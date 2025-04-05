@@ -3,13 +3,16 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private enum FacingDirection { Up, Down, Left, Right }
-    private FacingDirection facing = FacingDirection.Down; 
+    private FacingDirection facing = FacingDirection.Down;
 
-    public float moveSpeed = 5f;        
-    private bool isMoving = false;     
-    private Vector3 targetPos;          
+    public float moveSpeed = 5f;
+    private bool isMoving = false;
+    private Vector3 targetPos;
 
     private WorldGenerator worldGenerator;
+    public int maxDigAttempts = 10;
+    private int currentAttempts;
+    public DigUI digUI;
 
     void Start()
     {
@@ -17,7 +20,9 @@ public class PlayerController : MonoBehaviour
         targetPos = transform.position;
 
         worldGenerator = FindObjectOfType<WorldGenerator>();
-        
+
+        currentAttempts = maxDigAttempts;
+        digUI.UpdateDigText(currentAttempts);
     }
 
     void Update()
@@ -50,7 +55,7 @@ public class PlayerController : MonoBehaviour
             facing = FacingDirection.Right;
             MoveHorizontal(1);
         }
-        
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             DestroyBlockInFront();
@@ -107,6 +112,10 @@ public class PlayerController : MonoBehaviour
 
     void DestroyBlockInFront()
     {
+        if (currentAttempts > 0){
+            currentAttempts--;
+            digUI.UpdateDigText(currentAttempts);
+
         Vector3Int currentTile = Vector3Int.RoundToInt(transform.position);
         Vector3Int frontTile = currentTile;
 
@@ -132,6 +141,12 @@ public class PlayerController : MonoBehaviour
         {
             worldGenerator.DestroyBlockAt(frontTile);
         }
+        }
+
+        if (currentAttempts <= 0){
+            EndGame();
+        }
+
     }
 
 
@@ -159,5 +174,7 @@ public class PlayerController : MonoBehaviour
         return c.a > 0.0f;
     }
 
-
+    void EndGame(){
+        Debug.Log("Out of attempts!");
+    }
 }
