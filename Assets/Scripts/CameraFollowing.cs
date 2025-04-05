@@ -4,10 +4,12 @@ using UnityEngine;
 public class CameraFollowing : MonoBehaviour
 {
     public Transform target;
+    private Transform previousTarget;
     public float smoothSpeed = 0.125f;
 
     void Start ()
     {
+        
         Camera.main.orthographicSize = 10f;
     }
     void LateUpdate()

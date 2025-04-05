@@ -49,7 +49,7 @@ public class WorldGenerator : MonoBehaviour
             {
                 Vector3Int tilePos = getTilePos(chunk, new Vector2Int(x, y)); 
                 float perlinValue = Mathf.PerlinNoise((tilePos.x * scale) + seedX, (tilePos.y * scale) + seedY);
-                if (perlinValue > 0.75f)
+                if (perlinValue > 0.50f)
                 {
                     // Cave: leave as transparent or black
                     c = new Color(0f, 0f, 0f, 0f); // Fully transparent
