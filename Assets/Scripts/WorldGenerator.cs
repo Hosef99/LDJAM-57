@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class WorldGenerator : MonoBehaviour
 {
-    public int seedX = 1500;
-    public int seedY = 1000;
+    private int seedX;
+    private int seedY;
     public float scale = 0.1f;
 
     private Dictionary<Vector2Int, ChunkData> loadedChunks 
@@ -15,6 +15,8 @@ public class WorldGenerator : MonoBehaviour
 
     void Awake()
     {
+        seedX = Random.Range(0,1000);
+        seedY = Random.Range(0,1000);
     }
 
 
@@ -46,18 +48,10 @@ public class WorldGenerator : MonoBehaviour
             {
                 Vector3Int tilePos = getTilePos(chunk, new Vector2Int(x, y)); 
                 float perlinValue = Mathf.PerlinNoise((tilePos.x * scale) + seedX, (tilePos.y * scale) + seedY);
-                if (perlinValue > 0.9f)
+                if (perlinValue > 0.75f)
                 {
                     // Cave: leave as transparent or black
                     c = new Color(0f, 0f, 0f, 0f); // Fully transparent
-                }
-                else if (perlinValue > 0.75f)
-                {
-                    c = new Color(0.0f, 0.2f, 0.6f); // Oil - dark blue
-                }
-                else if (perlinValue > 0.6f)
-                {
-                    c = new Color(1.0f, 0.84f, 0.0f); // Gold - gold/yellow
                 }
                 else
                 {
