@@ -1,3 +1,5 @@
+using System;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -10,13 +12,14 @@ public class PlayerController : MonoBehaviour
     private Vector3 targetPos;
 
     private WorldGenerator worldGenerator;
-    public int maxDigAttempts = 10;
+    public int maxDigAttempts = 100;
     private int currentAttempts;
     public DigUI digUI;
 
     void Start()
     {
-
+        Vector3Int currentPos = Vector3Int.RoundToInt(transform.position);
+        transform.position = new Vector3Int(currentPos.x , ChunkData.CHUNK_SIZE/2 + 1, currentPos.z);
         targetPos = transform.position;
 
         worldGenerator = FindObjectOfType<WorldGenerator>();
@@ -112,9 +115,7 @@ public class PlayerController : MonoBehaviour
 
     void DestroyBlockInFront()
     {
-        if (currentAttempts > 0){
-            currentAttempts--;
-            digUI.UpdateDigText(currentAttempts);
+
 
         Vector3Int currentTile = Vector3Int.RoundToInt(transform.position);
         Vector3Int frontTile = currentTile;
@@ -137,11 +138,17 @@ public class PlayerController : MonoBehaviour
 
 
 
-        if (worldGenerator != null)
+        if (worldGenerator != null && IsBlockAt(frontTile))
         {
+            if (currentAttempts > 0)
+            {
+                currentAttempts--;
+                digUI.UpdateDigText(currentAttempts);
+            }
+
             worldGenerator.DestroyBlockAt(frontTile);
         }
-        }
+        
 
         if (currentAttempts <= 0){
             EndGame();
@@ -157,6 +164,14 @@ public class PlayerController : MonoBehaviour
         Vector2Int chunkXY = worldGenerator.GetChunkXY(tilePos);
         int cx = chunkXY.x;
         int cy = chunkXY.y;
+        for (int i = 0; i < 7; i++)
+        {
+            for (int j = 0; j < 5; j++)
+            {
+                worldGenerator.GetOrGenerateChunk(cx - 3 + i, cy - 2 + j);
+
+            }
+        }
         ChunkData chunk = worldGenerator.GetOrGenerateChunk(cx, cy);
 
         Vector2Int localXY = worldGenerator.GetChunkLocalXY(tilePos);

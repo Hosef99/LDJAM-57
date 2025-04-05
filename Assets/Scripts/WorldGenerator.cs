@@ -41,6 +41,7 @@ public class WorldGenerator : MonoBehaviour
     {
         Color c;
         ChunkData chunk = new ChunkData(cx, cy);
+        if (cy > 0) return chunk;
 
         for (int x = 0; x < ChunkData.CHUNK_SIZE; x++)
         {
