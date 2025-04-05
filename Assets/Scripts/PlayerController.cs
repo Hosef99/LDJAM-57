@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 targetPos;
 
     private WorldGenerator worldGenerator;
-    public int maxDigAttempts;
+    public int maxDigAttempts = 100;
     private int currentAttempts;
     public DigUI digUI;
     private SpriteRenderer sr;
@@ -23,7 +23,6 @@ public class PlayerController : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
     }
-    public UIManager uiManager;
 
     void Start()
     {
@@ -32,7 +31,7 @@ public class PlayerController : MonoBehaviour
         targetPos = transform.position;
 
         worldGenerator = FindObjectOfType<WorldGenerator>();
-        maxDigAttempts = 5;
+
         currentAttempts = maxDigAttempts;
         digUI.UpdateDigText(currentAttempts);
     }
@@ -161,7 +160,7 @@ public class PlayerController : MonoBehaviour
             worldGenerator.DestroyBlockAt(frontTile);
             anim.SetTrigger("Mine");
         }
-
+        
 
         if (currentAttempts <= 0){
             EndGame();
@@ -204,7 +203,5 @@ public class PlayerController : MonoBehaviour
 
     void EndGame(){
         Debug.Log("Out of attempts!");
-        uiManager.ShowGameOver();
-        enabled = false;
     }
 }
