@@ -15,6 +15,14 @@ public class PlayerController : MonoBehaviour
     public int maxDigAttempts = 100;
     private int currentAttempts;
     public DigUI digUI;
+    private SpriteRenderer sr;
+    private Animator anim;
+
+    void Awake()
+    {
+        sr = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
+    }
 
     void Start()
     {
@@ -51,11 +59,13 @@ public class PlayerController : MonoBehaviour
         else if (Input.GetKey(KeyCode.A))
         {
             facing = FacingDirection.Left;
+            sr.flipX = true;
             MoveHorizontal(-1);
         }
         else if (Input.GetKey(KeyCode.D))
         {
             facing = FacingDirection.Right;
+            sr.flipX = false;
             MoveHorizontal(1);
         }
 
@@ -74,13 +84,13 @@ public class PlayerController : MonoBehaviour
             return;
         }
         isMoving = true;
-
     }
 
     void HandleMovement()
     {
         if (isMoving)
         {
+            anim.SetBool("IsMove", true);
             transform.position = Vector3.MoveTowards(
                 transform.position,
                 targetPos,
@@ -92,6 +102,9 @@ public class PlayerController : MonoBehaviour
                 transform.position = targetPos;
                 isMoving = false;
             }
+        }
+        else{
+            anim.SetBool("IsMove", false);
         }
     }
 
@@ -108,8 +121,6 @@ public class PlayerController : MonoBehaviour
         {
             targetPos = belowPos;
             isMoving = true;
-
-
         }
     }
 
@@ -147,6 +158,7 @@ public class PlayerController : MonoBehaviour
             }
 
             worldGenerator.DestroyBlockAt(frontTile);
+            anim.SetTrigger("Mine");
         }
         
 
