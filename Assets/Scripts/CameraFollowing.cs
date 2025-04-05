@@ -15,6 +15,8 @@ public class CameraFollowing : MonoBehaviour
     }
     void LateUpdate()
     {
+        previousPosition.y = target.position.y;
+
         if (previousPosition.x < target.position.x - camBuffer)
         {
             previousPosition.x = target.position.x - camBuffer - 0.01f;
