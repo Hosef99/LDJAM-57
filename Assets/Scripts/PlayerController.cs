@@ -197,8 +197,7 @@ public class PlayerController : MonoBehaviour
             return false;
         }
 
-        Color c = chunk.tilesColor[localX, localY];
-        return c.a > 0.0f;
+        return chunk.tilesType[localX, localY] != 0;
     }
 
     void EndGame(){

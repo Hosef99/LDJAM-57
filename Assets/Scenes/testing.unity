@@ -230,6 +230,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 958127065}
   smoothSpeed: 0.125
+  camBuffer: 2
 --- !u!1 &958127062
 GameObject:
   m_ObjectHideFlags: 0
@@ -329,7 +330,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  maxDigAttempts: 10
   digUI: {fileID: 2058285186}
 --- !u!95 &958127067
 Animator:
@@ -753,7 +753,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilemap: {fileID: 2126050405}
-  baseTile: {fileID: 11400000, guid: a336094a4c03ad548b765fcce382f448, type: 2}
+  stoneTile: {fileID: 11400000, guid: 35f8df3e83fce4448bc51fb899ee3648, type: 2}
+  dirtTile: {fileID: 11400000, guid: fa0045b188ede1343b53872058ef4507, type: 2}
+  fossilTile1: {fileID: 0}
+  fossilTile2: {fileID: 0}
+  fossilTile3: {fileID: 0}
+  fossilTile4: {fileID: 0}
+  fossilTile5: {fileID: 0}
+  fossilTile6: {fileID: 0}
 --- !u!483693784 &2126050404
 TilemapRenderer:
   m_ObjectHideFlags: 0

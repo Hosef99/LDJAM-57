@@ -6,7 +6,6 @@ public class ChunkData
 {
     public int chunkX;
     public int chunkY;
-    public Color[,] tilesColor;
     public int[,] tilesType;
     // 0: hole
     // 1: stone1
@@ -27,7 +26,6 @@ public class ChunkData
     {
         chunkX = cx;
         chunkY = cy;
-        tilesColor = new Color[CHUNK_SIZE, CHUNK_SIZE];
         tilesType = new int[CHUNK_SIZE, CHUNK_SIZE];
 
     }

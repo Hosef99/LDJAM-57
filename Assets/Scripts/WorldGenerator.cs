@@ -6,7 +6,10 @@ public class WorldGenerator : MonoBehaviour
     private int seedX;
     private int seedY;
     public float scale = 0.1f;
+    public float goldScale = 0.1f;
+    public float fossilScale = 0.1f;
 
+    
     private Dictionary<Vector2Int, ChunkData> loadedChunks 
         = new Dictionary<Vector2Int, ChunkData>();
 
@@ -39,7 +42,6 @@ public class WorldGenerator : MonoBehaviour
 
     private ChunkData GenerateChunk(int cx, int cy)
     {
-        Color c;
         int type; // 0: hole
                   // 1: stone1
                   // 2: stone2
@@ -52,6 +54,7 @@ public class WorldGenerator : MonoBehaviour
                   // 9: gold1
                   //10: gold2
                   //11: gold3 
+                  //12: dirt
         ChunkData chunk = new ChunkData(cx, cy);
         if (cy > 0) return chunk;
 
@@ -61,16 +64,37 @@ public class WorldGenerator : MonoBehaviour
             {
                 Vector3Int tilePos = getTilePos(chunk, new Vector2Int(x, y)); 
                 float perlinValue = Mathf.PerlinNoise((tilePos.x * scale) + seedX, (tilePos.y * scale) + seedY);
+                float goldPerlinValue = Mathf.PerlinNoise((tilePos.x * goldScale) + seedX + 1, (tilePos.y * goldScale) + seedY+ 1);
+                float fossilPerlinValue = Mathf.PerlinNoise((tilePos.x * goldScale) + seedX + 2, (tilePos.y * goldScale) + seedY+ 2);
+
                 if (perlinValue > 0.8f)
                 {
                     // Cave: leave as transparent or black
-                    c = new Color(0f, 0f, 0f, 0f); // Fully transparent
+                    type = 0;
+                }
+                else if (perlinValue > 0.2f)
+                {
+                    type = 1;
                 }
                 else
                 {
-                    c = new Color(0.5f, 0.5f, 0.5f); // Stone - grey
+                    type = 12;
                 }
-                chunk.tilesColor[x, y] = c;
+
+                if (type != 0)
+                {
+                    if (goldPerlinValue > 0.87f)
+                    {
+                        // Cave: leave as transparent or black
+                        type = 9;
+                    }
+                    else if (goldPerlinValue > 0.8f)
+                    {
+                        type = 10;
+                    }
+                }
+
+                chunk.tilesType[x, y] = type;
             }
         }
         return chunk;
@@ -117,7 +141,7 @@ public class WorldGenerator : MonoBehaviour
             localY < 0 || localY >= ChunkData.CHUNK_SIZE)
             return;
 
-        chunk.tilesColor[localX, localY] = new Color(0, 0, 0, 0);
+        chunk.tilesType[localX, localY] = 0;
 
         if (chunkRenderer != null)
         {
