@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 targetPos;
 
     private WorldGenerator worldGenerator;
-    public int maxDigAttempts = 100;
+
     private int currentAttempts;
     public DigUI digUI;
     private SpriteRenderer sr;
@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
 
         worldGenerator = FindObjectOfType<WorldGenerator>();
 
-        currentAttempts = maxDigAttempts;
+        currentAttempts = 10;
         digUI.UpdateDigText(currentAttempts);
     }
 
@@ -160,7 +160,7 @@ public class PlayerController : MonoBehaviour
             worldGenerator.DestroyBlockAt(frontTile);
             anim.SetTrigger("Mine");
         }
-        
+
 
         if (currentAttempts <= 0){
             EndGame();
