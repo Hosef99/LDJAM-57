@@ -381,7 +381,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47cd23b4959ac534ea6feae1bec0097b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scale: 0.1
+  scale: 0.2
+  goldScale: 0.3
+  fossilScale: 0.1
   chunkRenderer: {fileID: 2126050403}
 --- !u!4 &1137783711
 Transform:
@@ -761,6 +763,8 @@ MonoBehaviour:
   fossilTile4: {fileID: 0}
   fossilTile5: {fileID: 0}
   fossilTile6: {fileID: 0}
+  goldTile1: {fileID: 11400000, guid: e4cc34f7f59f52843939ad75b4025acf, type: 2}
+  goldTile2: {fileID: 11400000, guid: bc067b3a6bbbca348b2977ca2f62dec4, type: 2}
 --- !u!483693784 &2126050404
 TilemapRenderer:
   m_ObjectHideFlags: 0
