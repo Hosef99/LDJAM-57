@@ -3,18 +3,18 @@ using UnityEngine;
 
 public class WorldGenerator : MonoBehaviour
 {
-    public int seed = 12345;
+    public int seedX = 1500;
+    public int seedY = 1000;
+    public float scale = 0.1f;
 
     private Dictionary<Vector2Int, ChunkData> loadedChunks 
         = new Dictionary<Vector2Int, ChunkData>();
 
     public ChunkRenderer chunkRenderer;
 
-    private System.Random random;
 
     void Awake()
     {
-        random = new System.Random(seed);
     }
 
 
@@ -37,20 +37,43 @@ public class WorldGenerator : MonoBehaviour
 
     private ChunkData GenerateChunk(int cx, int cy)
     {
+        Color c;
         ChunkData chunk = new ChunkData(cx, cy);
 
         for (int x = 0; x < ChunkData.CHUNK_SIZE; x++)
         {
             for (int y = 0; y < ChunkData.CHUNK_SIZE; y++)
             {
-
-                float r = (float)random.NextDouble();
-                float g = (float)random.NextDouble();
-                float b = (float)random.NextDouble();
-                chunk.tiles[x, y] = new Color(r, g, b, 1f);
+                Vector3Int tilePos = getTilePos(chunk, new Vector2Int(x, y)); 
+                float perlinValue = Mathf.PerlinNoise((tilePos.x * scale) + seedX, (tilePos.y * scale) + seedY);
+                if (perlinValue > 0.9f)
+                {
+                    // Cave: leave as transparent or black
+                    c = new Color(0f, 0f, 0f, 0f); // Fully transparent
+                }
+                else if (perlinValue > 0.75f)
+                {
+                    c = new Color(0.0f, 0.2f, 0.6f); // Oil - dark blue
+                }
+                else if (perlinValue > 0.6f)
+                {
+                    c = new Color(1.0f, 0.84f, 0.0f); // Gold - gold/yellow
+                }
+                else
+                {
+                    c = new Color(0.5f, 0.5f, 0.5f); // Stone - grey
+                }
+                chunk.tiles[x, y] = c;
             }
         }
         return chunk;
+    }
+
+    public Vector3Int getTilePos(ChunkData chunk, Vector2Int localPos)
+    {
+        int globalX = chunk.chunkX * ChunkData.CHUNK_SIZE + localPos.x - ChunkData.CHUNK_SIZE / 2;
+        int globalY = chunk.chunkY * ChunkData.CHUNK_SIZE + localPos.y - ChunkData.CHUNK_SIZE / 2;
+        return new Vector3Int(globalX, globalY, 0);
     }
 
     public Vector2Int GetChunkXY(Vector3Int tilePos)
@@ -60,7 +83,7 @@ public class WorldGenerator : MonoBehaviour
         return new Vector2Int(cx, cy);
     } 
     
-    public Vector2Int GetLocalXY(Vector3Int tilePos)
+    public Vector2Int GetChunkLocalXY(Vector3Int tilePos)
     {
         Vector2Int chunkXY = GetChunkXY(tilePos);
         int cx = chunkXY.x;
@@ -69,7 +92,6 @@ public class WorldGenerator : MonoBehaviour
         int localY = tilePos.y - cy * ChunkData.CHUNK_SIZE + ChunkData.CHUNK_SIZE / 2;
         return new Vector2Int(localX, localY);
     } 
-    
 
     public void DestroyBlockAt(Vector3Int tilePos)
     {
@@ -78,7 +100,7 @@ public class WorldGenerator : MonoBehaviour
         int cy = chunkXY.y;
 
         ChunkData chunk = GetOrGenerateChunk(cx, cy); 
-        Vector2Int localXY = GetLocalXY(tilePos);
+        Vector2Int localXY = GetChunkLocalXY(tilePos);
 
         int localX = localXY.x;
         int localY = localXY.y;
@@ -96,3 +118,5 @@ public class WorldGenerator : MonoBehaviour
         }
     }
 }
+
+

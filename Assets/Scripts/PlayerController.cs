@@ -173,7 +173,7 @@ public class PlayerController : MonoBehaviour
         int cy = chunkXY.y;
         ChunkData chunk = worldGenerator.GetOrGenerateChunk(cx, cy);
 
-        Vector2Int localXY = worldGenerator.GetLocalXY(tilePos);
+        Vector2Int localXY = worldGenerator.GetChunkLocalXY(tilePos);
 
         int localX = localXY.x;
         int localY = localXY.y;
