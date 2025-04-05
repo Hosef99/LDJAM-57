@@ -12,7 +12,7 @@ public class CameraFollowing : MonoBehaviour
     }
     void LateUpdate()
     {
-        Vector3 desiredPosition = target.position + new Vector3(0f, -8.5f, -10f);
+        Vector3 desiredPosition = target.position + new Vector3(0f, -5.08f, -10f);
         //Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
         transform.position = desiredPosition;
     }
