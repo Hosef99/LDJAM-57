@@ -463,6 +463,7 @@ MonoBehaviour:
   digCount: 1
   oreBrokeChance: 1
   digUI: {fileID: 2058285186}
+  stoneParticle: {fileID: 8832367722207546015, guid: 50bc3d8dc3dfafb419e4a5e5295bfc2c, type: 3}
   goldCount: 0
   fossil1Count: 0
   fossil2Count: 0

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Unity.Mathematics;
 using UnityEngine;
 using Random = System.Random;
@@ -16,13 +17,13 @@ public class PlayerController : MonoBehaviour
     private bool isMoving = false;
     private Vector3 targetPos;
     private Random rnd = new Random();
-
     private WorldGenerator worldGenerator;
 
     private int currentAttempts;
     public DigUI digUI;
     private SpriteRenderer sr;
     private Animator anim;
+    public GameObject stoneParticle;
     
     public int goldCount = 0;
     public int fossil1Count = 0;
@@ -226,14 +227,12 @@ public class PlayerController : MonoBehaviour
             }
         }
         
-
-
-
-        
-
         if (gotBlock)
         {
             anim.SetTrigger("Mine");
+            GameObject tempParticle = Instantiate(stoneParticle, frontTile, Quaternion.identity);
+            tempParticle.transform.eulerAngles = new Vector3(0,0,45);
+            StartCoroutine("DestroyParticle", tempParticle);
             currentAttempts--;
             digUI.UpdateDigText(currentAttempts);
         }
@@ -242,6 +241,11 @@ public class PlayerController : MonoBehaviour
             EndGame();
         }
 
+    }
+
+    IEnumerator DestroyParticle(GameObject particle){
+        yield return new WaitForSeconds(0.4f);
+        Destroy(particle);
     }
 
     void CollectBlockAt(Vector3Int tilePos)
