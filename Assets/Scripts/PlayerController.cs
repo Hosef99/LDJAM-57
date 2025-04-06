@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
     private Animator anim;
     public GameObject stoneParticle;
 
-    public int goldCount = 0;
+    //public int goldCount = 0;
     public int fossil1Count = 0;
     public int fossil2Count = 0;
     public int fossil3Count = 0;
@@ -313,15 +313,15 @@ public class PlayerController : MonoBehaviour
 
 
             case ChunkData.GOLD1:
-                goldCount += 10;
+                PlayerData.Instance.gold += 10;
                 break;
 
             case ChunkData.GOLD2:
-                goldCount += 20;
+                PlayerData.Instance.gold += 20;
                 break;
 
             case ChunkData.GOLD3:
-                goldCount += 30;
+                PlayerData.Instance.gold += 30;
                 break;
 
             case ChunkData.FOSSIL1:
