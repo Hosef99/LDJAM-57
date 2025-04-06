@@ -1,6 +1,7 @@
 using System;
 using Unity.Mathematics;
 using UnityEngine;
+using Random = System.Random;
 
 public class PlayerController : MonoBehaviour
 {
@@ -8,8 +9,12 @@ public class PlayerController : MonoBehaviour
     private FacingDirection facing = FacingDirection.Down;
 
     public float moveSpeed = 5f;
+    public int maxAttempts = 200;
+    public int digCount = 1;
+    public float oreBrokeChance = 1f;
     private bool isMoving = false;
     private Vector3 targetPos;
+    private Random rnd = new Random();
 
     private WorldGenerator worldGenerator;
 
@@ -17,7 +22,17 @@ public class PlayerController : MonoBehaviour
     public DigUI digUI;
     private SpriteRenderer sr;
     private Animator anim;
-
+    
+    public int goldCount = 0;
+    public int fossil1Count = 0;
+    public int fossil2Count = 0;
+    public int fossil3Count = 0;
+    public int fossil4Count = 0;
+    public int fossil5Count = 0;
+    public int fossil6Count = 0;
+    public int sliverCount = 0;
+    public int diamondCount = 0;
+    public int redStoneCount = 0;
     void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
@@ -32,7 +47,7 @@ public class PlayerController : MonoBehaviour
 
         worldGenerator = FindObjectOfType<WorldGenerator>();
 
-        currentAttempts = 10;
+        currentAttempts = maxAttempts;
         digUI.UpdateDigText(currentAttempts);
     }
 
@@ -71,7 +86,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            DestroyBlockInFront();
+            DestroyBlocksInFront(digCount);
         }
     }
 
@@ -124,54 +139,136 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void DestroyBlockInFront()
+    void DestroyBlocksInFront(int count)
     {
-
+        bool gotBlock = false;
 
         Vector3Int currentTile = Vector3Int.RoundToInt(transform.position);
         Vector3Int frontTile = currentTile;
+        
 
-        switch (facing)
+        
+        for (int i = 0; i < count; i++)
         {
-            case FacingDirection.Up:
-                frontTile += new Vector3Int(0, 1, 0);
-                break;
-            case FacingDirection.Down:
-                frontTile += new Vector3Int(0, -1, 0);
-                break;
-            case FacingDirection.Left:
-                frontTile += new Vector3Int(-1, 0, 0);
-                break;
-            case FacingDirection.Right:
-                frontTile += new Vector3Int(1, 0, 0);
-                break;
-        }
-
-
-
-        if (worldGenerator != null && IsBlockAt(frontTile))
-        {
-            if (currentAttempts > 0)
+            switch (facing)
             {
-                currentAttempts--;
-                digUI.UpdateDigText(currentAttempts);
+                case FacingDirection.Up:
+                    frontTile += new Vector3Int(0, 1, 0);
+                    break;
+                case FacingDirection.Down:
+                    frontTile += new Vector3Int(0, -1, 0);
+                    break;
+                case FacingDirection.Left:
+                    frontTile += new Vector3Int(-1, 0, 0);
+                    break;
+                case FacingDirection.Right:
+                    frontTile += new Vector3Int(1, 0, 0);
+                    break;
             }
+            if (IsBlockAt(frontTile))
+            {
 
-            worldGenerator.DestroyBlockAt(frontTile);
-            anim.SetTrigger("Mine");
+                CollectBlockAt(frontTile);
+                if (GetTileTypeAt(frontTile) != ChunkData.DIRT &&
+                    GetTileTypeAt(frontTile) != ChunkData.STONE1 &&
+                    GetTileTypeAt(frontTile) != ChunkData.STONE2 &&
+                    GetTileTypeAt(frontTile) != ChunkData.STONE3 )
+                {
+                    double rand = rnd.NextDouble();
+                    if (rand < oreBrokeChance)
+                    {
+                        worldGenerator.DestroyBlockAt(frontTile);
+                    }
+                }
+                else
+                {
+                    worldGenerator.DestroyBlockAt(frontTile);
+                }
+                
+                
+                gotBlock = true;
+            }
         }
+        
 
 
+
+        
+
+        if (gotBlock)
+        {
+            anim.SetTrigger("Mine");
+            currentAttempts--;
+            digUI.UpdateDigText(currentAttempts);
+        }
+        
         if (currentAttempts <= 0){
             EndGame();
         }
 
     }
 
+    void CollectBlockAt(Vector3Int tilePos)
+    {
+        int theTileType = GetTileTypeAt(tilePos);
+        
+        switch (theTileType)
+        {
+
+                    
+            case ChunkData.GOLD1:
+                goldCount += 10;
+                break;
+                    
+            case ChunkData.GOLD2:
+                goldCount += 20;
+                break;
+                    
+            case ChunkData.GOLD3:
+                goldCount += 30;
+                break;
+                    
+            case ChunkData.FOSSIL1:
+                fossil1Count += 1;
+                break;
+                    
+            case ChunkData.FOSSIL2:
+                fossil2Count += 1;
+                break;
+                    
+            case ChunkData.FOSSIL3:
+                fossil3Count += 1;
+                break;
+                    
+            case ChunkData.FOSSIL4:
+                fossil4Count += 1;
+                break;
+                    
+            case ChunkData.FOSSIL5:
+                fossil5Count += 1;
+                break;
+                    
+            case ChunkData.FOSSIL6:
+                fossil6Count += 1;
+                break;
+                    
+            default:
+                break;
+        }
+    }
+
+
+
 
     bool IsBlockAt(Vector3Int tilePos)
     {
-        if (worldGenerator == null) return false;
+        
+        return GetTileTypeAt(tilePos) != ChunkData.HOLE;
+    }
+
+    int GetTileTypeAt(Vector3Int tilePos)
+    {
+        if (worldGenerator == null) return 0;
 
         Vector2Int chunkXY = worldGenerator.GetChunkXY(tilePos);
         int cx = chunkXY.x;
@@ -194,10 +291,10 @@ public class PlayerController : MonoBehaviour
         if (localX < 0 || localX >= ChunkData.CHUNK_SIZE ||
             localY < 0 || localY >= ChunkData.CHUNK_SIZE)
         {
-            return false;
+            return 0;
         }
 
-        return chunk.tilesType[localX, localY] != 0;
+        return chunk.tilesType[localX, localY];
     }
 
     void EndGame(){

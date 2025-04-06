@@ -458,7 +458,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
+  maxAttempts: 100
+  digCount: 1
+  oreBrokeChance: 1
   digUI: {fileID: 2058285186}
+  goldCount: 0
+  fossil1Count: 0
+  fossil2Count: 0
+  fossil3Count: 0
+  fossil4Count: 0
+  fossil5Count: 0
+  fossil6Count: 0
+  sliverCount: 0
+  diamondCount: 0
+  redStoneCount: 0
 --- !u!95 &958127067
 Animator:
   serializedVersion: 5
@@ -513,11 +526,11 @@ MonoBehaviour:
   goldScale: 0.3
   fossilScale: 0.3
   holeThreshold: 0.8
-  stoneThreshold: 0.2
+  stoneThreshold: 0.25
   gold1Threshold: 0.8
   gold2Threshold: 0.87
   gold3Threshold: 10000
-  fossilThreshold: 0.8
+  fossilThreshold: 0.85
   chunkRenderer: {fileID: 2126050403}
 --- !u!4 &1137783711
 Transform:
