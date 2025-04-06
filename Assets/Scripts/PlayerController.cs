@@ -182,7 +182,7 @@ public class PlayerController : MonoBehaviour
                 }
                 else
                 {
-                    worldGenerator.DestroyBlockAt(frontTile);
+                    worldGenerator.DestroyBlockAt(frontTile); 
                 }
                 
                 
