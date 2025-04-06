@@ -34,11 +34,21 @@ public class ShopUI : MonoBehaviour{
     }
 
     public void TryUpgrade(UpgradeData upgrade){
-        if (playerUpgrade.UpgradeFromShop(upgrade)){
+        if (PlayerData.Instance.gold >= upgrade.CurrentCost && !upgrade.IsMaxed()){
+            var existing = PlayerData.Instance.GetUpgrade(upgrade.upgradeID);
+            if (existing != null){
+                existing.level++;
+            }
+            else{
+                upgrade.level = 1;
+                PlayerData.Instance.upgrades.Add(upgrade);
+            }
             Debug.Log("Upgraded: " + upgrade.displayName);
-            CloseShop();
+            OpenShop(currentUpgrades);
+            //playerUpgrade.ApplyUpgrade(upgrade);
+            //PlayerData.Instance.gold -= upgrade.CurrentCost;
         }else{
-            Debug.Log("Not enough money or maxed out");
+            Debug.Log("Not enough gold or upgrade is maxed");
         }
     }
 

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = System.Random;
 
 public class PlayerController : MonoBehaviour
@@ -13,7 +14,7 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 5f;
     public int maxAttempts = 200;
     public int horizontalDigCount  = 1;
-    
+
     public int verticalDigCount = 1;
     public float oreBrokeChance = 1f;
     private bool isMoving = false;
@@ -26,7 +27,7 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer sr;
     private Animator anim;
     public GameObject stoneParticle;
-    
+
     public int goldCount = 0;
     public int fossil1Count = 0;
     public int fossil2Count = 0;
@@ -38,7 +39,7 @@ public class PlayerController : MonoBehaviour
     public int diamondCount = 0;
     public int redStoneCount = 0;
 
-    public int masterYi = 0; 
+    public int masterYi = 0;
     private int lastHitOnRow = 0;
     private int rowStreak = 0;
 
@@ -108,7 +109,7 @@ public class PlayerController : MonoBehaviour
         {
             Vector3Int currentTile = Vector3Int.RoundToInt(transform.position);
             Vector3Int frontTile = currentTile;
-            
+
             switch (facing)
             {
                 case FacingDirection.Up:
@@ -196,7 +197,7 @@ public class PlayerController : MonoBehaviour
 
         Vector3Int currentTile = Vector3Int.RoundToInt(transform.position);
         Vector3Int frontTile = currentTile;
-        
+
         if (currentTile.y == lastHitOnRow)
         {
             rowStreak += 1;
@@ -206,10 +207,10 @@ public class PlayerController : MonoBehaviour
             lastHitOnRow = currentTile.y;
             rowStreak = 1;
         }
-        
+
         if (masterYi > 0)
         {
-            
+
             switch (masterYi)
             {
                 case 1:
@@ -238,7 +239,7 @@ public class PlayerController : MonoBehaviour
         }
 
 
-        
+
         for (int i = 0; i < count; i++)
         {
             switch (facing)
@@ -273,15 +274,15 @@ public class PlayerController : MonoBehaviour
                 }
                 else
                 {
-                    DestroyBlockAt(frontTile); 
+                    DestroyBlockAt(frontTile);
                 }
-                
 
-                
+
+
                 gotBlock = true;
             }
         }
-        
+
         if (gotBlock)
         {
             anim.SetTrigger("Mine");
@@ -291,7 +292,7 @@ public class PlayerController : MonoBehaviour
             currentAttempts--;
             digUI.UpdateDigText(currentAttempts);
         }
-        
+
         if (currentAttempts <= 0){
             EndGame();
         }
@@ -306,47 +307,47 @@ public class PlayerController : MonoBehaviour
     public void CollectBlockAt(Vector3Int tilePos)
     {
         int theTileType = GetTileTypeAt(tilePos);
-        
+
         switch (theTileType)
         {
 
-                    
+
             case ChunkData.GOLD1:
                 goldCount += 10;
                 break;
-                    
+
             case ChunkData.GOLD2:
                 goldCount += 20;
                 break;
-                    
+
             case ChunkData.GOLD3:
                 goldCount += 30;
                 break;
-                    
+
             case ChunkData.FOSSIL1:
                 fossil1Count += 1;
                 break;
-                    
+
             case ChunkData.FOSSIL2:
                 fossil2Count += 1;
                 break;
-                    
+
             case ChunkData.FOSSIL3:
                 fossil3Count += 1;
                 break;
-                    
+
             case ChunkData.FOSSIL4:
                 fossil4Count += 1;
                 break;
-                    
+
             case ChunkData.FOSSIL5:
                 fossil5Count += 1;
                 break;
-                    
+
             case ChunkData.FOSSIL6:
                 fossil6Count += 1;
                 break;
-                    
+
             default:
                 break;
         }
@@ -357,7 +358,7 @@ public class PlayerController : MonoBehaviour
 
     public bool IsBlockAt(Vector3Int tilePos)
     {
-        
+
         return GetTileTypeAt(tilePos) != ChunkData.HOLE;
     }
 
@@ -394,21 +395,22 @@ public class PlayerController : MonoBehaviour
 
     void EndGame(){
         Debug.Log("Out of attempts!");
+        SceneManager.LoadScene("PermanentShop");
     }
-    
+
     public void DestroyBlockAt(Vector3Int tilePos)
     {
         Vector2Int chunkXY = worldGenerator.GetChunkXY(tilePos);
         int cx = chunkXY.x;
         int cy = chunkXY.y;
 
-        ChunkData chunk = worldGenerator.GetOrGenerateChunk(cx, cy); 
+        ChunkData chunk = worldGenerator.GetOrGenerateChunk(cx, cy);
         Vector2Int localXY = worldGenerator.GetChunkLocalXY(tilePos);
 
         int localX = localXY.x;
         int localY = localXY.y;
 
-        
+
         if (localX < 0 || localX >= ChunkData.CHUNK_SIZE ||
             localY < 0 || localY >= ChunkData.CHUNK_SIZE)
             return;
@@ -419,7 +421,7 @@ public class PlayerController : MonoBehaviour
         {
             worldGenerator.chunkRenderer.RefreshChunk(chunk);
         }
-        
+
         GameObject tempParticle = Instantiate(stoneParticle, tilePos, Quaternion.identity);
         tempParticle.transform.eulerAngles = new Vector3(0,0,45);
         StartCoroutine("DestroyParticle", tempParticle);
