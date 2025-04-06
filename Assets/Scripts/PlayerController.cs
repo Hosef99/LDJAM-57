@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     private enum FacingDirection { Up, Down, Left, Right }
     private FacingDirection facing = FacingDirection.Down;
 
+    public GameObject boomPrefab;
     public float moveSpeed = 5f;
     public int maxAttempts = 200;
     public int digCount = 1;
@@ -87,6 +88,41 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             DestroyBlocksInFront(digCount);
+        }
+        else if (Input.GetKeyDown(KeyCode.F))
+        {
+            Vector3Int currentTile = Vector3Int.RoundToInt(transform.position);
+            Vector3Int frontTile = currentTile;
+            
+            switch (facing)
+            {
+                case FacingDirection.Up:
+                    frontTile += new Vector3Int(0, 1, 0);
+                    break;
+                case FacingDirection.Down:
+                    frontTile += new Vector3Int(0, -1, 0);
+                    break;
+                case FacingDirection.Left:
+                    frontTile += new Vector3Int(-1, 0, 0);
+                    break;
+                case FacingDirection.Right:
+                    frontTile += new Vector3Int(1, 0, 0);
+                    break;
+            }
+            GameObject boomClone = Instantiate(boomPrefab);
+
+            if (!IsBlockAt(frontTile))
+            {
+                boomClone.transform.position = frontTile;
+            }
+            else
+            {
+                boomClone.transform.position = transform.position;
+
+            }
+            boomClone.GetComponent<BoomScript>().enabled = true;
+
+
         }
     }
 
@@ -260,7 +296,7 @@ public class PlayerController : MonoBehaviour
 
 
 
-    bool IsBlockAt(Vector3Int tilePos)
+    public bool IsBlockAt(Vector3Int tilePos)
     {
         
         return GetTileTypeAt(tilePos) != ChunkData.HOLE;
