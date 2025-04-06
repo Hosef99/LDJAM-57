@@ -35,6 +35,11 @@ public class PlayerController : MonoBehaviour
     public int sliverCount = 0;
     public int diamondCount = 0;
     public int redStoneCount = 0;
+
+    public int masterYi = 0; 
+    private int lastHitOnRow = 0;
+    private int rowStreak = 0;
+
     void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
@@ -183,6 +188,46 @@ public class PlayerController : MonoBehaviour
         Vector3Int currentTile = Vector3Int.RoundToInt(transform.position);
         Vector3Int frontTile = currentTile;
         
+        if (currentTile.y == lastHitOnRow)
+        {
+            rowStreak += 1;
+        }
+        else
+        {
+            lastHitOnRow = currentTile.y;
+            rowStreak = 1;
+        }
+        
+        if (masterYi > 0)
+        {
+            
+            switch (masterYi)
+            {
+                case 1:
+                    if (rowStreak % 5 == 0)
+                    {
+                        count *= 2;
+                        rowStreak += 1;
+                    }
+                    break;
+                case 2:
+                    if (rowStreak % 4 == 0)
+                    {
+                        count *= 2;
+                    }
+                    break;
+                case 3:
+                    if (rowStreak % 3 == 0)
+                    {
+                        count *= 2;
+                        rowStreak += 1;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
 
         
         for (int i = 0; i < count; i++)

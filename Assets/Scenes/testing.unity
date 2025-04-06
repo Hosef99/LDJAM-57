@@ -474,6 +474,7 @@ MonoBehaviour:
   sliverCount: 0
   diamondCount: 0
   redStoneCount: 0
+  masterYi: 0
 --- !u!95 &958127067
 Animator:
   serializedVersion: 5
