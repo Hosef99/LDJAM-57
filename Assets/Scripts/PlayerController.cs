@@ -245,7 +245,7 @@ public class PlayerController : MonoBehaviour
     }
 
     IEnumerator DestroyParticle(GameObject particle){
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(1f);
         Destroy(particle);
     }
 
