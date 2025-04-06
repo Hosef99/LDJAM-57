@@ -214,14 +214,15 @@ public class PlayerController : MonoBehaviour
                     double rand = rnd.NextDouble();
                     if (rand < oreBrokeChance)
                     {
-                        worldGenerator.DestroyBlockAt(frontTile);
+                        DestroyBlockAt(frontTile);
                     }
                 }
                 else
                 {
-                    worldGenerator.DestroyBlockAt(frontTile); 
+                    DestroyBlockAt(frontTile); 
                 }
                 
+
                 
                 gotBlock = true;
             }
@@ -230,9 +231,7 @@ public class PlayerController : MonoBehaviour
         if (gotBlock)
         {
             anim.SetTrigger("Mine");
-            GameObject tempParticle = Instantiate(stoneParticle, frontTile, Quaternion.identity);
-            tempParticle.transform.eulerAngles = new Vector3(0,0,45);
-            StartCoroutine("DestroyParticle", tempParticle);
+
             currentAttempts--;
             digUI.UpdateDigText(currentAttempts);
         }
@@ -244,11 +243,11 @@ public class PlayerController : MonoBehaviour
     }
 
     IEnumerator DestroyParticle(GameObject particle){
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(4f);
         Destroy(particle);
     }
 
-    void CollectBlockAt(Vector3Int tilePos)
+    public void CollectBlockAt(Vector3Int tilePos)
     {
         int theTileType = GetTileTypeAt(tilePos);
         
@@ -339,5 +338,34 @@ public class PlayerController : MonoBehaviour
 
     void EndGame(){
         Debug.Log("Out of attempts!");
+    }
+    
+    public void DestroyBlockAt(Vector3Int tilePos)
+    {
+        Vector2Int chunkXY = worldGenerator.GetChunkXY(tilePos);
+        int cx = chunkXY.x;
+        int cy = chunkXY.y;
+
+        ChunkData chunk = worldGenerator.GetOrGenerateChunk(cx, cy); 
+        Vector2Int localXY = worldGenerator.GetChunkLocalXY(tilePos);
+
+        int localX = localXY.x;
+        int localY = localXY.y;
+
+        
+        if (localX < 0 || localX >= ChunkData.CHUNK_SIZE ||
+            localY < 0 || localY >= ChunkData.CHUNK_SIZE)
+            return;
+
+        chunk.tilesType[localX, localY] = 0;
+
+        if (worldGenerator.chunkRenderer != null)
+        {
+            worldGenerator.chunkRenderer.RefreshChunk(chunk);
+        }
+        
+        GameObject tempParticle = Instantiate(stoneParticle, tilePos, Quaternion.identity);
+        tempParticle.transform.eulerAngles = new Vector3(0,0,45);
+        StartCoroutine("DestroyParticle", tempParticle);
     }
 }

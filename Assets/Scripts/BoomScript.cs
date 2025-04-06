@@ -19,6 +19,11 @@ public class BoomScript : MonoBehaviour
     void Start()
     {
         worldGenerator = FindObjectOfType<WorldGenerator>();
+    }
+
+    void Awake()
+    {
+        player = FindObjectOfType<PlayerController>();
 
     }
 
@@ -36,21 +41,21 @@ public class BoomScript : MonoBehaviour
                 {
                     if (collectOre)
                     {
-                        // player.CollectBlockAt(currentTile + new Vector3Int(i - range, j - range, 0));
+                        player.CollectBlockAt(currentTile + new Vector3Int(i - range, j - range, 0));
                     }
-                    worldGenerator.DestroyBlockAt(currentTile + new Vector3Int(i - range, j - range, 0));
+                    player.DestroyBlockAt(currentTile + new Vector3Int(i - range, j - range, 0));
 
                 }
             }
         }
         Destroy(gameObject);
     }
-    // Update is called once per frame
+    
     void Update()
     {
         HandleMovement();
         HandleFalling();
-        timer += Time.deltaTime; // 每帧增加经过的时间
+        timer += Time.deltaTime; 
 
         if (timer >= lifetime && !isMoving)
         {

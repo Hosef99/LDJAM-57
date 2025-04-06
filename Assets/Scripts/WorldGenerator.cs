@@ -147,30 +147,7 @@ public class WorldGenerator : MonoBehaviour
         return new Vector2Int(localX, localY);
     } 
 
-    public void DestroyBlockAt(Vector3Int tilePos)
-    {
-        Vector2Int chunkXY = GetChunkXY(tilePos);
-        int cx = chunkXY.x;
-        int cy = chunkXY.y;
 
-        ChunkData chunk = GetOrGenerateChunk(cx, cy); 
-        Vector2Int localXY = GetChunkLocalXY(tilePos);
-
-        int localX = localXY.x;
-        int localY = localXY.y;
-
-        
-        if (localX < 0 || localX >= ChunkData.CHUNK_SIZE ||
-            localY < 0 || localY >= ChunkData.CHUNK_SIZE)
-            return;
-
-        chunk.tilesType[localX, localY] = 0;
-
-        if (chunkRenderer != null)
-        {
-            chunkRenderer.RefreshChunk(chunk);
-        }
-    }
 }
 
 
