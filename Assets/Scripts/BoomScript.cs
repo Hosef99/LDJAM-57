@@ -8,6 +8,8 @@ public class BoomScript : MonoBehaviour
     public float moveSpeed = 5f;
     public float lifetime = 3f;
     public int range = 2;
+    public bool collectOre = false;
+    public PlayerController player;
     private float timer = 0f;
     private WorldGenerator worldGenerator;
     private bool isMoving = false;
@@ -32,6 +34,10 @@ public class BoomScript : MonoBehaviour
                 float distance = Vector3.Distance(targetTile, currentTile);
                 if (distance <= range - 0.5 )
                 {
+                    if (collectOre)
+                    {
+                        // player.CollectBlockAt(currentTile + new Vector3Int(i - range, j - range, 0));
+                    }
                     worldGenerator.DestroyBlockAt(currentTile + new Vector3Int(i - range, j - range, 0));
 
                 }
