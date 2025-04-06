@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 targetPos;
     private Random rnd = new Random();
     private WorldGenerator worldGenerator;
+    public PlayerData playerData ;
 
     private int currentAttempts;
     public DigUI digUI;
@@ -28,16 +29,7 @@ public class PlayerController : MonoBehaviour
     private Animator anim;
     public GameObject stoneParticle;
 
-    //public int goldCount = 0;
-    public int fossil1Count = 0;
-    public int fossil2Count = 0;
-    public int fossil3Count = 0;
-    public int fossil4Count = 0;
-    public int fossil5Count = 0;
-    public int fossil6Count = 0;
-    public int sliverCount = 0;
-    public int diamondCount = 0;
-    public int redStoneCount = 0;
+
 
     public int masterYi = 0;
     private int lastHitOnRow = 0;
@@ -313,39 +305,39 @@ public class PlayerController : MonoBehaviour
 
 
             case ChunkData.GOLD1:
-                PlayerData.Instance.gold += 10;
+                playerData.goldCount += 10;
                 break;
 
             case ChunkData.GOLD2:
-                PlayerData.Instance.gold += 20;
+                playerData.goldCount += 20;
                 break;
 
             case ChunkData.GOLD3:
-                PlayerData.Instance.gold += 30;
+                playerData.goldCount += 30;
                 break;
 
             case ChunkData.FOSSIL1:
-                fossil1Count += 1;
+                playerData.fossil1Count += 1;
                 break;
 
             case ChunkData.FOSSIL2:
-                fossil2Count += 1;
+                playerData.fossil2Count += 1;
                 break;
 
             case ChunkData.FOSSIL3:
-                fossil3Count += 1;
+                playerData.fossil3Count += 1;
                 break;
 
             case ChunkData.FOSSIL4:
-                fossil4Count += 1;
+                playerData.fossil4Count += 1;
                 break;
 
             case ChunkData.FOSSIL5:
-                fossil5Count += 1;
+                playerData.fossil5Count += 1;
                 break;
 
             case ChunkData.FOSSIL6:
-                fossil6Count += 1;
+                playerData.fossil6Count += 1;
                 break;
 
             default:

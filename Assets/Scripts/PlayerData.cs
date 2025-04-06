@@ -5,6 +5,17 @@ public class PlayerData : MonoBehaviour{
     public static PlayerData Instance;
 
     public int gold = 0;
+
+    public int goldCount = 0;
+    public int fossil1Count = 0;
+    public int fossil2Count = 0;
+    public int fossil3Count = 0;
+    public int fossil4Count = 0;
+    public int fossil5Count = 0;
+    public int fossil6Count = 0;
+    public int sliverCount = 0;
+    public int diamondCount = 0;
+    public int redStoneCount = 0;
     public int stamina = 0;
     public int cardSlots = 5;
 
