@@ -16,6 +16,7 @@ public class ChunkRenderer : MonoBehaviour
     public Tile fossilTile6;
     public Tile goldTile1;
     public Tile goldTile2;
+    public Tile goldTile3;
 
     
     public void RenderChunk(ChunkData chunk)
@@ -32,37 +33,58 @@ public class ChunkRenderer : MonoBehaviour
                     cy * ChunkData.CHUNK_SIZE + y - ChunkData.CHUNK_SIZE / 2 - 2,
                     0);
 
-                // 0: hole
-                // 1: stone1
-                // 2: stone2
-                // 3: stone3
-                // 4: stone4
-                // 5: stone5
-                // 6: fossil1
-                // 7: fossil2
-                // 8: fossil3
-                // 9: gold1
-                //10: gold2
-                //11: gold3 
-                //12: dirt
-                
-                if (chunk.tilesType[x, y] == 0)
+
+                switch (chunk.tilesType[x, y])
                 {
-                    tilemap.SetTile(cellPos, null);
+                    case ChunkData.DIRT:
+                        tilemap.SetTile(cellPos, dirtTile);
+                        break;
+                    
+                    case ChunkData.STONE1:
+                        tilemap.SetTile(cellPos, stoneTile);
+                        break;
+                    
+                    case ChunkData.GOLD1:
+                        tilemap.SetTile(cellPos, goldTile1);
+                        break;
+                    
+                    case ChunkData.GOLD2:
+                        tilemap.SetTile(cellPos, goldTile2);
+                        break;
+                    
+                    case ChunkData.GOLD3:
+                        tilemap.SetTile(cellPos, goldTile3);
+                        break;
+                    
+                    case ChunkData.FOSSIL1:
+                        tilemap.SetTile(cellPos, fossilTile1);
+                        break;
+                    
+                    case ChunkData.FOSSIL2:
+                        tilemap.SetTile(cellPos, fossilTile2);
+                        break;
+                    
+                    case ChunkData.FOSSIL3:
+                        tilemap.SetTile(cellPos, fossilTile3);
+                        break;
+                    
+                    case ChunkData.FOSSIL4:
+                        tilemap.SetTile(cellPos, fossilTile4);
+                        break;
+                    
+                    case ChunkData.FOSSIL5:
+                        tilemap.SetTile(cellPos, fossilTile5);
+                        break;
+                    
+                    case ChunkData.FOSSIL6:
+                        tilemap.SetTile(cellPos, fossilTile6);
+                        break;
+                    
+                    default:
+                        tilemap.SetTile(cellPos, null);
+                        break;
                 }
-                else if (chunk.tilesType[x, y] == 1)
-                {
-                    tilemap.SetTile(cellPos, stoneTile);
-                }else if (chunk.tilesType[x, y] == 12)
-                {
-                    tilemap.SetTile(cellPos, dirtTile);
-                }else if (chunk.tilesType[x, y] == 9)
-                {
-                    tilemap.SetTile(cellPos, goldTile1);
-                }else if (chunk.tilesType[x, y] == 10)
-                {
-                    tilemap.SetTile(cellPos, goldTile2);
-                }
+               
             }
         }
     }
