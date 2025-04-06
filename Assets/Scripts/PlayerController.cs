@@ -231,7 +231,9 @@ public class PlayerController : MonoBehaviour
         if (gotBlock)
         {
             anim.SetTrigger("Mine");
-
+            GameObject tempParticle = Instantiate(stoneParticle, (Vector3)frontTile-new Vector3(0,0.5f,0), Quaternion.identity);
+            tempParticle.transform.eulerAngles = new Vector3(0,0,45);
+            StartCoroutine("DestroyParticle", tempParticle);
             currentAttempts--;
             digUI.UpdateDigText(currentAttempts);
         }
