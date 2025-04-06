@@ -256,12 +256,32 @@ public class PlayerController : MonoBehaviour
                 if (GetTileTypeAt(frontTile) != ChunkData.DIRT &&
                     GetTileTypeAt(frontTile) != ChunkData.STONE1 &&
                     GetTileTypeAt(frontTile) != ChunkData.STONE2 &&
-                    GetTileTypeAt(frontTile) != ChunkData.STONE3 )
+                    GetTileTypeAt(frontTile) != ChunkData.OBSIDIAN1 &&
+                    GetTileTypeAt(frontTile) != ChunkData.OBSIDIAN2 &&
+                    GetTileTypeAt(frontTile) != ChunkData.OBSIDIAN3)
                 {
                     double rand = rnd.NextDouble();
                     if (rand < oreBrokeChance)
                     {
                         DestroyBlockAt(frontTile);
+                    }
+                }else if(GetTileTypeAt(frontTile) == ChunkData.OBSIDIAN1 ||
+                         GetTileTypeAt(frontTile) == ChunkData.OBSIDIAN2 ||
+                         GetTileTypeAt(frontTile) == ChunkData.OBSIDIAN3)
+                {
+                    
+                    switch (GetTileTypeAt(frontTile))
+                    {
+                        case ChunkData.OBSIDIAN1:
+                            ChangeBlockAt(frontTile, ChunkData.OBSIDIAN2);
+                            break;
+                        case ChunkData.OBSIDIAN2:
+                            ChangeBlockAt(frontTile, ChunkData.OBSIDIAN3);
+                            break;
+                        case ChunkData.OBSIDIAN3:
+                            DestroyBlockAt(frontTile);
+                            break;
+
                     }
                 }
                 else
@@ -339,6 +359,14 @@ public class PlayerController : MonoBehaviour
             case ChunkData.FOSSIL6:
                 playerData.fossil6Count += 1;
                 break;
+            
+            case ChunkData.DIAMOND:
+                playerData.diamondCount += 1;
+                break;
+            
+            case ChunkData.REDSTONE:
+                playerData.redStoneCount += 10;
+                break;
 
             default:
                 break;
@@ -392,6 +420,11 @@ public class PlayerController : MonoBehaviour
 
     public void DestroyBlockAt(Vector3Int tilePos)
     {
+        ChangeBlockAt(tilePos, ChunkData.HOLE);
+    }
+
+    public void ChangeBlockAt(Vector3Int tilePos, int type)
+    {
         Vector2Int chunkXY = worldGenerator.GetChunkXY(tilePos);
         int cx = chunkXY.x;
         int cy = chunkXY.y;
@@ -407,7 +440,7 @@ public class PlayerController : MonoBehaviour
             localY < 0 || localY >= ChunkData.CHUNK_SIZE)
             return;
 
-        chunk.tilesType[localX, localY] = 0;
+        chunk.tilesType[localX, localY] = type;
 
         if (worldGenerator.chunkRenderer != null)
         {

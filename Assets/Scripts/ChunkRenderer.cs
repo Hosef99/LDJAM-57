@@ -6,7 +6,11 @@ public class ChunkRenderer : MonoBehaviour
     public Tilemap tilemap;
 
 
-    public Tile stoneTile; // 在 Inspector 里拖进来的 Tile
+    public Tile stoneTile;
+    public Tile obsidianTile1;
+    public Tile obsidianTile2;
+    public Tile obsidianTile3;
+
     public Tile dirtTile;
     public Tile fossilTile1;
     public Tile fossilTile2;
@@ -17,6 +21,8 @@ public class ChunkRenderer : MonoBehaviour
     public Tile goldTile1;
     public Tile goldTile2;
     public Tile goldTile3;
+    public Tile diamondTile;
+    public Tile redStoneTile;
 
     
     public void RenderChunk(ChunkData chunk)
@@ -42,6 +48,18 @@ public class ChunkRenderer : MonoBehaviour
                     
                     case ChunkData.STONE1:
                         tilemap.SetTile(cellPos, stoneTile);
+                        break;
+                    
+                    case ChunkData.OBSIDIAN1:
+                        tilemap.SetTile(cellPos, obsidianTile1);
+                        break;
+                    
+                    case ChunkData.OBSIDIAN2:
+                        tilemap.SetTile(cellPos, obsidianTile2);
+                        break;
+                    
+                    case ChunkData.OBSIDIAN3:
+                        tilemap.SetTile(cellPos, obsidianTile3);
                         break;
                     
                     case ChunkData.GOLD1:
@@ -78,6 +96,14 @@ public class ChunkRenderer : MonoBehaviour
                     
                     case ChunkData.FOSSIL6:
                         tilemap.SetTile(cellPos, fossilTile6);
+                        break;
+                    
+                    case ChunkData.DIAMOND:
+                        tilemap.SetTile(cellPos, diamondTile);
+                        break;
+                    
+                    case ChunkData.REDSTONE:
+                        tilemap.SetTile(cellPos, redStoneTile);
                         break;
                     
                     default:

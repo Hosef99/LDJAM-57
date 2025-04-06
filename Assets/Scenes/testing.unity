@@ -287,7 +287,7 @@ GameObject:
   - component: {fileID: 708822818}
   - component: {fileID: 708822819}
   m_Layer: 0
-  m_Name: Test
+  m_Name: Fog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -315,7 +315,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 708822817}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
   m_Name: 
@@ -466,15 +466,6 @@ MonoBehaviour:
   playerData: {fileID: 987208400}
   digUI: {fileID: 2058285186}
   stoneParticle: {fileID: 8832367722207546015, guid: 50bc3d8dc3dfafb419e4a5e5295bfc2c, type: 3}
-  fossil1Count: 0
-  fossil2Count: 0
-  fossil3Count: 0
-  fossil4Count: 0
-  fossil5Count: 0
-  fossil6Count: 0
-  sliverCount: 0
-  diamondCount: 0
-  redStoneCount: 0
   masterYi: 0
 --- !u!95 &958127067
 Animator:
@@ -527,6 +518,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gold: 0
+  goldCount: 0
+  fossil1Count: 0
+  fossil2Count: 0
+  fossil3Count: 0
+  fossil4Count: 0
+  fossil5Count: 0
+  fossil6Count: 0
+  sliverCount: 0
+  diamondCount: 0
+  redStoneCount: 0
   stamina: 0
   cardSlots: 5
   bombCapcity: 1
@@ -578,12 +579,17 @@ MonoBehaviour:
   basicScale: 0.1
   goldScale: 0.3
   fossilScale: 0.3
+  obsidianScale: 0.14
+  diamondScale: 0.3
   holeThreshold: 0.8
   stoneThreshold: 0.25
   gold1Threshold: 0.8
   gold2Threshold: 0.87
   gold3Threshold: 10000
   fossilThreshold: 0.85
+  obsidianThreshold: 0.52
+  diamondThreshold: 0.8
+  obsidianXYRatio: 0.3
   chunkRenderer: {fileID: 2126050403}
 --- !u!4 &1137783711
 Transform:
@@ -632,7 +638,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   lifetime: 3
-  range: 2
+  range: 10
   collectOre: 0
   player: {fileID: 0}
 --- !u!212 &1238420977
@@ -1058,6 +1064,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tilemap: {fileID: 2126050405}
   stoneTile: {fileID: 11400000, guid: 35f8df3e83fce4448bc51fb899ee3648, type: 2}
+  obsidianTile1: {fileID: 0}
+  obsidianTile2: {fileID: 0}
+  obsidianTile3: {fileID: 0}
   dirtTile: {fileID: 11400000, guid: fa0045b188ede1343b53872058ef4507, type: 2}
   fossilTile1: {fileID: 11400000, guid: 0a96f2823419fc34887bcda7c431dfc3, type: 2}
   fossilTile2: {fileID: 11400000, guid: 282afe783f7de794a9309604f37a79c7, type: 2}
@@ -1068,6 +1077,7 @@ MonoBehaviour:
   goldTile1: {fileID: 11400000, guid: e4cc34f7f59f52843939ad75b4025acf, type: 2}
   goldTile2: {fileID: 11400000, guid: bc067b3a6bbbca348b2977ca2f62dec4, type: 2}
   goldTile3: {fileID: 0}
+  diamondTile: {fileID: 11400000, guid: 1d161c190021c7745a2411283384d617, type: 2}
 --- !u!483693784 &2126050404
 TilemapRenderer:
   m_ObjectHideFlags: 0

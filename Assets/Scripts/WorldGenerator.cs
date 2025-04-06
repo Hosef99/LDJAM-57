@@ -8,7 +8,11 @@ public class WorldGenerator : MonoBehaviour
     public float basicScale = 0.1f;
     public float goldScale = 0.3f;
     public float fossilScale = 0.3f;
+    public float obsidianScale = 0.3f;
+    public float diamondScale = 0.3f;
+    public float redStoneScale = 0.3f;
 
+    
     public float holeThreshold = 0.8f;
     public float stoneThreshold = 0.2f;
     
@@ -17,6 +21,12 @@ public class WorldGenerator : MonoBehaviour
     public float gold3Threshold = 10000f;
 
     public float fossilThreshold = 0.9f;
+    public float obsidianThreshold = 0.9f;
+    public float diamondThreshold = 0.9f;
+    public float redStoneThreshold = 0.9f;
+
+    public float obsidianXYRatio = 1;
+
     
     private Dictionary<Vector2Int, ChunkData> loadedChunks 
         = new Dictionary<Vector2Int, ChunkData>();
@@ -55,11 +65,11 @@ public class WorldGenerator : MonoBehaviour
         return typeList[index];
     }
 
-    private void GenerateOre(ref ChunkData chunk, int x, int y, float scale, float threshold, List<int> type, int seedX, int seedY)
+    private void GenerateOre(ref ChunkData chunk, int x, int y, float scale, float XOverYRatio, float threshold, List<int> type, int seedX, int seedY)
     {
         Vector3Int tilePos = getTilePos(chunk, new Vector2Int(x, y)); 
 
-        float perlinValue = Mathf.PerlinNoise((tilePos.x * scale) + seedX, (tilePos.y * fossilScale) + seedY);
+        float perlinValue = Mathf.PerlinNoise((tilePos.x * scale * XOverYRatio) + seedX, (tilePos.y * fossilScale) + seedY);
 
         if (perlinValue > threshold)
         {
@@ -80,41 +90,84 @@ public class WorldGenerator : MonoBehaviour
         {
             for (int y = 0; y < ChunkData.CHUNK_SIZE; y++)
             {
-                Vector3Int tilePos = getTilePos(chunk, new Vector2Int(x, y)); 
-                float perlinValue = Mathf.PerlinNoise((tilePos.x * basicScale) + seedX, (tilePos.y * basicScale) + seedY);
+                if (cy > -1)
+                {
+                    Vector3Int tilePos = getTilePos(chunk, new Vector2Int(x, y)); 
+                    float perlinValue = Mathf.PerlinNoise((tilePos.x * basicScale) + seedX, (tilePos.y * basicScale) + seedY);
 
                 
-                // base
+                    // base
                 
-                if (perlinValue > holeThreshold)
-                {
-                    type = ChunkData.HOLE;
-                }
-                else if (perlinValue > stoneThreshold)
-                {
-                    type = ChunkData.STONE1;
-                }
-                else
-                {
-                    type = ChunkData.DIRT;
-                }
-                chunk.tilesType[x, y] = type;
+                    if (perlinValue > holeThreshold)
+                    {
+                        type = ChunkData.HOLE;
+                    }
+                    else if (perlinValue > stoneThreshold)
+                    {
+                        type = ChunkData.STONE1;
+                    }
+                    else
+                    {
+                        type = ChunkData.DIRT;
+                    }
+                    chunk.tilesType[x, y] = type;
 
                 
-                if (type == ChunkData.STONE1)
+                    if (type == ChunkData.STONE1)
+                    {
+                        GenerateOre(ref chunk, x, y, goldScale,  1,gold1Threshold, new List<int> {ChunkData.GOLD1}, seedX + 1, seedY + 1);
+                        GenerateOre(ref chunk, x, y, goldScale,  1,gold2Threshold,  new List<int> {ChunkData.GOLD2}, seedX + 1, seedY + 1);
+                        GenerateOre(ref chunk, x, y, redStoneScale,  1,redStoneThreshold,  new List<int> {ChunkData.REDSTONE}, seedX + 5, seedY + 5);
+                        
+                        
+                    }
+
+                    if (type == ChunkData.DIRT)
+                    {
+                        GenerateOre(ref chunk, x, y, fossilScale, 1, fossilThreshold, new List<int> {ChunkData.FOSSIL1, ChunkData.FOSSIL2, ChunkData.FOSSIL3 , ChunkData.FOSSIL4 ,ChunkData.FOSSIL5 ,ChunkData.FOSSIL6}, seedX + 2, seedY + 2);
+
+                    }
+                } else if (cy > -20)
                 {
-                    GenerateOre(ref chunk, x, y, goldScale, gold1Threshold, new List<int> {ChunkData.GOLD1}, seedX + 1, seedY + 1);
-                    GenerateOre(ref chunk, x, y, goldScale, gold2Threshold, new List<int> {ChunkData.GOLD2}, seedX + 1, seedY + 1);
+                    Vector3Int tilePos = getTilePos(chunk, new Vector2Int(x, y)); 
+                    float perlinValue = Mathf.PerlinNoise((tilePos.x * basicScale) + seedX, (tilePos.y * basicScale) + seedY);
+
+                
+                    // base
+                
+                    if (perlinValue > holeThreshold)
+                    {
+                        type = ChunkData.HOLE;
+                    }
+                    else if (perlinValue > stoneThreshold)
+                    {
+                        type = ChunkData.STONE1;
+                    }
+                    else
+                    {
+                        type = ChunkData.DIRT;
+                    }
+                    chunk.tilesType[x, y] = type;
+
+                
+                    if (chunk.tilesType[x, y] == ChunkData.STONE1)
+                    {
+                        GenerateOre(ref chunk, x, y, goldScale,  1,gold1Threshold, new List<int> {ChunkData.GOLD1}, seedX + 1, seedY + 1);
+                        GenerateOre(ref chunk, x, y, goldScale,  1,gold2Threshold,  new List<int> {ChunkData.GOLD2}, seedX + 1, seedY + 1);
+                        GenerateOre(ref chunk, x, y, redStoneScale,  1,redStoneThreshold,  new List<int> {ChunkData.REDSTONE}, seedX + 5, seedY + 5);
+                        GenerateOre(ref chunk, x, y, obsidianScale,  obsidianXYRatio,obsidianThreshold,  new List<int> {ChunkData.OBSIDIAN1}, seedX + 3, seedY + 3);
+                        
+                    }
                     
+                    if (chunk.tilesType[x, y] == ChunkData.OBSIDIAN1) GenerateOre(ref chunk, x, y, diamondScale,  1,diamondThreshold,  new List<int> {ChunkData.DIAMOND}, seedX + 4, seedY + 4);
 
+                    if (chunk.tilesType[x, y] == ChunkData.DIRT)
+                    {
+                        GenerateOre(ref chunk, x, y, fossilScale, 1, fossilThreshold, new List<int> {ChunkData.FOSSIL1, ChunkData.FOSSIL2, ChunkData.FOSSIL3 , ChunkData.FOSSIL4 ,ChunkData.FOSSIL5 ,ChunkData.FOSSIL6}, seedX + 2, seedY + 2);
 
+                    }
                 }
-
-                if (type == ChunkData.DIRT)
-                {
-                    GenerateOre(ref chunk, x, y, fossilScale, fossilThreshold, new List<int> {ChunkData.FOSSIL1, ChunkData.FOSSIL2, ChunkData.FOSSIL3 , ChunkData.FOSSIL4 ,ChunkData.FOSSIL5 ,ChunkData.FOSSIL6}, seedX + 2, seedY + 2);
-
-                }
+                
                 
 
                 

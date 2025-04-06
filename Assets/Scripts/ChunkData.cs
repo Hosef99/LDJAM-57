@@ -13,7 +13,6 @@ public class ChunkData
     public const int STONE2 = 2;
     public const int STONE3 = 3;
     public const int STONE4 = 4;
-    public const int STONE5 = 5;
     public const int FOSSIL1 = 6;
     public const int FOSSIL2 = 7;
     public const int FOSSIL3 = 8;
@@ -24,6 +23,13 @@ public class ChunkData
     public const int GOLD2 = 13;
     public const int GOLD3 = 14;
     public const int DIRT = 15;
+    public const int DIAMOND = 16;
+    public const int OBSIDIAN1 = 17;
+    public const int OBSIDIAN2 = 18;
+    public const int OBSIDIAN3 = 19;
+    public const int REDSTONE = 20;
+
+
 
 
     public const int CHUNK_SIZE = 9;
