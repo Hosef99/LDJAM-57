@@ -12,7 +12,9 @@ public class PlayerController : MonoBehaviour
     public GameObject boomPrefab;
     public float moveSpeed = 5f;
     public int maxAttempts = 200;
-    public int digCount = 1;
+    public int horizontalDigCount  = 1;
+    
+    public int verticalDigCount = 1;
     public float oreBrokeChance = 1f;
     private bool isMoving = false;
     private Vector3 targetPos;
@@ -93,7 +95,14 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            DestroyBlocksInFront(digCount);
+            if (facing == FacingDirection.Down || facing == FacingDirection.Up)
+            {
+                DestroyBlocksInFront(verticalDigCount);
+            }
+            else
+            {
+                DestroyBlocksInFront(horizontalDigCount);
+            }
         }
         else if (Input.GetKeyDown(KeyCode.F))
         {
