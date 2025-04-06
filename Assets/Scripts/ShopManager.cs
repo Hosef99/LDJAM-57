@@ -4,33 +4,36 @@ using System.ComponentModel;
 
 public class ShopManager : MonoBehaviour{
     public enum ShopType{Permenant, Underground}
+    public ShopType shopType;
     public ShopUI shopUI;
 
-    public void OpenShop(ShopType type){
-        List<UpgradeData> upgrades;
-        if(type == ShopType.Permenant){
-            upgrades = new List<UpgradeData>{
-                new UpgradeData{upgradeID = "vision", displayName ="Increase Vision", maxLevel = 5,baseCost = 100, costPerLevel = 50},
-            };
+    void Start () {
+        if (shopType == ShopType.Permenant) {
+            OpenPermenatShop();
         }
-        else{
-            upgrades = GetRandomUpgrades();
-        }
+    }
+    public void OpenPermenatShop(){
+        List<UpgradeData> upgrades = new List<UpgradeData>{
+            new UpgradeData{upgradeID = "vision", displayName ="Increase Vision", maxLevel = 5,baseCost = 100, costPerLevel = 50},
+            new UpgradeData{upgradeID = "stamina", displayName ="Increase Stamina", maxLevel = 5,baseCost = 150, costPerLevel = 75},
+        };
+
         shopUI.OpenShop(upgrades);
     }
 
-    List<UpgradeData> GetRandomUpgrades(){
-        List<UpgradeData> allUpgrades = new List<UpgradeData>{
-            new UpgradeData{upgradeID = "vision", displayName ="Increase Vision", maxLevel = 5,baseCost = 100, costPerLevel = 50},
-        };
-
+    public void OpenUndergroundShop(){
+         List<UpgradeData> allUpgrades = new List<UpgradeData>{
+            new UpgradeData { upgradeID = "vision", displayName = "Increase Vision", maxLevel = 5, baseCost = 100, costPerLevel = 50},
+            new UpgradeData { upgradeID = "stamina", displayName = "Increase Stamina", maxLevel = 5, baseCost = 150, costPerLevel = 75},
+         };
+         //randomize
         List<UpgradeData> randomUpgrades = new List<UpgradeData>();
         for (int i = 0; i < 3; i ++){
             int randomIndex = Random.Range(0, allUpgrades.Count);
             randomUpgrades.Add(allUpgrades[randomIndex]);
             allUpgrades.RemoveAt(randomIndex); //not repeated
         }
-        return randomUpgrades;
-    }
 
+        shopUI.OpenShop(randomUpgrades);
+    }
 }
