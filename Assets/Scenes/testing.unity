@@ -509,9 +509,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47cd23b4959ac534ea6feae1bec0097b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scale: 0.2
+  basicScale: 0.1
   goldScale: 0.3
-  fossilScale: 0.1
+  fossilScale: 0.3
+  holeThreshold: 0.8
+  stoneThreshold: 0.2
+  gold1Threshold: 0.8
+  gold2Threshold: 0.87
+  gold3Threshold: 10000
+  fossilThreshold: 0.8
   chunkRenderer: {fileID: 2126050403}
 --- !u!4 &1137783711
 Transform:
@@ -885,14 +891,15 @@ MonoBehaviour:
   tilemap: {fileID: 2126050405}
   stoneTile: {fileID: 11400000, guid: 35f8df3e83fce4448bc51fb899ee3648, type: 2}
   dirtTile: {fileID: 11400000, guid: fa0045b188ede1343b53872058ef4507, type: 2}
-  fossilTile1: {fileID: 0}
-  fossilTile2: {fileID: 0}
-  fossilTile3: {fileID: 0}
-  fossilTile4: {fileID: 0}
-  fossilTile5: {fileID: 0}
-  fossilTile6: {fileID: 0}
+  fossilTile1: {fileID: 11400000, guid: 0a96f2823419fc34887bcda7c431dfc3, type: 2}
+  fossilTile2: {fileID: 11400000, guid: 282afe783f7de794a9309604f37a79c7, type: 2}
+  fossilTile3: {fileID: 11400000, guid: 64f489d8e54f2e0438b5fa00ce09bbd8, type: 2}
+  fossilTile4: {fileID: 11400000, guid: 5216a1bece7e8ed40bc6b0392114e8e8, type: 2}
+  fossilTile5: {fileID: 11400000, guid: a197e2b82f35b63418b69729c925f8cb, type: 2}
+  fossilTile6: {fileID: 11400000, guid: a2b7461b0e988824fb40eb0d28c1638c, type: 2}
   goldTile1: {fileID: 11400000, guid: e4cc34f7f59f52843939ad75b4025acf, type: 2}
   goldTile2: {fileID: 11400000, guid: bc067b3a6bbbca348b2977ca2f62dec4, type: 2}
+  goldTile3: {fileID: 0}
 --- !u!483693784 &2126050404
 TilemapRenderer:
   m_ObjectHideFlags: 0
