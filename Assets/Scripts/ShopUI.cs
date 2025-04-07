@@ -27,6 +27,18 @@ public class ShopUI : MonoBehaviour
     {
         playerData = FindObjectOfType<PlayerData>();
         playerUpgrade = FindObjectOfType<PlayerUpgrade>();
+        UpgradeData upg = playerUpgrade.GetPermanentUpgrade("stamina");
+        powerUpText[0].text = "+" + upg.levels[upg.level].addedValue.ToString() + " Stamina";
+        value[0].text = upg.levels[upg.level].cost.ToString();
+        upg = playerUpgrade.GetPermanentUpgrade("vision");
+        powerUpText[1].text = "+" + upg.levels[upg.level].addedValue.ToString() + " Vision Range";
+        value[1].text = upg.levels[upg.level].cost.ToString();
+        upg = playerUpgrade.GetPermanentUpgrade("bomb");
+        powerUpText[2].text = "+" + upg.levels[upg.level].addedValue.ToString() + " BOMBA";
+        value[2].text = upg.levels[upg.level].cost.ToString();
+        upg = playerUpgrade.GetPermanentUpgrade("slot");
+        powerUpText[3].text = "+" + upg.levels[upg.level].addedValue.ToString() + " Slot Size";
+        value[3].text = upg.levels[upg.level].cost.ToString();
         UpdateUI();
     }
 
@@ -44,43 +56,127 @@ public class ShopUI : MonoBehaviour
         diamondText.text = playerData.diamondCount.ToString();
         coinText.text = playerData.goldCount.ToString();
         redstoneText.text = playerData.redStoneCount.ToString();
+        
+        
     }
 
-    void UpgradeStamina()
+    public void UpgradeStamina()
     {
-        UpgradeData upgrade = playerUpgrade.GetPermanentUpgrade("stamina");
-        if(upgrade.IsMaxed()){
+        UpgradeData upg = playerUpgrade.GetPermanentUpgrade("stamina");
+        if(upg.IsMaxed()){
             return;
         }
-        int upgradeCost = upgrade.currentCost;
+        int upgradeCost = upg.levels[upg.level].cost;
         if (playerData.goldCount >= upgradeCost)
         {
-            playerUpgrade.UpgradePermanent("stamina");
+            playerData.stamina += upg.levels[upg.level].addedValue;
+            playerUpgrade.GetPermanentUpgrade("stamina").level++;
             playerData.goldCount -= upgradeCost;
-            if (upgrade.IsMaxed())
+            if (upg.IsMaxed())
             {
                 powerUpText[0].text = "MAX";
                 coins[0].enabled = false;
                 value[0].text = "";
             }
-            else{
-                
+            else
+            {
+                powerUpText[0].text = "+" + upg.levels[upg.level].addedValue.ToString() + " Stamina";
+                value[0].text = upg.levels[upg.level].cost.ToString();
             }
+        }
+        else
+        {
+            // not enough gold
         }
     }
 
-    void UpgradeVision()
+    public void UpgradeVision()
     {
-
+        UpgradeData upg = playerUpgrade.GetPermanentUpgrade("vision");
+        if(upg.IsMaxed()){
+            return;
+        }
+        int upgradeCost = upg.levels[upg.level].cost;
+        if (playerData.goldCount >= upgradeCost)
+        {
+            playerData.vision += upg.levels[upg.level].addedValue;
+            playerUpgrade.GetPermanentUpgrade("vision").level++;
+            playerData.goldCount -= upgradeCost;
+            if (upg.IsMaxed())
+            {
+                powerUpText[1].text = "MAX";
+                coins[1].enabled = false;
+                value[1].text = "";
+            }
+            else
+            {
+                powerUpText[1].text = "+" + upg.levels[upg.level].addedValue.ToString() + " Vision";
+                value[1].text = upg.levels[upg.level].cost.ToString();
+            }
+        }
+        else
+        {
+            // not enough gold
+        }
     }
 
-    void UpgradeBomb()
+    public void UpgradeBomb()
     {
-
+        UpgradeData upg = playerUpgrade.GetPermanentUpgrade("bomb");
+        if(upg.IsMaxed()){
+            return;
+        }
+        int upgradeCost = upg.levels[upg.level].cost;
+        if (playerData.goldCount >= upgradeCost)
+        {
+            playerData.bombCount += upg.levels[upg.level].addedValue;
+            playerUpgrade.GetPermanentUpgrade("bomb").level++;
+            playerData.goldCount -= upgradeCost;
+            if (upg.IsMaxed())
+            {
+                powerUpText[2].text = "MAX";
+                coins[2].enabled = false;
+                value[2].text = "";
+            }
+            else
+            {
+                powerUpText[2].text = "+" + upg.levels[upg.level].addedValue.ToString() + " Bomb";
+                value[2].text = upg.levels[upg.level].cost.ToString();
+            }
+        }
+        else
+        {
+            // not enough gold
+        }
     }
 
-    void UpgradeSlot()
+    public void UpgradeSlot()
     {
-
+        UpgradeData upg = playerUpgrade.GetPermanentUpgrade("slot");
+        if(upg.IsMaxed()){
+            return;
+        }
+        int upgradeCost = upg.levels[upg.level].cost;
+        if (playerData.diamondCount >= upgradeCost)
+        {
+            playerData.cardSlots += upg.levels[upg.level].addedValue;
+            playerUpgrade.GetPermanentUpgrade("slot").level++;
+            playerData.diamondCount -= upgradeCost;
+            if (upg.IsMaxed())
+            {
+                powerUpText[3].text = "MAX";
+                coins[3].enabled = false;
+                value[3].text = "";
+            }
+            else
+            {
+                powerUpText[3].text = "+" + upg.levels[upg.level].addedValue.ToString() + " Slot Size";
+                value[3].text = upg.levels[upg.level].cost.ToString();
+            }
+        }
+        else
+        {
+            // not enough diamond
+        }
     }
 }

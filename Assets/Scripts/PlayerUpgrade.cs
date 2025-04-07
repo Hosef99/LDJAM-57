@@ -20,26 +20,4 @@ public class PlayerUpgrade : MonoBehaviour{
         return false;
     }
 
-    //underground shop
-    public bool UpgradeFromShop(UpgradeData shopData){
-        UpgradeData upg = GetPermanentUpgrade(shopData.upgradeID);
-        if(upg == null){
-
-            upg = new UpgradeData()
-            {
-                upgradeID = shopData.upgradeID,
-                displayName = shopData.displayName,
-                level = 1,
-                maxLevel = shopData.maxLevel,
-                baseCost = shopData.baseCost,
-                costPerLevel = shopData.costPerLevel
-            };
-            permanentUpgrades.Add(upg);
-            return true;
-        }else if(!upg.IsMaxed()){
-            upg.level++;
-            return true;
-        }
-        return false;
-    }
 }

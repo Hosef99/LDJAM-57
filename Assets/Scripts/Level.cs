@@ -5,7 +5,6 @@ using UnityEngine;
 [System.Serializable]
 public class Level
 {
-    int nextLevel;
-    int cost;
-    int addedValue;
+    public int cost;
+    public int addedValue;
 }

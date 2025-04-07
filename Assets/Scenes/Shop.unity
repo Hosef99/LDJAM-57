@@ -1457,7 +1457,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f2b01aa1bd04f74c8aa978804e7527a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goldCount: 34
+  goldCount: 1000
   fossil1Count: 0
   fossil2Count: 0
   fossil3Count: 0
@@ -1487,29 +1487,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   permanentUpgrades:
   - upgradeID: stamina
-    displayName: Stamina Increase
-    level: 1
-    maxLevel: 5
-    baseCost: 10
-    costPerLevel: 15
-  - upgradeID: vision
-    displayName: Vision Increase
-    level: 1
-    maxLevel: 3
-    baseCost: 20
-    costPerLevel: 100
-  - upgradeID: bomb
-    displayName: Bomb Increase
-    level: 1
-    maxLevel: 3
-    baseCost: 20
-    costPerLevel: 100
-  - upgradeID: slot
-    displayName: Slot Increase
-    level: 1
-    maxLevel: 3
-    baseCost: 20
-    costPerLevel: 100
+    displayName: Stamina
+    level: 0
+    levels:
+    - cost: 30
+      addedValue: 50
+    - cost: 100
+      addedValue: 100
+    - cost: 300
+      addedValue: 150
+  - upgradeID: 
+    displayName: 
+    level: 0
+    levels: []
+  - upgradeID: 
+    displayName: 
+    level: 0
+    levels: []
+  - upgradeID: 
+    displayName: 
+    level: 0
+    levels: []
   upgradePool: []
 --- !u!1 &385197903
 GameObject:
@@ -3623,7 +3621,7 @@ GameObject:
   - component: {fileID: 982667282}
   - component: {fileID: 982667284}
   m_Layer: 5
-  m_Name: Wood
+  m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3730,7 +3728,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 982667282}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1185093697}
+        m_TargetAssemblyTypeName: ShopUI, Assembly-CSharp
+        m_MethodName: UpgradeStamina
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &997868711
 GameObject:
   m_ObjectHideFlags: 0
@@ -4577,19 +4587,10 @@ MonoBehaviour:
   slotText: {fileID: 1343035031}
   powerUpText:
   - {fileID: 601377000}
-  - {fileID: 288351249}
-  - {fileID: 1820976037}
-  - {fileID: 1193020362}
   value:
   - {fileID: 1049022283}
-  - {fileID: 334819025}
-  - {fileID: 491330131}
-  - {fileID: 1878193318}
   coins:
   - {fileID: 1148612899}
-  - {fileID: 361397041}
-  - {fileID: 1054568685}
-  - {fileID: 1397146959}
 --- !u!1 &1193020360
 GameObject:
   m_ObjectHideFlags: 0
@@ -5306,7 +5307,7 @@ GameObject:
   - component: {fileID: 1522161232}
   - component: {fileID: 1522161231}
   m_Layer: 5
-  m_Name: Wood
+  m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5375,7 +5376,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1522161232}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1185093697}
+        m_TargetAssemblyTypeName: ShopUI, Assembly-CSharp
+        m_MethodName: UpgradeSlot
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1522161232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5504,7 +5517,7 @@ GameObject:
   - component: {fileID: 1551795213}
   - component: {fileID: 1551795212}
   m_Layer: 5
-  m_Name: Wood
+  m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5573,7 +5586,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1551795213}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1185093697}
+        m_TargetAssemblyTypeName: ShopUI, Assembly-CSharp
+        m_MethodName: UpgradeBomb
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1551795213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5915,7 +5940,7 @@ GameObject:
   - component: {fileID: 1670166271}
   - component: {fileID: 1670166270}
   m_Layer: 5
-  m_Name: Wood
+  m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5984,7 +6009,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1670166271}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1185093697}
+        m_TargetAssemblyTypeName: ShopUI, Assembly-CSharp
+        m_MethodName: UpgradeVision
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1670166271
 MonoBehaviour:
   m_ObjectHideFlags: 0

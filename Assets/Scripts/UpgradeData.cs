@@ -5,7 +5,6 @@ public class UpgradeData
     public string upgradeID;
     public string displayName;
     public int level = 0;
-    public int maxLevel = 5;
 
     public Level[] levels;
 
@@ -21,6 +20,6 @@ public class UpgradeData
     }
 
     public bool IsMaxed(){
-        return level >= maxLevel;
+        return level >= levels.Length;
     }
 }

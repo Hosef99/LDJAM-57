@@ -37,7 +37,7 @@ public class PlayerData : MonoBehaviour{
         }
     }
 
-     public UpgradeData GetUpgrade(string id)
+    public UpgradeData GetUpgrade(string id)
     {
         return upgrades.Find(u => u.upgradeID == id);
     }
@@ -64,5 +64,9 @@ public class PlayerData : MonoBehaviour{
             default:
             break;
         }
+    }
+
+    public void OnUpdate(){
+        
     }
 }
