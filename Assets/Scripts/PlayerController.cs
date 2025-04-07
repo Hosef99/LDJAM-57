@@ -131,6 +131,8 @@ public class PlayerController : MonoBehaviour
             boomClone.GetComponent<BoomScript>().enabled = true;
 
 
+        }else if(Input.GetKeyDown(KeyCode.P)){
+            SceneManager.LoadScene("Shop");
         }
     }
 
@@ -269,7 +271,7 @@ public class PlayerController : MonoBehaviour
                          GetTileTypeAt(frontTile) == ChunkData.OBSIDIAN2 ||
                          GetTileTypeAt(frontTile) == ChunkData.OBSIDIAN3)
                 {
-                    
+
                     switch (GetTileTypeAt(frontTile))
                     {
                         case ChunkData.OBSIDIAN1:
@@ -359,11 +361,11 @@ public class PlayerController : MonoBehaviour
             case ChunkData.FOSSIL6:
                 playerData.fossil6Count += 1;
                 break;
-            
+
             case ChunkData.DIAMOND:
                 playerData.diamondCount += 1;
                 break;
-            
+
             case ChunkData.REDSTONE:
                 playerData.redStoneCount += 10;
                 break;
