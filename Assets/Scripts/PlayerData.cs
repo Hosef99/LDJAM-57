@@ -79,22 +79,45 @@ public class PlayerData : MonoBehaviour{
         switch (level)
         {
             case 0:
-                light2D.pointLightOuterRadius = 10;
+                light2D.falloffIntensity = 1;
                 break;
             case 1:
-                light2D.pointLightOuterRadius = 12;
+                light2D.falloffIntensity = 0.8f;
                 break;
             case 2:
-                light2D.pointLightOuterRadius = 14;
+                light2D.falloffIntensity = 0.65f;
                 break;
             case 3:
-                light2D.pointLightOuterRadius = 16;
+                light2D.falloffIntensity = 0.5f;
                 break;
 
         }
         
         
     }
+    
+    public void Boom(int level)
+    {
+        switch (level)
+        {
+            case 0:
+                light2D.falloffIntensity = 1;
+                break;
+            case 1:
+                light2D.falloffIntensity = 0.8f;
+                break;
+            case 2:
+                light2D.falloffIntensity = 0.65f;
+                break;
+            case 3:
+                light2D.falloffIntensity = 0.5f;
+                break;
+
+        }
+        
+        
+    }
+    
     
 
 }
