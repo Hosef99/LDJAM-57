@@ -74,8 +74,27 @@ public class PlayerData : MonoBehaviour{
     }
 
 
-    public void VisionIncrease()
+    public void VisionIncrease(int level)
     {
-        light2D.pointLightOuterAngle += 2;
+        switch (level)
+        {
+            case 0:
+                light2D.pointLightOuterRadius = 10;
+                break;
+            case 1:
+                light2D.pointLightOuterRadius = 12;
+                break;
+            case 2:
+                light2D.pointLightOuterRadius = 14;
+                break;
+            case 3:
+                light2D.pointLightOuterRadius = 16;
+                break;
+
+        }
+        
+        
     }
+    
+
 }
