@@ -158,15 +158,15 @@ public class PlayerData : MonoBehaviour{
         }
     }
 
-    public void BoomCollect(int level)          // ---------------------------------------------------------------
+    public void BoomCollect(bool x)         
     {
-        
+        boomScript.collectOre = x;
     }
     
     
-    public void BoomImmune(int level)          // ---------------------------------------------------------------
+    public void BoomImmune(bool x)         
     {
-        
+        boomScript.boomImmune = x;
     }
     
 

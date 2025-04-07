@@ -9,6 +9,7 @@ public class BoomScript : MonoBehaviour
     public float lifetime = 3f;
     public int range = 2;
     public bool collectOre = false;
+    public bool boomImmune = false;
     public PlayerController player;
     private float timer = 0f;
     private WorldGenerator worldGenerator;
@@ -43,6 +44,15 @@ public class BoomScript : MonoBehaviour
                     {
                         player.CollectBlockAt(currentTile + new Vector3Int(i - range, j - range, 0));
                     }
+
+                    if (!boomImmune)
+                    {
+                        if (Vector3.Distance( player.transform.position , targetTile ) < 0.5)
+                        {
+                            Debug.Log("player DEATH");
+                        }
+                    }
+                    
                     player.DestroyBlockAt(currentTile + new Vector3Int(i - range, j - range, 0));
 
                 }
