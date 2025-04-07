@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = System.Random;
@@ -430,11 +431,12 @@ public class PlayerController : MonoBehaviour
     }
 
     public void Die(){
-        this.enabled = false;
+        // this.enabled = false;
         levelLoader.LoadScene("Shop");
     }
 
-    void EndGame(){
+    public void EndGame()
+    {
        Die();
     }
 

@@ -32,6 +32,7 @@ public class BoomScript : MonoBehaviour
     void Boom()
     {
         Vector3Int currentTile = Vector3Int.RoundToInt(transform.position);
+        bool playerIsDie = false;
         for (int i = 0; i < range * 2 + 1; i++)
         {
             for (int j = 0; j < range * 2 + 1; j++)
@@ -49,7 +50,7 @@ public class BoomScript : MonoBehaviour
                     {
                         if (Vector3.Distance( player.transform.position , targetTile ) < 0.5)
                         {
-                            Debug.Log("player DEATH");
+                            playerIsDie = true;
                         }
                     }
                     
@@ -57,6 +58,11 @@ public class BoomScript : MonoBehaviour
 
                 }
             }
+        }
+
+        if (playerIsDie)
+        {
+            player.Die();
         }
         Destroy(gameObject);
     }
