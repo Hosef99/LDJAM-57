@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class PlayerData : MonoBehaviour{
     public static PlayerData Instance;
-
+    public PlayerController playerController;
+    public Light2D light2D;
     public int goldCount = 0;
     public int fossil1Count = 0;
     public int fossil2Count = 0;
@@ -21,6 +23,7 @@ public class PlayerData : MonoBehaviour{
 
     public int bombCapcity = 1;
     public List<UpgradeData> upgrades;
+    
 
     
 
@@ -69,4 +72,29 @@ public class PlayerData : MonoBehaviour{
     public void OnUpdate(){
         
     }
+
+
+    public void VisionIncrease(int level)
+    {
+        switch (level)
+        {
+            case 0:
+                light2D.pointLightOuterRadius = 10;
+                break;
+            case 1:
+                light2D.pointLightOuterRadius = 12;
+                break;
+            case 2:
+                light2D.pointLightOuterRadius = 14;
+                break;
+            case 3:
+                light2D.pointLightOuterRadius = 16;
+                break;
+
+        }
+        
+        
+    }
+    
+
 }

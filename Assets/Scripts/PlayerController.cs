@@ -327,15 +327,15 @@ public class PlayerController : MonoBehaviour
 
 
             case ChunkData.GOLD1:
-                playerData.goldCount += 10;
+                playerData.goldCount += 1;
                 break;
 
             case ChunkData.GOLD2:
-                playerData.goldCount += 20;
+                playerData.goldCount += 2;
                 break;
 
             case ChunkData.GOLD3:
-                playerData.goldCount += 30;
+                playerData.goldCount += 3;
                 break;
 
             case ChunkData.FOSSIL1:
