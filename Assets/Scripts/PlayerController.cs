@@ -12,7 +12,6 @@ public class PlayerController : MonoBehaviour
 
     public GameObject boomPrefab;
     public float moveSpeed = 5f;
-    public int maxAttempts = 200;
     public int horizontalDigCount  = 1;
 
     public int verticalDigCount = 1;
@@ -23,14 +22,14 @@ public class PlayerController : MonoBehaviour
     private WorldGenerator worldGenerator;
     public PlayerData playerData ;
 
-    private int currentAttempts;
-    public DigUI digUI;
+    public UndergroundUI undergroundUI;
     private SpriteRenderer sr;
     private Animator anim;
     public GameObject stoneParticle;
-
-
-
+    private int currentStamina;    
+    private int currentLayer = 1;
+    private int lastShopLayer = -100;
+    private LevelLoader levelLoader;
     public int masterYi = 0;
     private int lastHitOnRow = 0;
     private int rowStreak = 0;
@@ -48,9 +47,9 @@ public class PlayerController : MonoBehaviour
         targetPos = transform.position;
 
         worldGenerator = FindObjectOfType<WorldGenerator>();
-
-        currentAttempts = maxAttempts;
-        digUI.UpdateDigText(currentAttempts);
+        levelLoader = FindObjectOfType<LevelLoader>();
+        currentStamina = playerData.stamina;
+        undergroundUI.UpdateStamina(playerData.stamina);
     }
 
     void Update()
@@ -183,6 +182,20 @@ public class PlayerController : MonoBehaviour
             targetPos = belowPos;
             isMoving = true;
         }
+
+        int newLayer = Mathf.Abs(Vector3Int.RoundToInt(transform.position).y);
+        if (newLayer > currentLayer){
+            currentLayer = newLayer;
+            if (currentLayer % 100 == 0 && currentLayer != lastShopLayer){
+                lastShopLayer = currentLayer;
+                EnterUndergroundShop();
+            }
+        }
+    }
+
+    void EnterUndergroundShop(){
+        Debug.Log("Underground Shop triggered at layer: " + currentLayer);
+        levelLoader.LoadScene("Shop");
     }
 
     void DestroyBlocksInFront(int count)
@@ -303,11 +316,11 @@ public class PlayerController : MonoBehaviour
             GameObject tempParticle = Instantiate(stoneParticle, (Vector3)frontTile-new Vector3(0,0.5f,0), Quaternion.identity);
             tempParticle.transform.eulerAngles = new Vector3(0,0,45);
             StartCoroutine("DestroyParticle", tempParticle);
-            currentAttempts--;
-            digUI.UpdateDigText(currentAttempts);
+            currentStamina--;
+            undergroundUI.UpdateStamina(currentStamina);
         }
 
-        if (currentAttempts <= 0){
+        if (currentStamina <= 0){
             EndGame();
         }
 

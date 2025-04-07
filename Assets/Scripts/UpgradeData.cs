@@ -8,16 +8,10 @@ public class UpgradeData
 
     public Level[] levels;
 
-
-
-    public string GetDescription(){
-        switch (upgradeID){
-            case "vision":
-                return "Increases vision range by " + (level + 1) + " units";
-            default:
-                return "unknown upgrade";
-        }
-    }
+    // for underground upgrades
+    
+    public bool isActive;
+    public string description;
 
     public bool IsMaxed(){
         return level >= levels.Length;
