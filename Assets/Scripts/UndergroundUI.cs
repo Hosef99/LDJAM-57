@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class UndergroundUI : MonoBehaviour{
-    private PlayerUpgrade playerUpgrade;
+
     private PlayerData playerData;
     public GameObject shopPanel;
     public TextMeshProUGUI staminaValue;
@@ -14,13 +14,12 @@ public class UndergroundUI : MonoBehaviour{
     public Image[] abilityIcons;
     public TextMeshProUGUI[] titles;
     public TextMeshProUGUI[] descriptions;
-    public Button[] buybuttons;
+
     public string[] slotIDs;
 
     void Start()
     {
         playerData = FindObjectOfType<PlayerData>();
-        playerUpgrade = FindObjectOfType<PlayerUpgrade>();
     }
 
     public void UpdateStamina(int stamina){
@@ -47,19 +46,8 @@ public class UndergroundUI : MonoBehaviour{
 
     public void BuyCard(int slotID)
     {
-
-        int cost = playerUpgrade.GetUpgrade(slotIDs[slotID]).levels[0].cost;
-
-        if (playerData.redStoneCount >= cost){
-            playerData.redStoneCount -= cost;
-            playerData.Upgrade(slotIDs[slotID]);
-            UpdateUI();
-
-            titles[slotID].text = "Sold Out";
-            descriptions[slotID].text = "";
-        }else{
-            Debug.Log("Not enough redstone");
-        }
+        
+        playerData.Upgrade(slotIDs[slotID]);
     }
 
     public void ShowShop()
@@ -87,5 +75,5 @@ public class UndergroundUI : MonoBehaviour{
         return result;
     }
 
-
+    
 }
