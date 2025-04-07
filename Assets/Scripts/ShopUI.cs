@@ -7,7 +7,6 @@ public class ShopUI : MonoBehaviour
     [Header("Currency Displays")]
     public TextMeshProUGUI diamondText;
     public TextMeshProUGUI coinText;
-    public TextMeshProUGUI redstoneText;
 
     [Header("Stat Displays")]
     public TextMeshProUGUI staminaText;
@@ -44,7 +43,6 @@ public class ShopUI : MonoBehaviour
         slotText.text = playerData.cardSlots.ToString();
         diamondText.text = playerData.diamondCount.ToString();
         coinText.text = playerData.goldCount.ToString();
-        redstoneText.text = playerData.redStoneCount.ToString();
     }
 
     void UpdateButtons(){

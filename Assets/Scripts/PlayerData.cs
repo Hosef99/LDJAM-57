@@ -1,8 +1,12 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
 public class PlayerData : MonoBehaviour{
+    public AudioSource audioSource;
+    public AudioClip caveMusic;
+    public AudioClip shopMusic;
     public static PlayerData Instance;
     public PlayerController playerController;
     public BoomScript boomScript;
@@ -40,7 +44,60 @@ public class PlayerData : MonoBehaviour{
         }
     }
 
+    public void OnPlay(){
+        playerController = FindAnyObjectByType<PlayerController>();
+        boomScript = FindAnyObjectByType<BoomScript>();
+        light2D = playerController.GetComponentInChildren<Light2D>();
+        redStoneCount = 0;
+    }
 
+    public void StopMusic(){
+        StartCoroutine("FadeOutMusic", 2);
+    }
+
+    public void ToShop(){
+        ChangeClip(2, shopMusic);
+    }
+
+    public void ToCave(){
+        ChangeClip(2, caveMusic);
+    }
+
+    public void ChangeClip(float sec, AudioClip clip){
+        StartCoroutine(ChangeToClip(sec, clip));
+    }
+
+    IEnumerator ChangeToClip(float sec, AudioClip clip){
+        for (int i = 0; i < 100; i++)
+        {
+            audioSource.volume -= 0.01f;
+            yield return new WaitForSeconds(sec/100);
+        }
+        audioSource.clip = clip;
+        audioSource.Play();
+        for (int i = 0; i < 100; i++)
+        {
+            audioSource.volume += 0.01f;
+            yield return new WaitForSeconds(sec/100);
+        }
+    }
+    IEnumerator FadeOutMusic(float sec)
+    {
+        for (int i = 0; i < 100; i++)
+        {
+            audioSource.volume -= 0.01f;
+            yield return new WaitForSeconds(sec/100);
+        }
+    }
+
+    IEnumerator FadeInMusic(float sec)
+    {
+        for (int i = 0; i < 100; i++)
+        {
+            audioSource.volume += 0.01f;
+            yield return new WaitForSeconds(sec/100);
+        }
+    }
 
 
     public void OnUpdate(){

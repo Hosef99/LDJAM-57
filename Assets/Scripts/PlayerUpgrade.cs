@@ -23,4 +23,18 @@ public class PlayerUpgrade : MonoBehaviour{
     public UpgradeData GetUpgrade(string id){
         return upgrades.Find(upg => upg.upgradeID == id);
     }
+
+    public int GetUpgradeIndex(string id)
+    {
+        return upgrades.FindIndex(upg => upg.upgradeID == id);
+    }
+
+    public void ResetUpgrades()
+    {
+        for (int i = 0; i < upgrades.Count; i++)
+        {
+            upgrades[i].isActive = false;
+        }
+    }
+
 }

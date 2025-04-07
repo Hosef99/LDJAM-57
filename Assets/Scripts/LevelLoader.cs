@@ -7,6 +7,12 @@ public class LevelLoader : MonoBehaviour
 {
     public Animator transition;
     public float transitionTime = 1f;
+    private PlayerData playerData;
+
+    void Start()
+    {
+        playerData = FindAnyObjectByType<PlayerData>();
+    }
 
     // Update is called once per frame
     void Update()
@@ -39,4 +45,11 @@ public class LevelLoader : MonoBehaviour
         SceneManager.LoadScene(sceneName);
     }
 
+    public void ToCave(){
+        playerData.ToCave();
+    }
+
+    public void ToShop(){
+        playerData.ToShop();
+    }
 }

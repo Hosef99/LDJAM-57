@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
     public int masterYi = 0;
     private int lastHitOnRow = 0;
     private int rowStreak = 0;
+    private bool cannotMove = false;
 
     void Awake()
     {
@@ -46,10 +47,13 @@ public class PlayerController : MonoBehaviour
         transform.position = new Vector3Int(currentPos.x , ChunkData.CHUNK_SIZE/2 + 1, currentPos.z);
         targetPos = transform.position;
 
+        playerData = FindAnyObjectByType<PlayerData>();
+        playerData.OnPlay();
         worldGenerator = FindObjectOfType<WorldGenerator>();
         levelLoader = FindObjectOfType<LevelLoader>();
         currentStamina = playerData.stamina;
         undergroundUI.UpdateStamina(playerData.stamina);
+        undergroundUI.UpdateUI();
     }
 
     void Update()
@@ -62,6 +66,7 @@ public class PlayerController : MonoBehaviour
     void HandleInput()
     {
         if (isMoving) return;
+        if (cannotMove) return;
 
         if (Input.GetKey(KeyCode.W))
         {
@@ -183,7 +188,8 @@ public class PlayerController : MonoBehaviour
             isMoving = true;
         }
 
-        int newLayer = Mathf.Abs(Vector3Int.RoundToInt(transform.position).y);
+        int newLayer = Mathf.Abs(Vector3Int.RoundToInt(transform.position).y-5);
+        undergroundUI.UpdateLevel(newLayer);
         if (newLayer > currentLayer){
             currentLayer = newLayer;
             if (currentLayer % 100 == 0 && currentLayer != lastShopLayer){
@@ -314,6 +320,7 @@ public class PlayerController : MonoBehaviour
         if (gotBlock)
         {
             anim.SetTrigger("Mine");
+            SoundManager.Instance.PlaySFX("mine");
             GameObject tempParticle = Instantiate(stoneParticle, (Vector3)frontTile-new Vector3(0,0.5f,0), Quaternion.identity);
             tempParticle.transform.eulerAngles = new Vector3(0,0,45);
             StartCoroutine("DestroyParticle", tempParticle);
@@ -387,6 +394,7 @@ public class PlayerController : MonoBehaviour
             default:
                 break;
         }
+        undergroundUI.UpdateUI();
     }
 
 
@@ -430,8 +438,12 @@ public class PlayerController : MonoBehaviour
     }
 
     void EndGame(){
+        cannotMove = true;
         Debug.Log("Out of attempts!");
-        SceneManager.LoadScene("PermanentShop");
+        PlayerUpgrade playerUpgrade = FindAnyObjectByType<PlayerUpgrade>();
+        playerUpgrade.ResetUpgrades();
+        playerData.ToShop();
+        levelLoader.LoadScene("Shop");
     }
 
     public void DestroyBlockAt(Vector3Int tilePos)
