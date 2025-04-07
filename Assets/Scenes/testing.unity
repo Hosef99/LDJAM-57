@@ -315,7 +315,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 708822817}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
   m_Name: 
@@ -461,7 +461,7 @@ MonoBehaviour:
   moveSpeed: 5
   maxAttempts: 100
   horizontalDigCount: 1
-  verticalDigCount: 1
+  verticalDigCount: 90
   oreBrokeChance: 1
   playerData: {fileID: 987208400}
   digUI: {fileID: 2058285186}
@@ -532,6 +532,7 @@ MonoBehaviour:
   bombCount: 0
   cardSlots: 5
   bombCapcity: 1
+  upgrades: []
 --- !u!4 &987208401
 Transform:
   m_ObjectHideFlags: 0
