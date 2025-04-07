@@ -1,3 +1,4 @@
+using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 [System.Serializable]
 public class UpgradeData
@@ -10,6 +11,7 @@ public class UpgradeData
 
     // for underground upgrades
     
+    public Sprite icon;
     public bool isActive;
     public string description;
 

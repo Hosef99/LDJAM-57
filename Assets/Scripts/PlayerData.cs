@@ -169,5 +169,32 @@ public class PlayerData : MonoBehaviour{
         boomScript.boomImmune = x;
     }
     
-
+    public void Upgrade(string upgradeID){
+        switch (upgradeID)
+        {
+            case "boomrange":
+            BoomRangeIncrease(2);
+            break;
+            case "horizontal":
+            HorizontalDigLevel(2);
+            break;
+            case "vertical":
+            VerticalDigLevel(2);
+            break;
+            case "masteryi":
+            MasterYiLevel(2);
+            break;
+            case "ore":
+            OreLevel(2);
+            break;
+            case "boomcollect":
+            BoomCollect(true);
+            break;
+            case "immune":
+            BoomImmune(true);
+            break;
+            default:
+            break;
+        }
+    }
 }
