@@ -1496,18 +1496,38 @@ MonoBehaviour:
       addedValue: 100
     - cost: 300
       addedValue: 150
-  - upgradeID: 
-    displayName: 
+  - upgradeID: vision
+    displayName: Vision
     level: 0
-    levels: []
-  - upgradeID: 
-    displayName: 
+    levels:
+    - cost: 100
+      addedValue: 1
+    - cost: 200
+      addedValue: 1
+    - cost: 500
+      addedValue: 1
+  - upgradeID: bomb
+    displayName: Bomb
     level: 0
-    levels: []
-  - upgradeID: 
-    displayName: 
+    levels:
+    - cost: 50
+      addedValue: 3
+    - cost: 150
+      addedValue: 7
+    - cost: 300
+      addedValue: 11
+  - upgradeID: slot
+    displayName: Slot Size
     level: 0
-    levels: []
+    levels:
+    - cost: 10
+      addedValue: 1
+    - cost: 25
+      addedValue: 1
+    - cost: 50
+      addedValue: 1
+    - cost: 100
+      addedValue: 1
   upgradePool: []
 --- !u!1 &385197903
 GameObject:
@@ -4587,10 +4607,19 @@ MonoBehaviour:
   slotText: {fileID: 1343035031}
   powerUpText:
   - {fileID: 601377000}
+  - {fileID: 288351249}
+  - {fileID: 1820976037}
+  - {fileID: 1193020362}
   value:
   - {fileID: 1049022283}
+  - {fileID: 334819025}
+  - {fileID: 491330131}
+  - {fileID: 1878193318}
   coins:
   - {fileID: 1148612899}
+  - {fileID: 361397041}
+  - {fileID: 1054568685}
+  - {fileID: 1397146959}
 --- !u!1 &1193020360
 GameObject:
   m_ObjectHideFlags: 0
@@ -5074,7 +5103,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1775973949, guid: 65c1b0a4f2575bb47a98a678ae41854d, type: 3}
+  m_Sprite: {fileID: 876502101, guid: 65c1b0a4f2575bb47a98a678ae41854d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
