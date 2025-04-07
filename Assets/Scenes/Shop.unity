@@ -1514,6 +1514,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f2b01aa1bd04f74c8aa978804e7527a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerController: {fileID: 0}
+  boomScript: {fileID: 0}
+  light2D: {fileID: 0}
   goldCount: 1000
   fossil1Count: 0
   fossil2Count: 0
@@ -1529,7 +1532,6 @@ MonoBehaviour:
   bombCount: 0
   cardSlots: 5
   bombCapcity: 1
-  upgrades: []
 --- !u!114 &376603477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1595,11 +1597,69 @@ MonoBehaviour:
     description: 
   upgradePool:
   - upgradeID: 
-    displayName: 
+    displayName: Lateral Expansion
     level: 0
-    levels: []
+    levels:
+    - cost: 20
+      addedValue: 0
     isActive: 0
-    description: 
+    description: Digs two blocks at a time when mining sideways
+  - upgradeID: 
+    displayName: Vertical Focus
+    level: 0
+    levels:
+    - cost: 20
+      addedValue: 0
+    isActive: 0
+    description: Digs two blocks at a time when mining downward
+  - upgradeID: 
+    displayName: Rhythmic Flow
+    level: 0
+    levels:
+    - cost: 20
+      addedValue: 0
+    isActive: 0
+    description: 'Every second lateral dig yields two blocks instead of one '
+  - upgradeID: 
+    displayName: Precise Madness
+    level: 0
+    levels:
+    - cost: 20
+      addedValue: 0
+    isActive: 0
+    description: Increases bomb explosion radius to [custom area]
+  - upgradeID: 
+    displayName: Relic Preservation
+    level: 0
+    levels:
+    - cost: 20
+      addedValue: 0
+    isActive: 0
+    description: Chance to collect minerals without destroying the block
+  - upgradeID: 
+    displayName: Tech Shielding
+    level: 0
+    levels:
+    - cost: 20
+      addedValue: 0
+    isActive: 0
+    description: Grants immunity to bomb damage
+  - upgradeID: 
+    displayName: Contact Bombs
+    level: 0
+    levels:
+    - cost: 20
+      addedValue: 0
+    isActive: 0
+    description: Bombs only explode upon ground impact, never mid-air
+  - upgradeID: 
+    displayName: Residual Collection
+    level: 0
+    levels:
+    - cost: 20
+      addedValue: 0
+    isActive: 0
+    description: Allows you to collect minerals destroyed by bomb blasts
 --- !u!1 &385197903
 GameObject:
   m_ObjectHideFlags: 0
