@@ -124,7 +124,7 @@ public class WorldGenerator : MonoBehaviour
 
                     if (type == ChunkData.DIRT)
                     {
-                        GenerateOre(ref chunk, x, y, fossilScale, 1, fossilThreshold, new List<int> {ChunkData.FOSSIL1, ChunkData.FOSSIL2, ChunkData.FOSSIL3 , ChunkData.FOSSIL4 ,ChunkData.FOSSIL5 ,ChunkData.FOSSIL6}, seedX + 2, seedY + 2);
+                        GenerateOre(ref chunk, x, y, fossilScale, 1, fossilThreshold, new List<int> {ChunkData.FOSSIL1}, seedX + 2, seedY + 2);
 
                     }
                 }else if (cy > -20)
@@ -161,7 +161,7 @@ public class WorldGenerator : MonoBehaviour
 
                     if (type == ChunkData.DIRT)
                     {
-                        GenerateOre(ref chunk, x, y, fossilScale, 1, fossilThreshold, new List<int> {ChunkData.FOSSIL1, ChunkData.FOSSIL2, ChunkData.FOSSIL3 , ChunkData.FOSSIL4 ,ChunkData.FOSSIL5 ,ChunkData.FOSSIL6}, seedX + 2, seedY + 2);
+                        GenerateOre(ref chunk, x, y, fossilScale, 1, fossilThreshold - 0.05f, new List<int> {ChunkData.FOSSIL2, ChunkData.FOSSIL3 }, seedX + 2, seedY + 2);
 
                     }
                 } 
@@ -199,7 +199,7 @@ public class WorldGenerator : MonoBehaviour
 
                     if (type == ChunkData.DIRT)
                     {
-                        GenerateOre(ref chunk, x, y, fossilScale, 1, fossilThreshold, new List<int> {ChunkData.FOSSIL1, ChunkData.FOSSIL2, ChunkData.FOSSIL3 , ChunkData.FOSSIL4 ,ChunkData.FOSSIL5 ,ChunkData.FOSSIL6}, seedX + 2, seedY + 2);
+                        GenerateOre(ref chunk, x, y, fossilScale, 1, fossilThreshold, new List<int> {ChunkData.FOSSIL4 }, seedX + 2, seedY + 2);
 
                     }
                 }else if (cy > -40)
@@ -236,7 +236,7 @@ public class WorldGenerator : MonoBehaviour
 
                     if (type == ChunkData.DIRT)
                     {
-                        GenerateOre(ref chunk, x, y, fossilScale, 1, fossilThreshold, new List<int> {ChunkData.FOSSIL1, ChunkData.FOSSIL2, ChunkData.FOSSIL3 , ChunkData.FOSSIL4 ,ChunkData.FOSSIL5 ,ChunkData.FOSSIL6}, seedX + 2, seedY + 2);
+                        GenerateOre(ref chunk, x, y, fossilScale, 1, fossilThreshold, new List<int> {ChunkData.FOSSIL5}, seedX + 2, seedY + 2);
 
                     }
                 }else
@@ -278,8 +278,7 @@ public class WorldGenerator : MonoBehaviour
                         GenerateOre(ref chunk, x, y, fossilScale, 1, fossilThreshold,
                             new List<int>
                             {
-                                ChunkData.FOSSIL1, ChunkData.FOSSIL2, ChunkData.FOSSIL3, ChunkData.FOSSIL4,
-                                ChunkData.FOSSIL5, ChunkData.FOSSIL6
+                                ChunkData.FOSSIL6
                             }, seedX + 2, seedY + 2);
 
                     }
