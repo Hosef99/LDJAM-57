@@ -32,7 +32,6 @@ public class BoomScript : MonoBehaviour
     void Boom()
     {
         Vector3Int currentTile = Vector3Int.RoundToInt(transform.position);
-        bool playerIsDie = false;
         for (int i = 0; i < range * 2 + 1; i++)
         {
             for (int j = 0; j < range * 2 + 1; j++)
@@ -46,39 +45,34 @@ public class BoomScript : MonoBehaviour
                         player.CollectBlockAt(currentTile + new Vector3Int(i - range, j - range, 0));
                     }
 
-                    if (!boomImmune)
-                    {
-                        if (Vector3.Distance( player.transform.position , targetTile ) < 0.5)
-                        {
-                            playerIsDie = true;
-                        }
-                    }
-                    
+                    // if (!boomImmune)
+                    // {
+                    //     if (Vector3.Distance( player.transform.position , targetTile ) < 0.5)
+                    //     {
+                    //         Debug.Log("player DEATH");
+                    //     }
+                    // }
+
                     player.DestroyBlockAt(currentTile + new Vector3Int(i - range, j - range, 0));
 
                 }
             }
         }
-
-        if (playerIsDie)
-        {
-            player.Die();
-        }
         Destroy(gameObject);
     }
-    
+
     void Update()
     {
         HandleMovement();
         HandleFalling();
-        timer += Time.deltaTime; 
+        timer += Time.deltaTime;
 
         if (timer >= lifetime && !isMoving)
         {
             Boom();
         }
     }
-    
+
     void HandleMovement()
     {
         if (isMoving)
@@ -111,10 +105,10 @@ public class BoomScript : MonoBehaviour
             isMoving = true;
         }
     }
-    
+
     public bool IsBlockAt(Vector3Int tilePos)
     {
-        
+
         return GetTileTypeAt(tilePos) != ChunkData.HOLE;
     }
 

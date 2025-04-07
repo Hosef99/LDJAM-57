@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = System.Random;
@@ -430,14 +429,9 @@ public class PlayerController : MonoBehaviour
         return chunk.tilesType[localX, localY];
     }
 
-    public void Die(){
-        // this.enabled = false;
-        levelLoader.LoadScene("Shop");
-    }
-
-    public void EndGame()
-    {
-       Die();
+    void EndGame(){
+        Debug.Log("Out of attempts!");
+        SceneManager.LoadScene("PermanentShop");
     }
 
     public void DestroyBlockAt(Vector3Int tilePos)
