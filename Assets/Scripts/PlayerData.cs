@@ -5,6 +5,7 @@ using UnityEngine.Rendering.Universal;
 public class PlayerData : MonoBehaviour{
     public static PlayerData Instance;
     public PlayerController playerController;
+    public BoomScript boomScript;
     public Light2D light2D;
     public int goldCount = 0;
     public int fossil1Count = 0;
@@ -96,28 +97,104 @@ public class PlayerData : MonoBehaviour{
         
     }
     
-    public void Boom(int level)
+    public void BoomRangeIncrease(int level)
     {
         switch (level)
         {
             case 0:
-                light2D.falloffIntensity = 1;
+                boomScript.range = 2;
+
                 break;
             case 1:
-                light2D.falloffIntensity = 0.8f;
+                boomScript.range = 4;
                 break;
             case 2:
-                light2D.falloffIntensity = 0.65f;
+                boomScript.range = 6;
                 break;
             case 3:
-                light2D.falloffIntensity = 0.5f;
+                boomScript.range = 8;
                 break;
 
         }
         
         
     }
+
+    public void HorizontalDigLevel(int level)
+    {
+        switch (level)
+        {
+            case 0:
+                playerController.horizontalDigCount = 1;
+                break;
+            case 1:
+                playerController.horizontalDigCount = 2;
+                break;
+            case 2:
+                playerController.horizontalDigCount = 3;
+                break;
+            case 3:
+                playerController.horizontalDigCount = 4;
+                break;
+
+        }
+    }
     
+    public void VerticalDigLevel(int level)
+    {
+        switch (level)
+        {
+            case 0:
+                playerController.verticalDigCount = 1;
+                break;
+            case 1:
+                playerController.verticalDigCount = 2;
+                break;
+            case 2:
+                playerController.verticalDigCount = 3;
+                break;
+            case 3:
+                playerController.verticalDigCount = 4;
+                break;
+
+        }
+    }
+    
+    public void MasterYiLevel(int level)
+    {
+        playerController.masterYi = level;
+    }
+    
+    public void OreLevel(int level)
+    {
+        switch (level)
+        {
+            case 0:
+                playerController.oreBrokeChance = 1;
+                break;
+            case 1:
+                playerController.oreBrokeChance = 0.9f;
+                break;
+            case 2:
+                playerController.oreBrokeChance = 0.8f;
+                break;
+            case 3:
+                playerController.oreBrokeChance = 0.7f;
+                break;
+
+        }
+    }
+
+    public void BoomCollect(int level)          // ---------------------------------------------------------------
+    {
+        
+    }
+    
+    
+    public void BoomImmune(int level)          // ---------------------------------------------------------------
+    {
+        
+    }
     
 
 }
