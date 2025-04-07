@@ -22,7 +22,6 @@ public class PlayerData : MonoBehaviour{
     public int cardSlots = 5;
 
     public int bombCapcity = 1;
-    public List<UpgradeData> upgrades;
     
 
     
@@ -40,34 +39,8 @@ public class PlayerData : MonoBehaviour{
         }
     }
 
-    public UpgradeData GetUpgrade(string id)
-    {
-        return upgrades.Find(u => u.upgradeID == id);
-    }
 
-    public void ApplyUpgrade(UpgradeData upgrade)
-    {
-        var existing = GetUpgrade(upgrade.upgradeID);
-        if (existing != null)
-        {
-            existing.level = upgrade.level;
-        }
-        else
-        {
-            upgrades.Add(upgrade);
-        }
-    }
 
-    public void Upgrade(string upgradeID){
-        switch (upgradeID)
-        {
-            case "1":
-            // other underground upgrades
-            break;
-            default:
-            break;
-        }
-    }
 
     public void OnUpdate(){
         

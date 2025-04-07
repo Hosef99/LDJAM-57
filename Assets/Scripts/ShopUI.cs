@@ -27,19 +27,8 @@ public class ShopUI : MonoBehaviour
     {
         playerData = FindObjectOfType<PlayerData>();
         playerUpgrade = FindObjectOfType<PlayerUpgrade>();
-        UpgradeData upg = playerUpgrade.GetPermanentUpgrade("stamina");
-        powerUpText[0].text = "+" + upg.levels[upg.level].addedValue.ToString() + " Stamina";
-        value[0].text = upg.levels[upg.level].cost.ToString();
-        upg = playerUpgrade.GetPermanentUpgrade("vision");
-        powerUpText[1].text = "+" + upg.levels[upg.level].addedValue.ToString() + " Vision Range";
-        value[1].text = upg.levels[upg.level].cost.ToString();
-        upg = playerUpgrade.GetPermanentUpgrade("bomb");
-        powerUpText[2].text = "+" + upg.levels[upg.level].addedValue.ToString() + " BOMBA";
-        value[2].text = upg.levels[upg.level].cost.ToString();
-        upg = playerUpgrade.GetPermanentUpgrade("slot");
-        powerUpText[3].text = "+" + upg.levels[upg.level].addedValue.ToString() + " Slot Size";
-        value[3].text = upg.levels[upg.level].cost.ToString();
-        UpdateUI();
+        UpdateButtons();
+        UpdateUI(); 
     }
 
     void Update()
@@ -56,7 +45,49 @@ public class ShopUI : MonoBehaviour
         diamondText.text = playerData.diamondCount.ToString();
         coinText.text = playerData.goldCount.ToString();
         redstoneText.text = playerData.redStoneCount.ToString();
-        
+    }
+
+    void UpdateButtons(){
+        UpgradeData upg = playerUpgrade.GetPermanentUpgrade("stamina");
+        if(upg.level != upg.levels.Length){
+            powerUpText[0].text = "+" + upg.levels[upg.level].addedValue.ToString() + " Stamina";
+            value[0].text = upg.levels[upg.level].cost.ToString();
+        }
+        else{
+            powerUpText[0].text = "MAX";
+            coins[0].enabled = false;
+            value[0].text = "";
+        }
+        upg = playerUpgrade.GetPermanentUpgrade("vision");
+        if(upg.level != upg.levels.Length){
+            powerUpText[1].text = "+" + upg.levels[upg.level].addedValue.ToString() + " Vision Range";
+            value[1].text = upg.levels[upg.level].cost.ToString();
+        }
+        else{
+            powerUpText[1].text = "MAX";
+            coins[1].enabled = false;
+            value[1].text = "";
+        }
+        upg = playerUpgrade.GetPermanentUpgrade("bomb");
+        if(upg.level != upg.levels.Length){
+            powerUpText[2].text = "+" + upg.levels[upg.level].addedValue.ToString() + " BOMBA";
+            value[2].text = upg.levels[upg.level].cost.ToString();
+        }
+        else{
+            powerUpText[2].text = "MAX";
+            coins[2].enabled = false;
+            value[2].text = "";
+        }
+        upg = playerUpgrade.GetPermanentUpgrade("slot");
+        if(upg.level != upg.levels.Length){
+            powerUpText[3].text = "+" + upg.levels[upg.level].addedValue.ToString() + " Slot Size";
+            value[3].text = upg.levels[upg.level].cost.ToString();
+        }
+        else{
+            powerUpText[3].text = "MAX";
+            coins[3].enabled = false;
+            value[3].text = "";
+        }
         
     }
 

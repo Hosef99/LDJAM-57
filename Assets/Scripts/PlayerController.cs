@@ -12,7 +12,6 @@ public class PlayerController : MonoBehaviour
 
     public GameObject boomPrefab;
     public float moveSpeed = 5f;
-    public int maxAttempts = 200;
     public int horizontalDigCount  = 1;
 
     public int verticalDigCount = 1;
@@ -23,11 +22,11 @@ public class PlayerController : MonoBehaviour
     private WorldGenerator worldGenerator;
     public PlayerData playerData ;
 
-    private int currentAttempts;
-    public DigUI digUI;
+    public UndergroundUI undergroundUI;
     private SpriteRenderer sr;
     private Animator anim;
     public GameObject stoneParticle;
+    private int currentStamina;    
     private int currentLayer = 1;
     private int lastShopLayer = -100;
     private LevelLoader levelLoader;
@@ -49,8 +48,8 @@ public class PlayerController : MonoBehaviour
 
         worldGenerator = FindObjectOfType<WorldGenerator>();
         levelLoader = FindObjectOfType<LevelLoader>();
-        currentAttempts = maxAttempts;
-        digUI.UpdateDigText(currentAttempts);
+        currentStamina = playerData.stamina;
+        undergroundUI.UpdateStamina(playerData.stamina);
     }
 
     void Update()
@@ -317,11 +316,11 @@ public class PlayerController : MonoBehaviour
             GameObject tempParticle = Instantiate(stoneParticle, (Vector3)frontTile-new Vector3(0,0.5f,0), Quaternion.identity);
             tempParticle.transform.eulerAngles = new Vector3(0,0,45);
             StartCoroutine("DestroyParticle", tempParticle);
-            currentAttempts--;
-            digUI.UpdateDigText(currentAttempts);
+            currentStamina--;
+            undergroundUI.UpdateStamina(currentStamina);
         }
 
-        if (currentAttempts <= 0){
+        if (currentStamina <= 0){
             EndGame();
         }
 
