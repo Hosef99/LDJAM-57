@@ -11,20 +11,32 @@ public class LevelLoader : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetMouseButtonDown(0)){
-            LoadNextLevel();
-        }
+        // if(Input.GetMouseButtonDown(0)){
+        //     LoadNextLevel();
+        // }
     }
 
-    public void LoadNextLevel(){
-        StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex + 1));
+    // public void LoadNextLevel(){
+    //     StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex + 1));
 
+    // }
+
+    // IEnumerator LoadLevel(int levelIndex){
+    //     transition.SetTrigger("Start");
+
+    //     yield return new WaitForSeconds(transitionTime);
+    //     SceneManager.LoadScene(levelIndex);
+    // }
+
+    public void LoadScene(string sceneName){
+        StartCoroutine(LoadSceneByName(sceneName));
     }
 
-    IEnumerator LoadLevel(int levelIndex){
+     IEnumerator LoadSceneByName(string sceneName){
         transition.SetTrigger("Start");
 
         yield return new WaitForSeconds(transitionTime);
-        SceneManager.LoadScene(levelIndex);
+        SceneManager.LoadScene(sceneName);
     }
+
 }

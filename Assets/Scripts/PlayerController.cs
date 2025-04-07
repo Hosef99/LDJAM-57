@@ -28,9 +28,9 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer sr;
     private Animator anim;
     public GameObject stoneParticle;
-
-
-
+    private int currentLayer = 1;
+    private int lastShopLayer = -100;
+    private LevelLoader levelLoader;
     public int masterYi = 0;
     private int lastHitOnRow = 0;
     private int rowStreak = 0;
@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
         targetPos = transform.position;
 
         worldGenerator = FindObjectOfType<WorldGenerator>();
-
+        levelLoader = FindObjectOfType<LevelLoader>();
         currentAttempts = maxAttempts;
         digUI.UpdateDigText(currentAttempts);
     }
@@ -183,6 +183,20 @@ public class PlayerController : MonoBehaviour
             targetPos = belowPos;
             isMoving = true;
         }
+
+        int newLayer = Mathf.Abs(Vector3Int.RoundToInt(transform.position).y);
+        if (newLayer > currentLayer){
+            currentLayer = newLayer;
+            if (currentLayer % 100 == 0 && currentLayer != lastShopLayer){
+                lastShopLayer = currentLayer;
+                EnterUndergroundShop();
+            }
+        }
+    }
+
+    void EnterUndergroundShop(){
+        Debug.Log("Underground Shop triggered at layer: " + currentLayer);
+        levelLoader.LoadScene("Shop");
     }
 
     void DestroyBlocksInFront(int count)
