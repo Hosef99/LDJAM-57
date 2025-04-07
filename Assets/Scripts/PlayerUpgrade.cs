@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerUpgrade : MonoBehaviour{
     public List<UpgradeData> permanentUpgrades;
-    public List<UpgradeData> upgradePool = new List<UpgradeData>();
+    public List<UpgradeData> upgrades = new List<UpgradeData>();
 
     // upgrade the permenant upgrade by searching the ID
     public UpgradeData GetPermanentUpgrade(string id){
@@ -18,5 +18,9 @@ public class PlayerUpgrade : MonoBehaviour{
             return true;
         }
         return false;
+    }
+
+    public UpgradeData GetUpgrade(string id){
+        return upgrades.Find(upg => upg.upgradeID == id);
     }
 }

@@ -442,9 +442,9 @@ RectTransform:
   - {fileID: 470911061}
   m_Father: {fileID: 1319240905}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 760, y: -430}
   m_SizeDelta: {x: 360, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &43431776
@@ -1477,7 +1477,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 470911063}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2058285186}
+        m_TargetAssemblyTypeName: UndergroundUI, Assembly-CSharp
+        m_MethodName: BuyCard
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &470911063
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1679,7 +1691,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 668060595}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2058285186}
+        m_TargetAssemblyTypeName: UndergroundUI, Assembly-CSharp
+        m_MethodName: BuyCard
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &668060595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1962,9 +1986,9 @@ RectTransform:
   - {fileID: 733279578}
   m_Father: {fileID: 1319240905}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 1266.6667, y: -430}
   m_SizeDelta: {x: 360, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &696380521
@@ -2308,7 +2332,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 733279580}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2058285186}
+        m_TargetAssemblyTypeName: UndergroundUI, Assembly-CSharp
+        m_MethodName: BuyCard
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &733279580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2817,9 +2853,9 @@ RectTransform:
   - {fileID: 668060593}
   m_Father: {fileID: 1319240905}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 253.33334, y: -430}
   m_SizeDelta: {x: 360, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &900116324
@@ -3099,7 +3135,7 @@ MonoBehaviour:
   verticalDigCount: 1
   oreBrokeChance: 1
   playerData: {fileID: 987208400}
-  undergroundUI: {fileID: 0}
+  undergroundUI: {fileID: 2058285186}
   stoneParticle: {fileID: 8832367722207546015, guid: 50bc3d8dc3dfafb419e4a5e5295bfc2c, type: 3}
   masterYi: 3
 --- !u!95 &958127067
@@ -3199,7 +3235,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   permanentUpgrades: []
-  upgradePool: []
+  upgrades: []
 --- !u!1 &1033102652
 GameObject:
   m_ObjectHideFlags: 0
@@ -3217,7 +3253,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1033102653
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4733,7 +4769,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1594037495}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2058285186}
+        m_TargetAssemblyTypeName: UndergroundUI, Assembly-CSharp
+        m_MethodName: CloseShop
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1606531573
 GameObject:
   m_ObjectHideFlags: 0
@@ -5998,15 +6046,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95642c0380f6f93438d9f1ae5ed2e09e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shopPanel: {fileID: 0}
-  staminaValue: {fileID: 0}
-  goldValue: {fileID: 0}
-  diamondValue: {fileID: 0}
-  redstoneValue: {fileID: 0}
-  abilityIcons: []
-  titles: []
-  descriptions: []
-  slotIDs: []
+  shopPanel: {fileID: 1033102652}
+  staminaValue: {fileID: 919496617}
+  goldValue: {fileID: 185036773}
+  diamondValue: {fileID: 1154596500}
+  redstoneValue: {fileID: 709938426}
+  abilityIcons:
+  - {fileID: 1435037103}
+  - {fileID: 849791338}
+  - {fileID: 846971690}
+  titles:
+  - {fileID: 759540296}
+  - {fileID: 28808798}
+  - {fileID: 1069071693}
+  descriptions:
+  - {fileID: 684730261}
+  - {fileID: 418434351}
+  - {fileID: 1672229733}
+  buybuttons:
+  - {fileID: 668060594}
+  - {fileID: 470911062}
+  - {fileID: 733279579}
+  slotIDs:
+  - 0
+  - 1
+  - 2
 --- !u!114 &2058285187
 MonoBehaviour:
   m_ObjectHideFlags: 0

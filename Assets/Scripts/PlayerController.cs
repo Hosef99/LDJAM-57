@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer sr;
     private Animator anim;
     public GameObject stoneParticle;
-    private int currentStamina;    
+    private int currentStamina;
     private int currentLayer = 1;
     private int lastShopLayer = -100;
     private LevelLoader levelLoader;
@@ -195,7 +195,8 @@ public class PlayerController : MonoBehaviour
 
     void EnterUndergroundShop(){
         Debug.Log("Underground Shop triggered at layer: " + currentLayer);
-        levelLoader.LoadScene("Shop");
+        undergroundUI.ShowShop();
+        // levelLoader.LoadScene("Shop");
     }
 
     void DestroyBlocksInFront(int count)
