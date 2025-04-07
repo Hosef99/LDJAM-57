@@ -429,9 +429,13 @@ public class PlayerController : MonoBehaviour
         return chunk.tilesType[localX, localY];
     }
 
+    public void Die(){
+        this.enabled = false;
+        levelLoader.LoadScene("Shop");
+    }
+
     void EndGame(){
-        Debug.Log("Out of attempts!");
-        SceneManager.LoadScene("PermanentShop");
+       Die();
     }
 
     public void DestroyBlockAt(Vector3Int tilePos)
