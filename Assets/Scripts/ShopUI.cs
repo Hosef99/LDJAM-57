@@ -1,58 +1,86 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 
-public class ShopUI : MonoBehaviour{
-    public GameObject shopPanel;
-    public Transform upgradeListParent;
-    public GameObject upgradeEntryPrefab;
-    private List<UpgradeData> currentUpgrades;
+public class ShopUI : MonoBehaviour
+{
+    [Header("Currency Displays")]
+    public TextMeshProUGUI diamondText;
+    public TextMeshProUGUI coinText;
+    public TextMeshProUGUI redstoneText;
+
+    [Header("Stat Displays")]
+    public TextMeshProUGUI staminaText;
+    public TextMeshProUGUI visionText;
+    public TextMeshProUGUI bombText;
+    public TextMeshProUGUI slotText;
+
+    [Header("Upgrade Buttons")]
+    public TextMeshProUGUI[] powerUpText;
+    public TextMeshProUGUI[] value;
+    public Image[] coins;
+
+    private PlayerData playerData;
     private PlayerUpgrade playerUpgrade;
 
     void Start()
     {
+        playerData = FindObjectOfType<PlayerData>();
         playerUpgrade = FindObjectOfType<PlayerUpgrade>();
+        UpdateUI();
     }
 
-    public void OpenShop(List<UpgradeData> upgrades){
-        shopPanel.SetActive(true);
-        currentUpgrades = upgrades;
-
-        foreach (Transform child in upgradeListParent){
-            Destroy(child.gameObject);
-        }
-        foreach(var upgrade in currentUpgrades ){
-            GameObject entry = Instantiate(upgradeEntryPrefab,upgradeListParent);
-            entry.transform.Find("Name").GetComponent<Text>().text = upgrade.displayName + " Lv. " + upgrade.level;
-            entry.transform.Find("Description").GetComponent<Text>().text = upgrade.GetDescription();
-            entry.transform.Find("Cost").GetComponent<Text>().text = "Cost: " + upgrade.CurrentCost;
-
-            Button buyButton = entry.transform.Find("BuyButton").GetComponent<Button>();
-            buyButton.onClick.AddListener(() => TryUpgrade(upgrade));
-        }
+    void Update()
+    {
+        UpdateUI();
     }
 
-    public void TryUpgrade(UpgradeData upgrade){
-        if (PlayerData.Instance.gold >= upgrade.CurrentCost && !upgrade.IsMaxed()){
-            var existing = PlayerData.Instance.GetUpgrade(upgrade.upgradeID);
-            if (existing != null){
-                existing.level++;
+    void UpdateUI()
+    {
+        staminaText.text = playerData.stamina.ToString();
+        visionText.text = playerData.vision.ToString();
+        bombText.text = playerData.bombCount.ToString();
+        slotText.text = playerData.cardSlots.ToString();
+        diamondText.text = playerData.diamondCount.ToString();
+        coinText.text = playerData.goldCount.ToString();
+        redstoneText.text = playerData.redStoneCount.ToString();
+    }
+
+    void UpgradeStamina()
+    {
+        UpgradeData upgrade = playerUpgrade.GetPermanentUpgrade("stamina");
+        if(upgrade.IsMaxed()){
+            return;
+        }
+        int upgradeCost = upgrade.currentCost;
+        if (playerData.goldCount >= upgradeCost)
+        {
+            playerUpgrade.UpgradePermanent("stamina");
+            playerData.goldCount -= upgradeCost;
+            if (upgrade.IsMaxed())
+            {
+                powerUpText[0].text = "MAX";
+                coins[0].enabled = false;
+                value[0].text = "";
             }
             else{
-                upgrade.level = 1;
-                PlayerData.Instance.upgrades.Add(upgrade);
+                
             }
-            Debug.Log("Upgraded: " + upgrade.displayName);
-            OpenShop(currentUpgrades);
-            //playerUpgrade.ApplyUpgrade(upgrade);
-            //PlayerData.Instance.gold -= upgrade.CurrentCost;
-        }else{
-            Debug.Log("Not enough gold or upgrade is maxed");
         }
     }
 
-    public void CloseShop(){
-        shopPanel.SetActive(false);
+    void UpgradeVision()
+    {
+
+    }
+
+    void UpgradeBomb()
+    {
+
+    }
+
+    void UpgradeSlot()
+    {
+
     }
 }

@@ -4,8 +4,6 @@ using UnityEngine;
 public class PlayerData : MonoBehaviour{
     public static PlayerData Instance;
 
-    public int gold = 0;
-
     public int goldCount = 0;
     public int fossil1Count = 0;
     public int fossil2Count = 0;
@@ -17,10 +15,14 @@ public class PlayerData : MonoBehaviour{
     public int diamondCount = 0;
     public int redStoneCount = 0;
     public int stamina = 0;
+    public int vision = 1;
+    public int bombCount = 0;
     public int cardSlots = 5;
 
     public int bombCapcity = 1;
-    public List<UpgradeData> upgrades = new List<UpgradeData>();
+    public List<UpgradeData> upgrades;
+
+    
 
     void Awake()
     {
@@ -50,6 +52,17 @@ public class PlayerData : MonoBehaviour{
         else
         {
             upgrades.Add(upgrade);
+        }
+    }
+
+    public void Upgrade(string upgradeID){
+        switch (upgradeID)
+        {
+            case "1":
+            // other underground upgrades
+            break;
+            default:
+            break;
         }
     }
 }

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerUpgrade : MonoBehaviour{
-    public List<UpgradeData> permanentUpgrades = new List<UpgradeData>();
+    public List<UpgradeData> permanentUpgrades;
     public List<UpgradeData> upgradePool = new List<UpgradeData>();
 
     // upgrade the permenant upgrade by searching the ID
@@ -13,7 +13,7 @@ public class PlayerUpgrade : MonoBehaviour{
     //if not max level, upgrade it
     public bool UpgradePermanent(string id){
         UpgradeData upg = GetPermanentUpgrade(id);
-        if(upg !=null && !upg.IsMaxed()){
+        if (upg !=null && !upg.IsMaxed()) {
             upg.level++;
             return true;
         }

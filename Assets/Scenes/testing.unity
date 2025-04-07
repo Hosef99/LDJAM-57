@@ -315,7 +315,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 708822817}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
   m_Name: 
@@ -517,7 +517,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f2b01aa1bd04f74c8aa978804e7527a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gold: 0
   goldCount: 0
   fossil1Count: 0
   fossil2Count: 0
@@ -529,9 +528,10 @@ MonoBehaviour:
   diamondCount: 0
   redStoneCount: 0
   stamina: 0
+  vision: 1
+  bombCount: 0
   cardSlots: 5
   bombCapcity: 1
-  upgrades: []
 --- !u!4 &987208401
 Transform:
   m_ObjectHideFlags: 0

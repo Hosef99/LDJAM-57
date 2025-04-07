@@ -1,13 +1,15 @@
 using UnityEngine;
-
-public class UpgradeData : MonoBehaviour{
+[System.Serializable]
+public class UpgradeData
+{
     public string upgradeID;
     public string displayName;
     public int level = 0;
     public int maxLevel = 5;
-    public int baseCost = 50;
-    public int costPerLevel = 25;
-    public int CurrentCost => baseCost + level * costPerLevel;
+
+    public Level[] levels;
+
+
 
     public string GetDescription(){
         switch (upgradeID){

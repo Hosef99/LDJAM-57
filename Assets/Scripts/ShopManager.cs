@@ -12,13 +12,12 @@ public class ShopManager : MonoBehaviour{
             OpenPermenatShop();
         }
     }
+
     public void OpenPermenatShop(){
         List<UpgradeData> upgrades = new List<UpgradeData>{
             new UpgradeData{upgradeID = "vision", displayName ="Increase Vision", maxLevel = 5,baseCost = 100, costPerLevel = 50},
             new UpgradeData{upgradeID = "stamina", displayName ="Increase Stamina", maxLevel = 5,baseCost = 150, costPerLevel = 75},
         };
-
-        shopUI.OpenShop(upgrades);
     }
 
     public void OpenUndergroundShop(){
@@ -33,7 +32,5 @@ public class ShopManager : MonoBehaviour{
             randomUpgrades.Add(allUpgrades[randomIndex]);
             allUpgrades.RemoveAt(randomIndex); //not repeated
         }
-
-        shopUI.OpenShop(randomUpgrades);
     }
 }
