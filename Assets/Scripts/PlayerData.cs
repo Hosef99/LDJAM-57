@@ -48,6 +48,7 @@ public class PlayerData : MonoBehaviour{
         playerController = FindAnyObjectByType<PlayerController>();
         boomScript = FindAnyObjectByType<BoomScript>();
         light2D = playerController.GetComponentInChildren<Light2D>();
+        VisionIncrease(vision);
         redStoneCount = 0;
     }
 
@@ -109,16 +110,16 @@ public class PlayerData : MonoBehaviour{
     {
         switch (level)
         {
-            case 0:
+            case 1:
                 light2D.falloffIntensity = 1;
                 break;
-            case 1:
+            case 2:
                 light2D.falloffIntensity = 0.8f;
                 break;
-            case 2:
+            case 3:
                 light2D.falloffIntensity = 0.65f;
                 break;
-            case 3:
+            case 4:
                 light2D.falloffIntensity = 0.5f;
                 break;
 

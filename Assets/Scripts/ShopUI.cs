@@ -101,6 +101,7 @@ public class ShopUI : MonoBehaviour
             playerData.stamina += upg.levels[upg.level].addedValue;
             playerUpgrade.GetPermanentUpgrade("stamina").level++;
             playerData.goldCount -= upgradeCost;
+            SoundManager.Instance.PlaySFX("powerUp");
             if (upg.IsMaxed())
             {
                 powerUpText[0].text = "MAX";
@@ -131,6 +132,8 @@ public class ShopUI : MonoBehaviour
             playerData.vision += upg.levels[upg.level].addedValue;
             playerUpgrade.GetPermanentUpgrade("vision").level++;
             playerData.goldCount -= upgradeCost;
+            SoundManager.Instance.PlaySFX("powerUp");
+
             if (upg.IsMaxed())
             {
                 powerUpText[1].text = "MAX";
@@ -161,6 +164,8 @@ public class ShopUI : MonoBehaviour
             playerData.bombCount += upg.levels[upg.level].addedValue;
             playerUpgrade.GetPermanentUpgrade("bomb").level++;
             playerData.goldCount -= upgradeCost;
+            SoundManager.Instance.PlaySFX("powerUp");
+
             if (upg.IsMaxed())
             {
                 powerUpText[2].text = "MAX";
@@ -191,6 +196,7 @@ public class ShopUI : MonoBehaviour
             playerData.cardSlots += upg.levels[upg.level].addedValue;
             playerUpgrade.GetPermanentUpgrade("slot").level++;
             playerData.diamondCount -= upgradeCost;
+            SoundManager.Instance.PlaySFX("powerUp");
             if (upg.IsMaxed())
             {
                 powerUpText[3].text = "MAX";

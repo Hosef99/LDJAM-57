@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
     private int lastHitOnRow = 0;
     private int rowStreak = 0;
     private bool cannotMove = false;
+    public int boomCount = 0;
 
     void Awake()
     {
@@ -121,7 +122,14 @@ public class PlayerController : MonoBehaviour
                     frontTile += new Vector3Int(1, 0, 0);
                     break;
             }
+
+            if (boomCount >= playerData.bombCount)
+            {
+                return;
+            }
             GameObject boomClone = Instantiate(boomPrefab);
+            boomCount++;
+            undergroundUI.UpdateUI();
 
             if (!IsBlockAt(frontTile))
             {

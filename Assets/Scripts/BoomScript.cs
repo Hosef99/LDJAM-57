@@ -31,6 +31,7 @@ public class BoomScript : MonoBehaviour
 
     void Boom()
     {
+        SoundManager.Instance.PlaySFX("explosion");
         Vector3Int currentTile = Vector3Int.RoundToInt(transform.position);
         for (int i = 0; i < range * 2 + 1; i++)
         {

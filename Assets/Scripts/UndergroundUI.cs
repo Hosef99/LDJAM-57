@@ -13,6 +13,7 @@ public class UndergroundUI : MonoBehaviour{
     public TextMeshProUGUI goldValue;
     public TextMeshProUGUI diamondValue;
     public TextMeshProUGUI redstoneValue;
+    public TextMeshProUGUI bombValue;
     public Image[] abilityIcons;
     public TextMeshProUGUI[] titles;
     public TextMeshProUGUI[] descriptions;
@@ -42,8 +43,9 @@ public class UndergroundUI : MonoBehaviour{
         goldValue.text = playerData.goldCount.ToString();
         diamondValue.text = playerData.diamondCount.ToString();
         redstoneValue.text = playerData.redStoneCount.ToString();
+        bombValue.text = (playerData.bombCount - playerData.playerController.boomCount).ToString();
         if (playerData.cardSlots > 3){
-            for (int i = 0; i < 6-playerData.cardSlots+1; i++)
+            for (int i = 0; i < playerData.cardSlots-3; i++)
             {
                 slots[i].SetActive(true);
             }
@@ -92,7 +94,7 @@ public class UndergroundUI : MonoBehaviour{
             abilityNo++;
             int index = playerUpgrade.GetUpgradeIndex(slotIDs[slotID]);
             playerUpgrade.upgrades[index].isActive = true;
-
+            SoundManager.Instance.PlaySFX("powerUp");
             titles[slotID].text = "Sold Out";
             descriptions[slotID].text = "";
         }else{
