@@ -1,11 +1,15 @@
 using UnityEngine;
+using System.Collections;
 
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance;
-
-    [SerializeField] public AudioSource sfxSource;
-    [SerializeField] public AudioClip[] sfxClips;
+    
+    public AudioClip caveMusic;
+    public AudioClip shopMusic;
+    public AudioSource musicSource;
+    public AudioSource sfxSource;
+    public AudioClip[] sfxClips;
 
     private void Awake()
     {
@@ -59,5 +63,53 @@ public class SoundManager : MonoBehaviour
                 return clip;
         }
         return null;
+    }
+    
+    public void StopMusic(){
+        StartCoroutine("FadeOutMusic", 2);
+    }
+
+    public void ToShop(){
+        ChangeClip(2, shopMusic);
+    }
+
+    public void ToCave(){
+        ChangeClip(2, caveMusic);
+    }
+
+    public void ChangeClip(float sec, AudioClip clip){
+        StartCoroutine(ChangeToClip(sec, clip));
+    }
+
+    IEnumerator ChangeToClip(float sec, AudioClip clip){
+        for (int i = 0; i < 100; i++)
+        {
+            musicSource.volume -= 0.01f;
+            yield return new WaitForSeconds(sec/100);
+        }
+        musicSource.clip = clip;
+        musicSource.Play();
+        for (int i = 0; i < 100; i++)
+        {
+            musicSource.volume += 0.01f;
+            yield return new WaitForSeconds(sec/100);
+        }
+    }
+    IEnumerator FadeOutMusic(float sec)
+    {
+        for (int i = 0; i < 100; i++)
+        {
+            musicSource.volume -= 0.01f;
+            yield return new WaitForSeconds(sec/100);
+        }
+    }
+
+    IEnumerator FadeInMusic(float sec)
+    {
+        for (int i = 0; i < 100; i++)
+        {
+            musicSource.volume += 0.01f;
+            yield return new WaitForSeconds(sec/100);
+        }
     }
 }

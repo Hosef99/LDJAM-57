@@ -1,36 +1,36 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
+public enum Stat
+{
+    maxStamina,
+    currentStamina,
+    vision,
+    maxBomb,
+    currBomb,
+    tempUpgradeSlots,
+    gold,
+    redstone,
+    diamond,
+    bombImmune,
+    bombCollectOre,
+    horizontalDig,
+    verticalDig,
+    duplicateOre,
+    masterYi,
+    fossil1,
+    fossil2,
+    fossil3,
+    fossil4,
+    fossil5,
+    fossil6
+}
+
 public class PlayerData : MonoBehaviour{
-    public AudioSource audioSource;
-    public AudioClip caveMusic;
-    public AudioClip shopMusic;
     public static PlayerData Instance;
-    public PlayerController playerController;
-    public BoomScript boomScript;
-    public Light2D light2D;
-    public int goldCount = 0;
-    public int fossil1Count = 0;
-    public int fossil2Count = 0;
-    public int fossil3Count = 0;
-    public int fossil4Count = 0;
-    public int fossil5Count = 0;
-    public int fossil6Count = 0;
-    public int sliverCount = 0;
-    public int diamondCount = 0;
-    public int redStoneCount = 0;
-    public int stamina = 0;
-    public int vision = 1;
-    public int bombCount = 0;
-    public int cardSlots = 5;
-
-    public int bombCapcity = 1;
+    public Dictionary<Stat, float> stats = new();
     
-
-    
-
     void Awake()
     {
         if (Instance == null)
@@ -44,215 +44,55 @@ public class PlayerData : MonoBehaviour{
         }
     }
 
-    public void OnPlay(){
-        playerController = FindAnyObjectByType<PlayerController>();
-        boomScript = FindAnyObjectByType<BoomScript>();
-        light2D = playerController.GetComponentInChildren<Light2D>();
-        VisionIncrease(vision);
-        redStoneCount = 0;
-    }
-
-    public void StopMusic(){
-        StartCoroutine("FadeOutMusic", 2);
-    }
-
-    public void ToShop(){
-        ChangeClip(2, shopMusic);
-    }
-
-    public void ToCave(){
-        ChangeClip(2, caveMusic);
-    }
-
-    public void ChangeClip(float sec, AudioClip clip){
-        StartCoroutine(ChangeToClip(sec, clip));
-    }
-
-    IEnumerator ChangeToClip(float sec, AudioClip clip){
-        for (int i = 0; i < 100; i++)
-        {
-            audioSource.volume -= 0.01f;
-            yield return new WaitForSeconds(sec/100);
-        }
-        audioSource.clip = clip;
-        audioSource.Play();
-        for (int i = 0; i < 100; i++)
-        {
-            audioSource.volume += 0.01f;
-            yield return new WaitForSeconds(sec/100);
-        }
-    }
-    IEnumerator FadeOutMusic(float sec)
+    public float GetStat(Stat stat)
     {
-        for (int i = 0; i < 100; i++)
+        if (stats.TryGetValue(stat, out var value))
         {
-            audioSource.volume -= 0.01f;
-            yield return new WaitForSeconds(sec/100);
+            return value;
         }
+        return 0;
     }
 
-    IEnumerator FadeInMusic(float sec)
+    public void SetStat(Stat stat, float value)
     {
-        for (int i = 0; i < 100; i++)
-        {
-            audioSource.volume += 0.01f;
-            yield return new WaitForSeconds(sec/100);
-        }
+        stats[stat] = value;
     }
 
+    public void AddStat(Stat stat, float value)
+    {
+        if(!stats.ContainsKey(stat))
+        {
+            stats[stat] = 0f;
+        }
+        stats[stat] += value;
+    }
 
-    public void OnUpdate(){
+    public void InitializeStats()
+    {
+        stats[Stat.maxStamina] = 100;
+        stats[Stat.currentStamina] = 100;
+        stats[Stat.vision] = 3;
+        stats[Stat.maxBomb] = 3;
+        stats[Stat.currBomb] = 3;
+        stats[Stat.tempUpgradeSlots] = 3;
+        stats[Stat.gold] = 0;
+        stats[Stat.redstone] = 0;
+        stats[Stat.diamond] = 0;
         
-    }
+        // Upgrades
+        stats[Stat.bombImmune] = 0;
+        stats[Stat.bombCollectOre] = 0;
+        stats[Stat.horizontalDig] = 1;
+        stats[Stat.verticalDig] = 1;
+        stats[Stat.duplicateOre] = 0;
+        stats[Stat.masterYi] = 0;
 
-
-    public void VisionIncrease(int level)
-    {
-        switch (level)
-        {
-            case 1:
-                light2D.falloffIntensity = 1;
-                break;
-            case 2:
-                light2D.falloffIntensity = 0.8f;
-                break;
-            case 3:
-                light2D.falloffIntensity = 0.65f;
-                break;
-            case 4:
-                light2D.falloffIntensity = 0.5f;
-                break;
-
-        }
-        
-        
-    }
-    
-    public void BoomRangeIncrease(int level)
-    {
-        switch (level)
-        {
-            case 0:
-                boomScript.range = 2;
-
-                break;
-            case 1:
-                boomScript.range = 4;
-                break;
-            case 2:
-                boomScript.range = 6;
-                break;
-            case 3:
-                boomScript.range = 8;
-                break;
-
-        }
-        
-        
-    }
-
-    public void HorizontalDigLevel(int level)
-    {
-        switch (level)
-        {
-            case 0:
-                playerController.horizontalDigCount = 1;
-                break;
-            case 1:
-                playerController.horizontalDigCount = 2;
-                break;
-            case 2:
-                playerController.horizontalDigCount = 3;
-                break;
-            case 3:
-                playerController.horizontalDigCount = 4;
-                break;
-
-        }
-    }
-    
-    public void VerticalDigLevel(int level)
-    {
-        switch (level)
-        {
-            case 0:
-                playerController.verticalDigCount = 1;
-                break;
-            case 1:
-                playerController.verticalDigCount = 2;
-                break;
-            case 2:
-                playerController.verticalDigCount = 3;
-                break;
-            case 3:
-                playerController.verticalDigCount = 4;
-                break;
-
-        }
-    }
-    
-    public void MasterYiLevel(int level)
-    {
-        playerController.masterYi = level;
-    }
-    
-    public void OreLevel(int level)
-    {
-        switch (level)
-        {
-            case 0:
-                playerController.oreBrokeChance = 1;
-                break;
-            case 1:
-                playerController.oreBrokeChance = 0.9f;
-                break;
-            case 2:
-                playerController.oreBrokeChance = 0.8f;
-                break;
-            case 3:
-                playerController.oreBrokeChance = 0.7f;
-                break;
-
-        }
-    }
-
-    public void BoomCollect(bool x)         
-    {
-        boomScript.collectOre = x;
-    }
-    
-    
-    public void BoomImmune(bool x)         
-    {
-        boomScript.boomImmune = x;
-    }
-    
-    public void Upgrade(string upgradeID){
-        switch (upgradeID)
-        {
-            case "boomrange":
-            BoomRangeIncrease(2);
-            break;
-            case "horizontal":
-            HorizontalDigLevel(2);
-            break;
-            case "vertical":
-            VerticalDigLevel(2);
-            break;
-            case "masteryi":
-            MasterYiLevel(2);
-            break;
-            case "ore":
-            OreLevel(2);
-            break;
-            case "boomcollect":
-            BoomCollect(true);
-            break;
-            case "immune":
-            BoomImmune(true);
-            break;
-            default:
-            break;
-        }
+        // Fossils
+        stats[Stat.fossil1] = 0;
+        stats[Stat.fossil2] = 0;
+        stats[Stat.fossil3] = 0;
+        stats[Stat.fossil4] = 0;
+        stats[Stat.fossil5] = 0;
+        stats[Stat.fossil6] = 0;
     }
 }

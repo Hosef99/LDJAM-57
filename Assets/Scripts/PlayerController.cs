@@ -9,32 +9,23 @@ public class PlayerController : MonoBehaviour
 {
     private enum FacingDirection { Up, Down, Left, Right }
     private FacingDirection facing = FacingDirection.Down;
-
     public GameObject boomPrefab;
     public float moveSpeed = 5f;
-    public int horizontalDigCount  = 1;
-
-    public int verticalDigCount = 1;
-    public float oreBrokeChance = 1f;
     private bool isMoving = false;
     private Vector3 targetPos;
     private Random rnd = new Random();
     private WorldGenerator worldGenerator;
-    public PlayerData playerData ;
-
+    public PlayerData data ;
     public UndergroundUI undergroundUI;
     private SpriteRenderer sr;
     private Animator anim;
     public GameObject stoneParticle;
-    private int currentStamina;
     private int currentLayer = 1;
     private int lastShopLayer = -100;
     private LevelLoader levelLoader;
-    public int masterYi = 0;
     private int lastHitOnRow = 0;
     private int rowStreak = 0;
     private bool cannotMove = false;
-    public int boomCount = 0;
 
     void Awake()
     {
@@ -48,12 +39,10 @@ public class PlayerController : MonoBehaviour
         transform.position = new Vector3Int(currentPos.x , ChunkData.CHUNK_SIZE/2 + 1, currentPos.z);
         targetPos = transform.position;
 
-        playerData = FindAnyObjectByType<PlayerData>();
-        playerData.OnPlay();
+        data = PlayerData.Instance;
         worldGenerator = FindObjectOfType<WorldGenerator>();
         levelLoader = FindObjectOfType<LevelLoader>();
-        currentStamina = playerData.stamina;
-        undergroundUI.UpdateStamina(playerData.stamina);
+        undergroundUI.UpdateStamina(data.maxStamina);
         undergroundUI.UpdateUI();
     }
 
@@ -95,11 +84,11 @@ public class PlayerController : MonoBehaviour
         {
             if (facing == FacingDirection.Down || facing == FacingDirection.Up)
             {
-                DestroyBlocksInFront(verticalDigCount);
+                DestroyBlocksInFront(data.verticalDig);
             }
             else
             {
-                DestroyBlocksInFront(horizontalDigCount);
+                DestroyBlocksInFront(data.horizontalDig);
             }
         }
         else if (Input.GetKeyDown(KeyCode.F))
@@ -123,12 +112,12 @@ public class PlayerController : MonoBehaviour
                     break;
             }
 
-            if (boomCount >= playerData.bombCount)
+            if (data.currBomb <= 0)
             {
                 return;
             }
             GameObject boomClone = Instantiate(boomPrefab);
-            boomCount++;
+            data.currBomb--;
             undergroundUI.UpdateUI();
 
             if (!IsBlockAt(frontTile))
@@ -230,10 +219,10 @@ public class PlayerController : MonoBehaviour
             rowStreak = 1;
         }
 
-        if (masterYi > 0)
+        if (data.masterYi > 0)
         {
 
-            switch (masterYi)
+            switch (data.masterYi)
             {
                 case 1:
                     if (rowStreak % 5 == 0)
@@ -291,10 +280,11 @@ public class PlayerController : MonoBehaviour
                     GetTileTypeAt(frontTile) != ChunkData.OBSIDIAN3)
                 {
                     double rand = rnd.NextDouble();
-                    if (rand < oreBrokeChance)
+                    if (rand > data.duplicateOre)
                     {
-                        DestroyBlockAt(frontTile);
+                        CollectBlockAt(frontTile);
                     }
+                    DestroyBlockAt(frontTile);
                 }else if(GetTileTypeAt(frontTile) == ChunkData.OBSIDIAN1 ||
                          GetTileTypeAt(frontTile) == ChunkData.OBSIDIAN2 ||
                          GetTileTypeAt(frontTile) == ChunkData.OBSIDIAN3)
@@ -332,11 +322,11 @@ public class PlayerController : MonoBehaviour
             GameObject tempParticle = Instantiate(stoneParticle, (Vector3)frontTile-new Vector3(0,0.5f,0), Quaternion.identity);
             tempParticle.transform.eulerAngles = new Vector3(0,0,45);
             StartCoroutine("DestroyParticle", tempParticle);
-            currentStamina--;
-            undergroundUI.UpdateStamina(currentStamina);
+            data.currentStamina--;
+            undergroundUI.UpdateStamina(data.currentStamina);
         }
 
-        if (currentStamina <= 0){
+        if (data.currentStamina <= 0){
             EndGame();
         }
 
@@ -356,47 +346,47 @@ public class PlayerController : MonoBehaviour
 
 
             case ChunkData.GOLD1:
-                playerData.goldCount += 2;
+                data.gold += 2;
                 break;
 
             case ChunkData.GOLD2:
-                playerData.goldCount += 4;
+                data.gold += 4;
                 break;
 
             case ChunkData.GOLD3:
-                playerData.goldCount += 6;
+                data.gold += 6;
                 break;
 
             case ChunkData.FOSSIL1:
-                playerData.fossil1Count += 1;
+                data.fossils[0] += 1;
                 break;
 
             case ChunkData.FOSSIL2:
-                playerData.fossil2Count += 1;
+                data.fossils[1] += 1;
                 break;
 
             case ChunkData.FOSSIL3:
-                playerData.fossil3Count += 1;
+                data.fossils[2] += 1;
                 break;
 
             case ChunkData.FOSSIL4:
-                playerData.fossil4Count += 1;
+                data.fossils[3] += 1;
                 break;
 
             case ChunkData.FOSSIL5:
-                playerData.fossil5Count += 1;
+                data.fossils[4] += 1;
                 break;
 
             case ChunkData.FOSSIL6:
-                playerData.fossil6Count += 1;
+                data.fossils[5] += 1;
                 break;
 
             case ChunkData.DIAMOND:
-                playerData.diamondCount += 1;
+                data.diamond += 1;
                 break;
 
             case ChunkData.REDSTONE:
-                playerData.redStoneCount += 6;
+                data.redStone += 6;
                 break;
 
             default:
@@ -450,7 +440,7 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Out of attempts!");
         PlayerUpgrade playerUpgrade = FindAnyObjectByType<PlayerUpgrade>();
         playerUpgrade.ResetUpgrades();
-        playerData.ToShop();
+        SoundManager.Instance.ToShop();
         levelLoader.LoadScene("Shop");
     }
 

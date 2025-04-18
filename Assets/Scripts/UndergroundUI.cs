@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class UndergroundUI : MonoBehaviour{
     private PlayerUpgrade playerUpgrade;
-    private PlayerData playerData;
+    private PlayerData data;
     private int abilityNo = 0;
     public GameObject shopPanel;
     public TextMeshProUGUI staminaValue;
@@ -37,15 +37,15 @@ public class UndergroundUI : MonoBehaviour{
     }
 
     public void UpdateUI(){
-        playerData = FindObjectOfType<PlayerData>();
+        data = FindObjectOfType<PlayerData>();
         playerUpgrade = FindObjectOfType<PlayerUpgrade>();
 
-        goldValue.text = playerData.goldCount.ToString();
-        diamondValue.text = playerData.diamondCount.ToString();
-        redstoneValue.text = playerData.redStoneCount.ToString();
-        bombValue.text = (playerData.bombCount - playerData.playerController.boomCount).ToString();
-        if (playerData.cardSlots > 3){
-            for (int i = 0; i < playerData.cardSlots-3; i++)
+        goldValue.text = data.gold.ToString();
+        diamondValue.text = data.diamond.ToString();
+        redstoneValue.text = data.redStone.ToString();
+        bombValue.text = data.currBomb.ToString();
+        if (data.tempUpgradeSlots > 3){
+            for (int i = 0; i < data.tempUpgradeSlots-3; i++)
             {
                 slots[i].SetActive(true);
             }
@@ -78,16 +78,16 @@ public class UndergroundUI : MonoBehaviour{
 
     public void BuyCard(int slotID)
     {
-        if (abilityNo == playerData.cardSlots)
+        if (abilityNo == data.tempUpgradeSlots)
         {
             return;
         }
 
         int cost = playerUpgrade.GetUpgrade(slotIDs[slotID]).levels[0].cost;
 
-        if (playerData.redStoneCount >= cost){
-            playerData.redStoneCount -= cost;
-            playerData.Upgrade(slotIDs[slotID]);
+        if (data.redStone >= cost){
+            data.redStone -= cost;
+            data.Upgrade(slotIDs[slotID]);
             UpdateUI();
             slotIcons[abilityNo].gameObject.SetActive(true);
             slotIcons[abilityNo].sprite = playerUpgrade.GetUpgrade(slotIDs[slotID]).icon;

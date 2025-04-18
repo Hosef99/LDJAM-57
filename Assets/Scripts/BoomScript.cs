@@ -1,72 +1,37 @@
-
-
 using UnityEngine;
 
 public class BoomScript : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [Header("Explosion Settings")]
     public float moveSpeed = 5f;
     public float lifetime = 3f;
     public int range = 3;
-    public bool collectOre = false;
-    public bool boomImmune = false;
-    public PlayerController player;
+
     private float timer = 0f;
-    private WorldGenerator worldGenerator;
     private bool isMoving = false;
     private Vector3 targetPos;
 
-
-    void Start()
-    {
-        worldGenerator = FindObjectOfType<WorldGenerator>();
-    }
+    private WorldGenerator worldGenerator;
+    private PlayerController player;
+    private PlayerData data;
 
     void Awake()
     {
         player = FindObjectOfType<PlayerController>();
-
     }
 
-
-    void Boom()
+    void Start()
     {
-        SoundManager.Instance.PlaySFX("explosion");
-        Vector3Int currentTile = Vector3Int.RoundToInt(transform.position);
-        for (int i = 0; i < range * 2 + 1; i++)
-        {
-            for (int j = 0; j < range * 2 + 1; j++)
-            {
-                Vector3Int targetTile = currentTile + new Vector3Int(i - range, j - range, 0);
-                float distance = Vector3.Distance(targetTile, currentTile);
-                if (distance <= range - 0.5 )
-                {
-                    if (collectOre)
-                    {
-                        player.CollectBlockAt(currentTile + new Vector3Int(i - range, j - range, 0));
-                    }
-
-                    // if (!boomImmune)
-                    // {
-                    //     if (Vector3.Distance( player.transform.position , targetTile ) < 0.5)
-                    //     {
-                    //         Debug.Log("player DEATH");
-                    //     }
-                    // }
-
-                    player.DestroyBlockAt(currentTile + new Vector3Int(i - range, j - range, 0));
-
-                }
-            }
-        }
-        Destroy(gameObject);
+        worldGenerator = FindObjectOfType<WorldGenerator>();
+        data = PlayerData.Instance;
     }
 
     void Update()
     {
+        timer += Time.deltaTime;
+
         HandleMovement();
         HandleFalling();
-        timer += Time.deltaTime;
 
         if (timer >= lifetime && !isMoving)
         {
@@ -74,31 +39,54 @@ public class BoomScript : MonoBehaviour
         }
     }
 
-    void HandleMovement()
+    private void Boom()
     {
-        if (isMoving)
-        {
-            transform.position = Vector3.MoveTowards(
-                transform.position,
-                targetPos,
-                moveSpeed * Time.deltaTime
-            );
+        SoundManager.Instance.PlaySFX("explosion");
 
-            if (Vector3.Distance(transform.position, targetPos) < 0.001f)
+        Vector3Int center = Vector3Int.RoundToInt(transform.position);
+
+        for (int dx = -range; dx <= range; dx++)
+        {
+            for (int dy = -range; dy <= range; dy++)
             {
-                transform.position = targetPos;
-                isMoving = false;
+                Vector3Int offset = new Vector3Int(dx, dy, 0);
+                Vector3Int targetTile = center + offset;
+
+                if (offset.sqrMagnitude <= (range - 0.5f) * (range - 0.5f))
+                {
+                    if (data.bombCollectOre)
+                        player.CollectBlockAt(targetTile);
+
+                    if (!data.bombImmune && Vector3.Distance(player.transform.position, targetTile) < 0.5f)
+                    {
+                        Debug.Log("Player DEATH");
+                    }
+
+                    player.DestroyBlockAt(targetTile);
+                }
             }
         }
 
+        Destroy(gameObject);
     }
 
-    void HandleFalling()
+    private void HandleMovement()
     {
+        if (!isMoving) return;
 
+        transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
 
+        if (Vector3.Distance(transform.position, targetPos) < 0.001f)
+        {
+            transform.position = targetPos;
+            isMoving = false;
+        }
+    }
+
+    private void HandleFalling()
+    {
         Vector3Int currentPos = Vector3Int.RoundToInt(transform.position);
-        Vector3Int belowPos = currentPos + new Vector3Int(0, -1, 0);
+        Vector3Int belowPos = currentPos + Vector3Int.down;
 
         if (!IsBlockAt(belowPos))
         {
@@ -107,40 +95,35 @@ public class BoomScript : MonoBehaviour
         }
     }
 
-    public bool IsBlockAt(Vector3Int tilePos)
+    private bool IsBlockAt(Vector3Int tilePos)
     {
-
         return GetTileTypeAt(tilePos) != ChunkData.HOLE;
     }
 
-    int GetTileTypeAt(Vector3Int tilePos)
+    private int GetTileTypeAt(Vector3Int tilePos)
     {
         if (worldGenerator == null) return 0;
 
         Vector2Int chunkXY = worldGenerator.GetChunkXY(tilePos);
-        int cx = chunkXY.x;
-        int cy = chunkXY.y;
-        for (int i = 0; i < 7; i++)
-        {
-            for (int j = 0; j < 5; j++)
-            {
-                worldGenerator.GetOrGenerateChunk(cx - 3 + i, cy - 2 + j);
-
-            }
-        }
-        ChunkData chunk = worldGenerator.GetOrGenerateChunk(cx, cy);
-
         Vector2Int localXY = worldGenerator.GetChunkLocalXY(tilePos);
 
-        int localX = localXY.x;
-        int localY = localXY.y;
+        // Preload surrounding chunks (for safety/visuals maybe?)
+        for (int dx = -3; dx <= 3; dx++)
+        {
+            for (int dy = -2; dy <= 2; dy++)
+            {
+                worldGenerator.GetOrGenerateChunk(chunkXY.x + dx, chunkXY.y + dy);
+            }
+        }
 
-        if (localX < 0 || localX >= ChunkData.CHUNK_SIZE ||
-            localY < 0 || localY >= ChunkData.CHUNK_SIZE)
+        ChunkData chunk = worldGenerator.GetOrGenerateChunk(chunkXY.x, chunkXY.y);
+
+        if (localXY.x < 0 || localXY.x >= ChunkData.CHUNK_SIZE ||
+            localXY.y < 0 || localXY.y >= ChunkData.CHUNK_SIZE)
         {
             return 0;
         }
 
-        return chunk.tilesType[localX, localY];
+        return chunk.tilesType[localXY.x, localXY.y];
     }
 }

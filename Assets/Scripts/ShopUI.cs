@@ -37,12 +37,12 @@ public class ShopUI : MonoBehaviour
 
     void UpdateUI()
     {
-        staminaText.text = playerData.stamina.ToString();
+        staminaText.text = playerData.maxStamina.ToString();
         visionText.text = playerData.vision.ToString();
-        bombText.text = playerData.bombCount.ToString();
-        slotText.text = playerData.cardSlots.ToString();
-        diamondText.text = playerData.diamondCount.ToString();
-        coinText.text = playerData.goldCount.ToString();
+        bombText.text = playerData.maxBomb.ToString();
+        slotText.text = playerData.tempUpgradeSlots.ToString();
+        diamondText.text = playerData.diamond.ToString();
+        coinText.text = playerData.gold.ToString();
     }
 
     void UpdateButtons(){
@@ -96,11 +96,11 @@ public class ShopUI : MonoBehaviour
             return;
         }
         int upgradeCost = upg.levels[upg.level].cost;
-        if (playerData.goldCount >= upgradeCost)
+        if (playerData.gold >= upgradeCost)
         {
-            playerData.stamina += upg.levels[upg.level].addedValue;
+            playerData.maxStamina += upg.levels[upg.level].addedValue;
             playerUpgrade.GetPermanentUpgrade("stamina").level++;
-            playerData.goldCount -= upgradeCost;
+            playerData.gold -= upgradeCost;
             SoundManager.Instance.PlaySFX("powerUp");
             if (upg.IsMaxed())
             {
@@ -127,11 +127,11 @@ public class ShopUI : MonoBehaviour
             return;
         }
         int upgradeCost = upg.levels[upg.level].cost;
-        if (playerData.goldCount >= upgradeCost)
+        if (playerData.gold >= upgradeCost)
         {
             playerData.vision += upg.levels[upg.level].addedValue;
             playerUpgrade.GetPermanentUpgrade("vision").level++;
-            playerData.goldCount -= upgradeCost;
+            playerData.gold -= upgradeCost;
             SoundManager.Instance.PlaySFX("powerUp");
 
             if (upg.IsMaxed())
@@ -159,11 +159,11 @@ public class ShopUI : MonoBehaviour
             return;
         }
         int upgradeCost = upg.levels[upg.level].cost;
-        if (playerData.goldCount >= upgradeCost)
+        if (playerData.gold >= upgradeCost)
         {
-            playerData.bombCount += upg.levels[upg.level].addedValue;
+            playerData.maxBomb += upg.levels[upg.level].addedValue;
             playerUpgrade.GetPermanentUpgrade("bomb").level++;
-            playerData.goldCount -= upgradeCost;
+            playerData.gold -= upgradeCost;
             SoundManager.Instance.PlaySFX("powerUp");
 
             if (upg.IsMaxed())
@@ -191,11 +191,11 @@ public class ShopUI : MonoBehaviour
             return;
         }
         int upgradeCost = upg.levels[upg.level].cost;
-        if (playerData.diamondCount >= upgradeCost)
+        if (playerData.diamond >= upgradeCost)
         {
-            playerData.cardSlots += upg.levels[upg.level].addedValue;
+            playerData.tempUpgradeSlots += upg.levels[upg.level].addedValue;
             playerUpgrade.GetPermanentUpgrade("slot").level++;
-            playerData.diamondCount -= upgradeCost;
+            playerData.diamond -= upgradeCost;
             SoundManager.Instance.PlaySFX("powerUp");
             if (upg.IsMaxed())
             {
