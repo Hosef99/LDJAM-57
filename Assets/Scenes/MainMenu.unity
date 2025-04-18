@@ -941,7 +941,7 @@ MonoBehaviour:
   playerController: {fileID: 0}
   boomScript: {fileID: 0}
   light2D: {fileID: 0}
-  goldCount: 1000
+  goldCount: 0
   fossil1Count: 0
   fossil2Count: 0
   fossil3Count: 0
@@ -949,7 +949,7 @@ MonoBehaviour:
   fossil5Count: 0
   fossil6Count: 0
   sliverCount: 0
-  diamondCount: 1000
+  diamondCount: 0
   redStoneCount: 0
   stamina: 100
   vision: 1
@@ -965,7 +965,7 @@ Transform:
   m_GameObject: {fileID: 687206541}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.25559, y: -100.81505, z: -0.28869995}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

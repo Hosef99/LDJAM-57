@@ -7,7 +7,7 @@ public class BoomScript : MonoBehaviour
     // Start is called before the first frame update
     public float moveSpeed = 5f;
     public float lifetime = 3f;
-    public int range = 2;
+    public int range = 3;
     public bool collectOre = false;
     public bool boomImmune = false;
     public PlayerController player;
