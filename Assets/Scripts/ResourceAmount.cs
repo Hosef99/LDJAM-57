@@ -1,8 +1,8 @@
 public enum ResourceType
 {
-    gold,
-    diamond,
-    redstone
+    Gold,
+    Diamond,
+    Redstone
 }
 
 [System.Serializable]

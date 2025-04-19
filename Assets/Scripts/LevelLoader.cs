@@ -7,11 +7,11 @@ public class LevelLoader : MonoBehaviour
 {
     public Animator transition;
     public float transitionTime = 1f;
-    private PlayerData playerData;
+    public SoundManager soundManager;
 
     void Start()
     {
-        playerData = FindAnyObjectByType<PlayerData>();
+        soundManager = SoundManager.Instance;
     }
 
     // Update is called once per frame
@@ -46,10 +46,10 @@ public class LevelLoader : MonoBehaviour
     }
 
     public void ToCave(){
-        playerData.ToCave();
+        soundManager.ToCave();
     }
 
     public void ToShop(){
-        playerData.ToShop();
+        soundManager.ToShop();
     }
 }

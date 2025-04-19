@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
         data = PlayerData.Instance;
         worldGenerator = FindObjectOfType<WorldGenerator>();
         levelLoader = FindObjectOfType<LevelLoader>();
-        undergroundUI.UpdateStamina(data.maxStamina);
+        undergroundUI.UpdateStamina((int)data.GetStat(Stat.CurrentStamina));
         undergroundUI.UpdateUI();
     }
 
@@ -84,11 +84,11 @@ public class PlayerController : MonoBehaviour
         {
             if (facing == FacingDirection.Down || facing == FacingDirection.Up)
             {
-                DestroyBlocksInFront(data.verticalDig);
+                DestroyBlocksInFront((int)data.GetStat(Stat.VerticalDig));
             }
             else
             {
-                DestroyBlocksInFront(data.horizontalDig);
+                DestroyBlocksInFront((int)data.GetStat(Stat.HorizontalDig));
             }
         }
         else if (Input.GetKeyDown(KeyCode.F))
@@ -112,12 +112,12 @@ public class PlayerController : MonoBehaviour
                     break;
             }
 
-            if (data.currBomb <= 0)
+            if (data.GetStat(Stat.CurrBomb) <= 0)
             {
                 return;
             }
             GameObject boomClone = Instantiate(boomPrefab);
-            data.currBomb--;
+            data.AddStat(Stat.CurrBomb, -1);
             undergroundUI.UpdateUI();
 
             if (!IsBlockAt(frontTile))
@@ -218,11 +218,11 @@ public class PlayerController : MonoBehaviour
             lastHitOnRow = currentTile.y;
             rowStreak = 1;
         }
-
-        if (data.masterYi > 0)
+        int masterYi = (int)data.GetStat(Stat.MasterYi);
+        if (masterYi > 0)
         {
 
-            switch (data.masterYi)
+            switch (masterYi)
             {
                 case 1:
                     if (rowStreak % 5 == 0)
@@ -280,7 +280,7 @@ public class PlayerController : MonoBehaviour
                     GetTileTypeAt(frontTile) != ChunkData.OBSIDIAN3)
                 {
                     double rand = rnd.NextDouble();
-                    if (rand > data.duplicateOre)
+                    if (rand > data.GetStat(Stat.DuplicateOre))
                     {
                         CollectBlockAt(frontTile);
                     }
@@ -322,11 +322,11 @@ public class PlayerController : MonoBehaviour
             GameObject tempParticle = Instantiate(stoneParticle, (Vector3)frontTile-new Vector3(0,0.5f,0), Quaternion.identity);
             tempParticle.transform.eulerAngles = new Vector3(0,0,45);
             StartCoroutine("DestroyParticle", tempParticle);
-            data.currentStamina--;
-            undergroundUI.UpdateStamina(data.currentStamina);
+            data.AddStat(Stat.CurrentStamina, -1);
+            undergroundUI.UpdateStamina((int)data.GetStat(Stat.CurrentStamina));
         }
 
-        if (data.currentStamina <= 0){
+        if (data.GetStat(Stat.CurrentStamina) <= 0){
             EndGame();
         }
 
@@ -346,47 +346,47 @@ public class PlayerController : MonoBehaviour
 
 
             case ChunkData.GOLD1:
-                data.gold += 2;
+                data.AddStat(Stat.Gold, 2);
                 break;
 
             case ChunkData.GOLD2:
-                data.gold += 4;
+                data.AddStat(Stat.Gold, 4);
                 break;
 
             case ChunkData.GOLD3:
-                data.gold += 6;
+                data.AddStat(Stat.Gold, 6);
                 break;
 
             case ChunkData.FOSSIL1:
-                data.fossils[0] += 1;
+                data.AddStat(Stat.Fossil1, 1);
                 break;
 
             case ChunkData.FOSSIL2:
-                data.fossils[1] += 1;
+                data.AddStat(Stat.Fossil2, 1);
                 break;
 
             case ChunkData.FOSSIL3:
-                data.fossils[2] += 1;
+                data.AddStat(Stat.Fossil3, 1);
                 break;
 
             case ChunkData.FOSSIL4:
-                data.fossils[3] += 1;
+                data.AddStat(Stat.Fossil4, 1);
                 break;
 
             case ChunkData.FOSSIL5:
-                data.fossils[4] += 1;
+                data.AddStat(Stat.Fossil5, 1);
                 break;
 
             case ChunkData.FOSSIL6:
-                data.fossils[5] += 1;
+                data.AddStat(Stat.Fossil6, 1);
                 break;
 
             case ChunkData.DIAMOND:
-                data.diamond += 1;
+                data.AddStat(Stat.Diamond, 1);
                 break;
 
             case ChunkData.REDSTONE:
-                data.redStone += 6;
+                data.AddStat(Stat.Redstone, 6);
                 break;
 
             default:

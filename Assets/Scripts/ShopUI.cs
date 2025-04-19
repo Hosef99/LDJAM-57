@@ -6,7 +6,7 @@ public class ShopUI : MonoBehaviour
 {
     [Header("Currency Displays")]
     public TextMeshProUGUI diamondText;
-    public TextMeshProUGUI coinText;
+    public TextMeshProUGUI goldText;
 
     [Header("Stat Displays")]
     public TextMeshProUGUI staminaText;
@@ -19,13 +19,13 @@ public class ShopUI : MonoBehaviour
     public TextMeshProUGUI[] value;
     public Image[] coins;
 
-    private PlayerData playerData;
-    private PlayerUpgrade playerUpgrade;
+    private PlayerData data;
+    private UpgradeManager upgManager;
 
     void Start()
     {
-        playerData = FindObjectOfType<PlayerData>();
-        playerUpgrade = FindObjectOfType<PlayerUpgrade>();
+        data = PlayerData.Instance;
+        upgManager = UpgradeManager.Instance;
         UpdateButtons();
         UpdateUI(); 
     }
@@ -37,16 +37,16 @@ public class ShopUI : MonoBehaviour
 
     void UpdateUI()
     {
-        staminaText.text = playerData.maxStamina.ToString();
-        visionText.text = playerData.vision.ToString();
-        bombText.text = playerData.maxBomb.ToString();
-        slotText.text = playerData.tempUpgradeSlots.ToString();
-        diamondText.text = playerData.diamond.ToString();
-        coinText.text = playerData.gold.ToString();
+        staminaText.text = data.GetStat(Stat.MaxStamina).ToString();
+        visionText.text = data.GetStat(Stat.Vision).ToString();
+        bombText.text = data.GetStat(Stat.MaxBomb).ToString();
+        slotText.text = data.GetStat(Stat.TempUpgradeSlots).ToString();
+        diamondText.text = data.GetStat(Stat.Diamond).ToString();
+        goldText.text = data.GetStat(Stat.Gold).ToString();
     }
 
     void UpdateButtons(){
-        UpgradeData upg = playerUpgrade.GetPermanentUpgrade("stamina");
+        UpgradeData upg = upgManager.GetPermanentUpgrade(UpgradeID.);
         if(upg.level != upg.levels.Length){
             powerUpText[0].text = "+" + upg.levels[upg.level].addedValue.ToString() + " Stamina";
             value[0].text = upg.levels[upg.level].cost.ToString();
@@ -56,7 +56,7 @@ public class ShopUI : MonoBehaviour
             coins[0].enabled = false;
             value[0].text = "";
         }
-        upg = playerUpgrade.GetPermanentUpgrade("vision");
+        upg = upgManager.GetPermanentUpgrade("vision");
         if(upg.level != upg.levels.Length){
             powerUpText[1].text = "+" + upg.levels[upg.level].addedValue.ToString() + " Vision Range";
             value[1].text = upg.levels[upg.level].cost.ToString();
@@ -66,7 +66,7 @@ public class ShopUI : MonoBehaviour
             coins[1].enabled = false;
             value[1].text = "";
         }
-        upg = playerUpgrade.GetPermanentUpgrade("bomb");
+        upg = upgManager.GetPermanentUpgrade("bomb");
         if(upg.level != upg.levels.Length){
             powerUpText[2].text = "+" + upg.levels[upg.level].addedValue.ToString() + " BOMBA";
             value[2].text = upg.levels[upg.level].cost.ToString();
@@ -76,7 +76,7 @@ public class ShopUI : MonoBehaviour
             coins[2].enabled = false;
             value[2].text = "";
         }
-        upg = playerUpgrade.GetPermanentUpgrade("slot");
+        upg = upgManager.GetPermanentUpgrade("slot");
         if(upg.level != upg.levels.Length){
             powerUpText[3].text = "+" + upg.levels[upg.level].addedValue.ToString() + " Slot Size";
             value[3].text = upg.levels[upg.level].cost.ToString();
@@ -91,16 +91,16 @@ public class ShopUI : MonoBehaviour
 
     public void UpgradeStamina()
     {
-        UpgradeData upg = playerUpgrade.GetPermanentUpgrade("stamina");
+        UpgradeData upg = upgManager.GetPermanentUpgrade("stamina");
         if(upg.IsMaxed()){
             return;
         }
         int upgradeCost = upg.levels[upg.level].cost;
-        if (playerData.gold >= upgradeCost)
+        if (data.gold >= upgradeCost)
         {
-            playerData.maxStamina += upg.levels[upg.level].addedValue;
-            playerUpgrade.GetPermanentUpgrade("stamina").level++;
-            playerData.gold -= upgradeCost;
+            data.maxStamina += upg.levels[upg.level].addedValue;
+            upgManager.GetPermanentUpgrade("stamina").level++;
+            data.gold -= upgradeCost;
             SoundManager.Instance.PlaySFX("powerUp");
             if (upg.IsMaxed())
             {
@@ -122,16 +122,16 @@ public class ShopUI : MonoBehaviour
 
     public void UpgradeVision()
     {
-        UpgradeData upg = playerUpgrade.GetPermanentUpgrade("vision");
+        UpgradeData upg = upgManager.GetPermanentUpgrade("vision");
         if(upg.IsMaxed()){
             return;
         }
         int upgradeCost = upg.levels[upg.level].cost;
-        if (playerData.gold >= upgradeCost)
+        if (data.gold >= upgradeCost)
         {
-            playerData.vision += upg.levels[upg.level].addedValue;
-            playerUpgrade.GetPermanentUpgrade("vision").level++;
-            playerData.gold -= upgradeCost;
+            data.vision += upg.levels[upg.level].addedValue;
+            upgManager.GetPermanentUpgrade("vision").level++;
+            data.gold -= upgradeCost;
             SoundManager.Instance.PlaySFX("powerUp");
 
             if (upg.IsMaxed())
@@ -154,16 +154,16 @@ public class ShopUI : MonoBehaviour
 
     public void UpgradeBomb()
     {
-        UpgradeData upg = playerUpgrade.GetPermanentUpgrade("bomb");
+        UpgradeData upg = upgManager.GetPermanentUpgrade("bomb");
         if(upg.IsMaxed()){
             return;
         }
         int upgradeCost = upg.levels[upg.level].cost;
-        if (playerData.gold >= upgradeCost)
+        if (data.gold >= upgradeCost)
         {
-            playerData.maxBomb += upg.levels[upg.level].addedValue;
-            playerUpgrade.GetPermanentUpgrade("bomb").level++;
-            playerData.gold -= upgradeCost;
+            data.maxBomb += upg.levels[upg.level].addedValue;
+            upgManager.GetPermanentUpgrade("bomb").level++;
+            data.gold -= upgradeCost;
             SoundManager.Instance.PlaySFX("powerUp");
 
             if (upg.IsMaxed())
@@ -186,16 +186,16 @@ public class ShopUI : MonoBehaviour
 
     public void UpgradeSlot()
     {
-        UpgradeData upg = playerUpgrade.GetPermanentUpgrade("slot");
+        UpgradeData upg = upgManager.GetPermanentUpgrade("slot");
         if(upg.IsMaxed()){
             return;
         }
         int upgradeCost = upg.levels[upg.level].cost;
-        if (playerData.diamond >= upgradeCost)
+        if (data.diamond >= upgradeCost)
         {
-            playerData.tempUpgradeSlots += upg.levels[upg.level].addedValue;
-            playerUpgrade.GetPermanentUpgrade("slot").level++;
-            playerData.diamond -= upgradeCost;
+            data.tempUpgradeSlots += upg.levels[upg.level].addedValue;
+            upgManager.GetPermanentUpgrade("slot").level++;
+            data.diamond -= upgradeCost;
             SoundManager.Instance.PlaySFX("powerUp");
             if (upg.IsMaxed())
             {

@@ -1,30 +1,32 @@
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
 public enum Stat
 {
-    maxStamina,
-    currentStamina,
-    vision,
-    maxBomb,
-    currBomb,
-    tempUpgradeSlots,
-    gold,
-    redstone,
-    diamond,
-    bombImmune,
-    bombCollectOre,
-    horizontalDig,
-    verticalDig,
-    duplicateOre,
-    masterYi,
-    fossil1,
-    fossil2,
-    fossil3,
-    fossil4,
-    fossil5,
-    fossil6
+    MaxStamina,
+    CurrentStamina,
+    Vision,
+    MaxBomb,
+    CurrBomb,
+    TempUpgradeSlots,
+    Gold,
+    Redstone,
+    Diamond,
+    BombImmune,
+    BombCollectOre,
+    HorizontalDig,
+    VerticalDig,
+    DuplicateOre,
+    MasterYi,
+    Fossil1,
+    Fossil2,
+    Fossil3,
+    Fossil4,
+    Fossil5,
+    Fossil6
 }
 
 public class PlayerData : MonoBehaviour{
@@ -69,30 +71,30 @@ public class PlayerData : MonoBehaviour{
 
     public void InitializeStats()
     {
-        stats[Stat.maxStamina] = 100;
-        stats[Stat.currentStamina] = 100;
-        stats[Stat.vision] = 3;
-        stats[Stat.maxBomb] = 3;
-        stats[Stat.currBomb] = 3;
-        stats[Stat.tempUpgradeSlots] = 3;
-        stats[Stat.gold] = 0;
-        stats[Stat.redstone] = 0;
-        stats[Stat.diamond] = 0;
+        stats[Stat.MaxStamina] = 100;
+        stats[Stat.CurrentStamina] = 100;
+        stats[Stat.Vision] = 3;
+        stats[Stat.MaxBomb] = 3;
+        stats[Stat.CurrBomb] = 3;
+        stats[Stat.TempUpgradeSlots] = 3;
+        stats[Stat.Gold] = 0;
+        stats[Stat.Redstone] = 0;
+        stats[Stat.Diamond] = 0;
         
         // Upgrades
-        stats[Stat.bombImmune] = 0;
-        stats[Stat.bombCollectOre] = 0;
-        stats[Stat.horizontalDig] = 1;
-        stats[Stat.verticalDig] = 1;
-        stats[Stat.duplicateOre] = 0;
-        stats[Stat.masterYi] = 0;
+        stats[Stat.BombImmune] = 0;
+        stats[Stat.BombCollectOre] = 0;
+        stats[Stat.HorizontalDig] = 1;
+        stats[Stat.VerticalDig] = 1;
+        stats[Stat.DuplicateOre] = 0;
+        stats[Stat.MasterYi] = 0;
 
         // Fossils
-        stats[Stat.fossil1] = 0;
-        stats[Stat.fossil2] = 0;
-        stats[Stat.fossil3] = 0;
-        stats[Stat.fossil4] = 0;
-        stats[Stat.fossil5] = 0;
-        stats[Stat.fossil6] = 0;
+        stats[Stat.Fossil1] = 0;
+        stats[Stat.Fossil2] = 0;
+        stats[Stat.Fossil3] = 0;
+        stats[Stat.Fossil4] = 0;
+        stats[Stat.Fossil5] = 0;
+        stats[Stat.Fossil6] = 0;
     }
 }
