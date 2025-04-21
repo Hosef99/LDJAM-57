@@ -438,7 +438,7 @@ public class PlayerController : MonoBehaviour
     void EndGame(){
         cannotMove = true;
         Debug.Log("Out of attempts!");
-        PlayerUpgrade playerUpgrade = FindAnyObjectByType<PlayerUpgrade>();
+        UpgradeManager playerUpgrade = FindAnyObjectByType<UpgradeManager>();
         playerUpgrade.ResetUpgrades();
         SoundManager.Instance.ToShop();
         levelLoader.LoadScene("Shop");

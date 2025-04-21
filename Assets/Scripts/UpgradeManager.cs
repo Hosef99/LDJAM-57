@@ -34,10 +34,13 @@ public class UpgradeManager : MonoBehaviour{
 
     public void ResetUpgrades()
     {
-        activeUpgrades = new();
-        foreach (var item in tempUpgrades)
+        activeUpgrades.Clear();
+        foreach (var upgrade in tempUpgrades)
         {
-            item.
+            if (upgrade is StatsUpgrade statsUpgrade)
+            {
+                statsUpgrade.currentLevel = 0;
+            }
         }
     }
 

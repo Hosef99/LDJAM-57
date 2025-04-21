@@ -1,29 +1,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class UpgradedStat
-{
-    public Stat stat;
-    public float value;
-}
+
 
 [CreateAssetMenu(fileName = "NewStatsUpgrade", menuName = "Upgrades/StatsUpgrade")]
 public class StatsUpgrade : Upgrade
 {
-    public List<List<UpgradedStat>> statLevel = new();
-    public int currentLevel;
     public override void DoUpgrade()
     {
-        if (currentLevel >= statLevel.Count)
+        if (currentLevel >= upgradeLevels.Count)
         {
             Debug.LogWarning("Max upgrade level reached.");
             return;
         }
 
-        var level = statLevel[currentLevel];
+        var level = upgradeLevels[currentLevel];
 
-        foreach (var item in level)
+        foreach (var item in level.upgradedStats)
         {
             PlayerData.Instance.AddStat(item.stat, item.value);
         }

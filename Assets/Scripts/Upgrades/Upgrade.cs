@@ -10,6 +10,24 @@ public enum UpgradeID
     VerticalDig,
     DuplicateOre,
     MasterYi,
+    PermStamina,
+    PermVision,
+    PermBomb,
+    PermSlot,
+}
+
+[System.Serializable]
+public class UpgradedStat
+{
+    public Stat stat;
+    public float value;
+}
+
+[System.Serializable]
+public class UpgradeLevel
+{
+    public List<UpgradedStat> upgradedStats;
+    public ResourceAmount cost;
 }
 
 public abstract class Upgrade : ScriptableObject 
@@ -18,7 +36,8 @@ public abstract class Upgrade : ScriptableObject
     public UpgradeID upgradeID;
     public string upgradeName;
     public string description;
-    public ResourceAmount cost;
+    public List<UpgradeLevel> upgradeLevels;
+    public int currentLevel;
     public bool isTemp;
     public abstract void DoUpgrade();
 }
