@@ -439,6 +439,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d6af1d277e78dc4ab5b46e5c123b4b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  caveMusic: {fileID: 0}
+  shopMusic: {fileID: 0}
+  musicSource: {fileID: 0}
   sfxSource: {fileID: 201657439}
   sfxClips:
   - {fileID: 8300000, guid: 3bde3a9d9da8a39468b4f0f5686ea59e, type: 3}
@@ -792,7 +795,7 @@ GameObject:
   m_Component:
   - component: {fileID: 687206544}
   - component: {fileID: 687206543}
-  - component: {fileID: 687206542}
+  - component: {fileID: 687206546}
   - component: {fileID: 687206545}
   m_Layer: 0
   m_Name: DataStorage
@@ -801,128 +804,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &687206542
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 687206541}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ea0adef1dd0b0543a2909809a0f1cfb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  permanentUpgrades:
-  - upgradeID: stamina
-    displayName: Stamina
-    level: 0
-    levels:
-    - cost: 30
-      addedValue: 50
-    - cost: 70
-      addedValue: 100
-    - cost: 200
-      addedValue: 150
-    - cost: 350
-      addedValue: 300
-    icon: {fileID: 0}
-    isActive: 0
-    description: 
-  - upgradeID: vision
-    displayName: Vision
-    level: 0
-    levels:
-    - cost: 100
-      addedValue: 1
-    - cost: 200
-      addedValue: 1
-    - cost: 500
-      addedValue: 1
-    icon: {fileID: 0}
-    isActive: 0
-    description: 
-  - upgradeID: bomb
-    displayName: Bomb
-    level: 0
-    levels:
-    - cost: 50
-      addedValue: 3
-    - cost: 150
-      addedValue: 5
-    - cost: 300
-      addedValue: 8
-    icon: {fileID: 0}
-    isActive: 0
-    description: 
-  - upgradeID: slot
-    displayName: Slot Size
-    level: 0
-    levels:
-    - cost: 10
-      addedValue: 1
-    - cost: 25
-      addedValue: 1
-    - cost: 75
-      addedValue: 1
-    icon: {fileID: 0}
-    isActive: 0
-    description: 
-  upgrades:
-  - upgradeID: horizontal
-    displayName: Lateral Expansion
-    level: 0
-    levels:
-    - cost: 40
-      addedValue: 0
-    icon: {fileID: 893539044, guid: 4158826ffb161914784aff02b825efa4, type: 3}
-    isActive: 0
-    description: Digs two blocks at a time when mining sideways
-  - upgradeID: vertical
-    displayName: Vertical Focus
-    level: 0
-    levels:
-    - cost: 60
-      addedValue: 0
-    icon: {fileID: -1147559618, guid: 4158826ffb161914784aff02b825efa4, type: 3}
-    isActive: 0
-    description: Digs two blocks at a time when mining downward
-  - upgradeID: masteryi
-    displayName: Rhythmic Flow
-    level: 0
-    levels:
-    - cost: 20
-      addedValue: 0
-    icon: {fileID: -136691721, guid: 4158826ffb161914784aff02b825efa4, type: 3}
-    isActive: 0
-    description: Every second lateral dig yields two blocks instead of one
-  - upgradeID: boomrange
-    displayName: Precise Madness
-    level: 0
-    levels:
-    - cost: 60
-      addedValue: 0
-    icon: {fileID: 1121198266, guid: 4158826ffb161914784aff02b825efa4, type: 3}
-    isActive: 0
-    description: Increases bomb explosion radius to 6
-  - upgradeID: ore
-    displayName: Relic Preservation
-    level: 0
-    levels:
-    - cost: 40
-      addedValue: 0
-    icon: {fileID: -690805641, guid: 65c1b0a4f2575bb47a98a678ae41854d, type: 3}
-    isActive: 0
-    description: Chance to collect minerals without destroying the block
-  - upgradeID: boomcollect
-    displayName: Residual Collection
-    level: 0
-    levels:
-    - cost: 100
-      addedValue: 0
-    icon: {fileID: -954584436, guid: 4158826ffb161914784aff02b825efa4, type: 3}
-    isActive: 0
-    description: Allows you to collect minerals destroyed by bomb blasts
 --- !u!114 &687206543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -935,27 +816,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f2b01aa1bd04f74c8aa978804e7527a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSource: {fileID: 687206545}
-  caveMusic: {fileID: 8300000, guid: 5ab99f42c86e0cb40a271aee44aade82, type: 3}
-  shopMusic: {fileID: 8300000, guid: 1d18c6202ec8ec64084d75108f4297db, type: 3}
-  playerController: {fileID: 0}
-  boomScript: {fileID: 0}
-  light2D: {fileID: 0}
-  goldCount: 0
-  fossil1Count: 0
-  fossil2Count: 0
-  fossil3Count: 0
-  fossil4Count: 0
-  fossil5Count: 0
-  fossil6Count: 0
-  sliverCount: 0
-  diamondCount: 0
-  redStoneCount: 0
-  stamina: 100
-  vision: 1
-  bombCount: 3
-  cardSlots: 3
-  bombCapcity: 1
 --- !u!4 &687206544
 Transform:
   m_ObjectHideFlags: 0
@@ -1067,6 +927,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &687206546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 687206541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf30a732d0ae83c4e810ffcc5f374b83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  permanentUpgrades: []
+  tempUpgrades: []
+  activeUpgrades: []
 --- !u!1 &788403534
 GameObject:
   m_ObjectHideFlags: 0

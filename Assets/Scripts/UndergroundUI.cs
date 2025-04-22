@@ -47,12 +47,12 @@ public class UndergroundUI : MonoBehaviour{
         data = FindObjectOfType<PlayerData>();
         upgradeManager = UpgradeManager.Instance;
 
-        goldValue.text = ((int)data.GetStat(Stat.Gold)).ToString();
-        diamondValue.text = ((int)data.GetStat(Stat.Diamond)).ToString();
-        redstoneValue.text = ((int)data.GetStat(Stat.Redstone)).ToString();
-        bombValue.text = ((int)data.GetStat(Stat.CurrBomb)).ToString();
-        if (data.GetStat(Stat.TempUpgradeSlots) > 3){
-            for (int i = 0; i < data.GetStat(Stat.TempUpgradeSlots)-3; i++)
+        goldValue.text = ((int)data.GetStatValue(Stat.Gold)).ToString();
+        diamondValue.text = ((int)data.GetStatValue(Stat.Diamond)).ToString();
+        redstoneValue.text = ((int)data.GetStatValue(Stat.Redstone)).ToString();
+        bombValue.text = ((int)data.GetStatValue(Stat.CurrBomb)).ToString();
+        if (data.GetStatValue(Stat.TempUpgradeSlots) > 3){
+            for (int i = 0; i < data.GetStatValue(Stat.TempUpgradeSlots)-3; i++)
             {
                 slots[i].SetActive(true);
             }
@@ -65,11 +65,19 @@ public class UndergroundUI : MonoBehaviour{
         return upgradeManager.tempUpgrades.Where(upg => !activeIDs.Contains(upg.upgradeID)).ToArray();
     }
 
-    public void UpdateCards(Upgrade[] availableTempUpgrades)
+    public void UpdateCards()
     {
         Upgrade upg;
 
-        for (int i = 0; i < availableTempUpgrades.Length; i++)
+        List<Upgrade> selectedUpgrades = UpgradeManager.Instance.tempUpgrades
+    .Where(upg => upg is StatsUpgrade statsUpgrade && statsUpgrade.currentLevel >= statsUpgrade.upgradeLevels.Count)
+    .Cast<Upgrade>()
+    .ToList();
+
+        List<Upgrade> availableTempUpgrades = GetRandomUniqueElements(selectedUpgrades, 3);
+
+
+        for (int i = 0; i < availableTempUpgrades.Count; i++)
         {
             upg = availableTempUpgrades[i];
             slotIDs[i] = availableTempUpgrades[i];
@@ -81,7 +89,7 @@ public class UndergroundUI : MonoBehaviour{
 
         }
         
-        for (int i = availableTempUpgrades.Length; i < 3; i++)
+        for (int i = availableTempUpgrades.Count; i < 3; i++)
         {
             buybuttons[i].gameObject.SetActive(false);
         }
@@ -90,7 +98,7 @@ public class UndergroundUI : MonoBehaviour{
 
     public void BuyCard(int slotID)
     {
-        if (abilityNo == data.GetStat(Stat.TempUpgradeSlots))
+        if (abilityNo == data.GetStatValue(Stat.TempUpgradeSlots))
         {
             return;
         }
@@ -98,7 +106,7 @@ public class UndergroundUI : MonoBehaviour{
         Upgrade upg = slotIDs[slotID];
         int cost = (int)upg.upgradeLevels[upg.currentLevel].cost.value;
 
-        if (data.GetStat(Stat.Redstone) >= cost){
+        if (data.GetStatValue(Stat.Redstone) >= cost){
             data.AddStat(Stat.Redstone,-cost);
             upg.DoUpgrade();
             UpdateUI();
@@ -115,7 +123,7 @@ public class UndergroundUI : MonoBehaviour{
 
     public void ShowShop()
     {
-        UpdateCards(GetAvailableTempUpgrades());
+        UpdateCards();
         shopPanel.SetActive(true);
     }
 

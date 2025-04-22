@@ -4330,7 +4330,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   diamondText: {fileID: 902919788}
-  coinText: {fileID: 615612730}
+  goldText: {fileID: 615612730}
   staminaText: {fileID: 2012362758}
   visionText: {fileID: 445171941}
   bombText: {fileID: 97361107}

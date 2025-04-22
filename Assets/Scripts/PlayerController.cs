@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
         data = PlayerData.Instance;
         worldGenerator = FindObjectOfType<WorldGenerator>();
         levelLoader = FindObjectOfType<LevelLoader>();
-        undergroundUI.UpdateStamina((int)data.GetStat(Stat.CurrentStamina));
+        undergroundUI.UpdateStamina((int)data.GetStatValue(Stat.CurrentStamina));
         undergroundUI.UpdateUI();
     }
 
@@ -84,11 +84,11 @@ public class PlayerController : MonoBehaviour
         {
             if (facing == FacingDirection.Down || facing == FacingDirection.Up)
             {
-                DestroyBlocksInFront((int)data.GetStat(Stat.VerticalDig));
+                DestroyBlocksInFront((int)data.GetStatValue(Stat.VerticalDig));
             }
             else
             {
-                DestroyBlocksInFront((int)data.GetStat(Stat.HorizontalDig));
+                DestroyBlocksInFront((int)data.GetStatValue(Stat.HorizontalDig));
             }
         }
         else if (Input.GetKeyDown(KeyCode.F))
@@ -112,7 +112,7 @@ public class PlayerController : MonoBehaviour
                     break;
             }
 
-            if (data.GetStat(Stat.CurrBomb) <= 0)
+            if (data.GetStatValue(Stat.CurrBomb) <= 0)
             {
                 return;
             }
@@ -218,7 +218,7 @@ public class PlayerController : MonoBehaviour
             lastHitOnRow = currentTile.y;
             rowStreak = 1;
         }
-        int masterYi = (int)data.GetStat(Stat.MasterYi);
+        int masterYi = (int)data.GetStatValue(Stat.MasterYi);
         if (masterYi > 0)
         {
 
@@ -280,7 +280,7 @@ public class PlayerController : MonoBehaviour
                     GetTileTypeAt(frontTile) != ChunkData.OBSIDIAN3)
                 {
                     double rand = rnd.NextDouble();
-                    if (rand > data.GetStat(Stat.DuplicateOre))
+                    if (rand > data.GetStatValue(Stat.DuplicateOre))
                     {
                         CollectBlockAt(frontTile);
                     }
@@ -323,10 +323,10 @@ public class PlayerController : MonoBehaviour
             tempParticle.transform.eulerAngles = new Vector3(0,0,45);
             StartCoroutine("DestroyParticle", tempParticle);
             data.AddStat(Stat.CurrentStamina, -1);
-            undergroundUI.UpdateStamina((int)data.GetStat(Stat.CurrentStamina));
+            undergroundUI.UpdateStamina((int)data.GetStatValue(Stat.CurrentStamina));
         }
 
-        if (data.GetStat(Stat.CurrentStamina) <= 0){
+        if (data.GetStatValue(Stat.CurrentStamina) <= 0){
             EndGame();
         }
 

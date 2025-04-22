@@ -10,14 +10,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 35f642be1e9db2646b08227c351b6ad1, type: 3}
-  m_Name: UpgradeStamina
+  m_Name: UpgradeSlot
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
-  upgradeID: 0
-  upgradeName: 
+  upgradeID: 9
+  upgradeName: Increase Slot
   description: 
-  cost:
-    resourceType: 0
-    value: 0
-  isTemp: 0
+  upgradeLevels:
+  - upgradedStats:
+    - stat: 5
+      value: 1
+    cost:
+      resourceType: 1
+      value: 1
+  - upgradedStats:
+    - stat: 5
+      value: 1
+    cost:
+      resourceType: 1
+      value: 5
+  - upgradedStats:
+    - stat: 5
+      value: 1
+    cost:
+      resourceType: 1
+      value: 15
   currentLevel: 0
+  isTemp: 0

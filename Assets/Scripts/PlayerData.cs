@@ -38,6 +38,7 @@ public class PlayerData : MonoBehaviour{
         if (Instance == null)
         {
             Instance = this;
+            InitializeStats();
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -46,7 +47,7 @@ public class PlayerData : MonoBehaviour{
         }
     }
 
-    public float GetStat(Stat stat)
+    public float GetStatValue(Stat stat)
     {
         if (stats.TryGetValue(stat, out var value))
         {

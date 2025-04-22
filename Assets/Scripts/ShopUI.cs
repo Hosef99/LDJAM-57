@@ -49,12 +49,12 @@ public class ShopUI : MonoBehaviour
 
     void UpdateUI()
     {
-        staminaText.text = data.GetStat(Stat.MaxStamina).ToString();
-        visionText.text = data.GetStat(Stat.Vision).ToString();
-        bombText.text = data.GetStat(Stat.MaxBomb).ToString();
-        slotText.text = data.GetStat(Stat.TempUpgradeSlots).ToString();
-        diamondText.text = data.GetStat(Stat.Diamond).ToString();
-        goldText.text = data.GetStat(Stat.Gold).ToString();
+        staminaText.text = data.GetStatValue(Stat.MaxStamina).ToString();
+        visionText.text = data.GetStatValue(Stat.Vision).ToString();
+        bombText.text = data.GetStatValue(Stat.MaxBomb).ToString();
+        slotText.text = data.GetStatValue(Stat.TempUpgradeSlots).ToString();
+        diamondText.text = data.GetStatValue(Stat.Diamond).ToString();
+        goldText.text = data.GetStatValue(Stat.Gold).ToString();
     }
 
     void UpdateButtons()
@@ -94,7 +94,7 @@ public class ShopUI : MonoBehaviour
             if (currentLevel >= statsUpgrade.upgradeLevels.Count) return;
 
             ResourceAmount cost = statsUpgrade.upgradeLevels[currentLevel].cost;
-            if (data.GetStat((Stat)System.Enum.Parse(typeof(Stat), cost.resourceType.ToString())) >= cost.value)
+            if (data.GetStatValue(cost.GetResourceTypeInStat()) >= cost.value)
             {
                 statsUpgrade.DoUpgrade();
                 SoundManager.Instance.PlaySFX("powerUp");

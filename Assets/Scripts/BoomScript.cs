@@ -54,10 +54,10 @@ public class BoomScript : MonoBehaviour
 
                 if (offset.sqrMagnitude <= (range - 0.5f) * (range - 0.5f))
                 {
-                    if (data.GetStat(Stat.BombCollectOre) != 0)
+                    if (data.GetStatValue(Stat.BombCollectOre) != 0)
                         player.CollectBlockAt(targetTile);
 
-                    if (data.GetStat(Stat.BombImmune) == 0 && Vector3.Distance(player.transform.position, targetTile) < 0.5f)
+                    if (data.GetStatValue(Stat.BombImmune) == 0 && Vector3.Distance(player.transform.position, targetTile) < 0.5f)
                     {
                         Debug.Log("Player DEATH");
                     }
