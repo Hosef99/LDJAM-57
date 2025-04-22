@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: UpgradeVision
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
-  upgradeID: 0
+  upgradeID: 7
   upgradeName: Increase Vision
   description: 
   upgradeLevels:

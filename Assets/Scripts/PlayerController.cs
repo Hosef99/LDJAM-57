@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 using Random = System.Random;
 
@@ -26,11 +27,13 @@ public class PlayerController : MonoBehaviour
     private int lastHitOnRow = 0;
     private int rowStreak = 0;
     private bool cannotMove = false;
+    private Light2D playerLight;
 
     void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        playerLight = GetComponent<Light2D>();
     }
 
     void Start()
@@ -132,7 +135,7 @@ public class PlayerController : MonoBehaviour
             boomClone.GetComponent<BoomScript>().enabled = true;
 
 
-        }else if(Input.GetKeyDown(KeyCode.P)){
+        }else if(Input.GetKeyDown(KeyCode.R)){
             SceneManager.LoadScene("Shop");
         }
     }
@@ -335,6 +338,32 @@ public class PlayerController : MonoBehaviour
     IEnumerator DestroyParticle(GameObject particle){
         yield return new WaitForSeconds(1f);
         Destroy(particle);
+    }
+
+    public void InitializeOnGame()
+    {
+        float intensity = 0f;
+        switch (data.GetStatValue(Stat.Vision))
+        {
+            case 0:
+            intensity = 0.5f;
+            break;
+            case 1:
+            intensity = 0.65f;
+            break;
+            case 2:
+            intensity = 0.8f;
+            break;
+            case 3:
+            intensity = 0.9f;
+            break;
+            case 4:
+            intensity = 1f;
+            break;
+            default:
+            break;
+        }
+        playerLight.falloffIntensity = intensity;
     }
 
     public void CollectBlockAt(Vector3Int tilePos)

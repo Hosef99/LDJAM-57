@@ -10,36 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 35f642be1e9db2646b08227c351b6ad1, type: 3}
-  m_Name: UpgradeBomb
+  m_Name: BombImmune
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
-  upgradeID: 8
-  upgradeName: Increase Bomb
-  description: 
+  upgradeID: 0
+  upgradeName: Blastproof Boots
+  description: Grants immunity to bomb damage
   upgradeLevels:
   - upgradedStats:
-    - stat: 3
-      value: 3
+    - stat: 9
+      value: 1
     cost:
-      resourceType: 0
+      resourceType: 2
       value: 50
-  - upgradedStats:
-    - stat: 3
-      value: 5
-    cost:
-      resourceType: 0
-      value: 80
-  - upgradedStats:
-    - stat: 3
-      value: 8
-    cost:
-      resourceType: 0
-      value: 100
-  - upgradedStats:
-    - stat: 3
-      value: 10
-    cost:
-      resourceType: 0
-      value: 150
   currentLevel: 0
-  isTemp: 0
+  isTemp: 1

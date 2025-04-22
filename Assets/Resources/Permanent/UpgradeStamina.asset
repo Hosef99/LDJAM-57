@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: UpgradeStamina
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
-  upgradeID: 0
+  upgradeID: 6
   upgradeName: Upgrade Stamina
   description: 
   upgradeLevels:

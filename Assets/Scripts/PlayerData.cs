@@ -29,9 +29,18 @@ public enum Stat
     Fossil6
 }
 
+[System.Serializable]
+public class StatData
+{
+    public Stat stat;
+    public float value;
+}
+
 public class PlayerData : MonoBehaviour{
     public static PlayerData Instance;
     public Dictionary<Stat, float> stats = new();
+
+    public Dictionary<UpgradeID, int> upgradeLevels = new();
     
     void Awake()
     {
@@ -70,17 +79,35 @@ public class PlayerData : MonoBehaviour{
         stats[stat] += value;
     }
 
+    public void OnGame()
+    {
+        stats[Stat.CurrentStamina] = stats[Stat.MaxStamina];
+        stats[Stat.CurrBomb] = stats[Stat.MaxBomb];
+    }
+
+    public void LevelUpgrade(Upgrade upgrade)
+    {
+        if (!upgradeLevels.ContainsKey(upgrade.upgradeID))
+        {
+            upgradeLevels[upgrade.upgradeID] = 1;
+        }
+        else if (upgradeLevels[upgrade.upgradeID] < upgrade.upgradeLevels.Count)
+        {
+            upgradeLevels[upgrade.upgradeID]++;
+        }
+    }
+
     public void InitializeStats()
     {
-        stats[Stat.MaxStamina] = 100;
-        stats[Stat.CurrentStamina] = 100;
-        stats[Stat.Vision] = 3;
+        stats[Stat.MaxStamina] = 10;
+        stats[Stat.CurrentStamina] = 10;
+        stats[Stat.Vision] = 0;
         stats[Stat.MaxBomb] = 3;
         stats[Stat.CurrBomb] = 3;
         stats[Stat.TempUpgradeSlots] = 3;
-        stats[Stat.Gold] = 0;
+        stats[Stat.Gold] = 9999;
         stats[Stat.Redstone] = 0;
-        stats[Stat.Diamond] = 0;
+        stats[Stat.Diamond] = 100;
         
         // Upgrades
         stats[Stat.BombImmune] = 0;

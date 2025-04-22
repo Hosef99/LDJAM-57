@@ -61,8 +61,10 @@ public class ShopUI : MonoBehaviour
     {
         for (int i = 0; i < upgradeIDs.Length; i++)
         {
-            if (upgManager.GetPermanentUpgrade(upgradeIDs[i]) is StatsUpgrade statsUpgrade)
+            Upgrade upg = upgManager.GetPermanentUpgrade(upgradeIDs[i]);
+            if (upg is StatsUpgrade statsUpgrade)
             {
+                Debug.Log("Stat");
                 int currentLevel = statsUpgrade.currentLevel;
 
                 if (currentLevel < statsUpgrade.upgradeLevels.Count)
@@ -97,6 +99,7 @@ public class ShopUI : MonoBehaviour
             if (data.GetStatValue(cost.GetResourceTypeInStat()) >= cost.value)
             {
                 statsUpgrade.DoUpgrade();
+                data.AddStat(cost.GetResourceTypeInStat(), -cost.value);
                 SoundManager.Instance.PlaySFX("powerUp");
                 UpdateButtons();
             }
