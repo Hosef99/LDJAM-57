@@ -175,9 +175,13 @@ public class PlayerController : MonoBehaviour
                 transform.position = targetPos;
                 isMoving = false;
             }
+
+            GameObject.Find("DustTrailParticle").GetComponent<ParticleSystem1>().isEnabled = true;
         }
         else{
             anim.SetBool("IsMove", false);
+
+            GameObject.Find("DustTrailParticle").GetComponent<ParticleSystem1>().isEnabled = false;
         }
     }
 
