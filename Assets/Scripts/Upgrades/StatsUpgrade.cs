@@ -8,6 +8,7 @@ public class StatsUpgrade : Upgrade
 {
     public override void DoUpgrade()
     {
+        int currentLevel = UpgradeManager.Instance.upgradeLevels[upgradeID];
         if (currentLevel >= upgradeLevels.Count)
         {
             Debug.LogWarning("Max upgrade level reached.");
@@ -25,7 +26,6 @@ public class StatsUpgrade : Upgrade
         {
             UpgradeManager.Instance.AddTempUpgrade(this);
         }
-
-        currentLevel++;
+        UpgradeManager.Instance.upgradeLevels[upgradeID]++;
     }
 }

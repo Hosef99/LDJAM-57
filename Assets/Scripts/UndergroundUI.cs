@@ -51,8 +51,8 @@ public class UndergroundUI : MonoBehaviour{
         diamondValue.text = ((int)data.GetStatValue(Stat.Diamond)).ToString();
         redstoneValue.text = ((int)data.GetStatValue(Stat.Redstone)).ToString();
         bombValue.text = ((int)data.GetStatValue(Stat.CurrBomb)).ToString();
-        if (data.GetStatValue(Stat.TempUpgradeSlots) > 3){
-            for (int i = 0; i < data.GetStatValue(Stat.TempUpgradeSlots)-3; i++)
+        if (data.GetStatValue(UpgradeStat.TempUpgradeSlots) > 3){
+            for (int i = 0; i < data.GetStatValue(UpgradeStat.TempUpgradeSlots)-3; i++)
             {
                 slots[i].SetActive(true);
             }
@@ -70,7 +70,7 @@ public class UndergroundUI : MonoBehaviour{
         Upgrade upg;
 
         List<Upgrade> selectedUpgrades = UpgradeManager.Instance.tempUpgrades
-    .Where(upg => upg is StatsUpgrade statsUpgrade && statsUpgrade.currentLevel >= statsUpgrade.upgradeLevels.Count)
+    .Where(upg => upg is StatsUpgrade statsUpgrade && UpgradeManager.Instance.GetUpgradeLevel(statsUpgrade.upgradeID) >= statsUpgrade.upgradeLevels.Count)
     .Cast<Upgrade>()
     .ToList();
 
@@ -80,12 +80,13 @@ public class UndergroundUI : MonoBehaviour{
         for (int i = 0; i < availableTempUpgrades.Count; i++)
         {
             upg = availableTempUpgrades[i];
+            int currentLevel = UpgradeManager.Instance.GetUpgradeLevel(upg.upgradeID);
             slotIDs[i] = availableTempUpgrades[i];
             abilityIcons[i].sprite = upg.icon;
             titles[i].text = upg.upgradeName;
             descriptions[i].text = upg.description;
-            values[i].text = upg.upgradeLevels[upg.currentLevel].cost.value.ToString();
-            resourceIcons[i].sprite = resourceIcon.GetIcon(upg.upgradeLevels[upg.currentLevel].cost.resourceType);
+            values[i].text = upg.upgradeLevels[currentLevel].cost.value.ToString();
+            resourceIcons[i].sprite = resourceIcon.GetIcon(upg.upgradeLevels[currentLevel].cost.resourceType);
 
         }
         
@@ -98,13 +99,15 @@ public class UndergroundUI : MonoBehaviour{
 
     public void BuyCard(int slotID)
     {
-        if (abilityNo == data.GetStatValue(Stat.TempUpgradeSlots))
+        if (abilityNo == data.GetStatValue(UpgradeStat.TempUpgradeSlots))
         {
             return;
         }
 
         Upgrade upg = slotIDs[slotID];
-        int cost = (int)upg.upgradeLevels[upg.currentLevel].cost.value;
+        int currentLevel = UpgradeManager.Instance.GetUpgradeLevel(upg.upgradeID);
+
+        int cost = (int)upg.upgradeLevels[currentLevel].cost.value;
 
         if (data.GetStatValue(Stat.Redstone) >= cost){
             data.AddStat(Stat.Redstone,-cost);

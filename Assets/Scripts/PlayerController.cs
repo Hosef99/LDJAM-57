@@ -87,11 +87,11 @@ public class PlayerController : MonoBehaviour
         {
             if (facing == FacingDirection.Down || facing == FacingDirection.Up)
             {
-                DestroyBlocksInFront((int)data.GetStatValue(Stat.VerticalDig));
+                DestroyBlocksInFront(data.GetStatValue(UpgradeStat.VerticalDig));
             }
             else
             {
-                DestroyBlocksInFront((int)data.GetStatValue(Stat.HorizontalDig));
+                DestroyBlocksInFront(data.GetStatValue(UpgradeStat.HorizontalDig));
             }
         }
         else if (Input.GetKeyDown(KeyCode.F))
@@ -221,7 +221,7 @@ public class PlayerController : MonoBehaviour
             lastHitOnRow = currentTile.y;
             rowStreak = 1;
         }
-        int masterYi = (int)data.GetStatValue(Stat.MasterYi);
+        int masterYi = data.GetStatValue(UpgradeStat.MasterYi);
         if (masterYi > 0)
         {
 
@@ -283,7 +283,7 @@ public class PlayerController : MonoBehaviour
                     GetTileTypeAt(frontTile) != ChunkData.OBSIDIAN3)
                 {
                     double rand = rnd.NextDouble();
-                    if (rand > data.GetStatValue(Stat.DuplicateOre))
+                    if (rand < data.GetStatValue(UpgradeStat.DuplicateOre)/100)
                     {
                         CollectBlockAt(frontTile);
                     }
@@ -343,7 +343,7 @@ public class PlayerController : MonoBehaviour
     public void InitializeOnGame()
     {
         float intensity = 0f;
-        switch (data.GetStatValue(Stat.Vision))
+        switch (data.GetStatValue(UpgradeStat.Vision))
         {
             case 0:
             intensity = 0.5f;

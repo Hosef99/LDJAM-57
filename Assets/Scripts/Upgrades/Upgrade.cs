@@ -37,7 +37,6 @@ public abstract class Upgrade : ScriptableObject
     public string upgradeName;
     public string description;
     public List<UpgradeLevel> upgradeLevels;
-    public int currentLevel;
     public bool isTemp;
     public abstract void DoUpgrade();
 }

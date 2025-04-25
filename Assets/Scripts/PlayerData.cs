@@ -6,27 +6,31 @@ using UnityEngine.Rendering.Universal;
 
 public enum Stat
 {
-    MaxStamina,
     CurrentStamina,
-    Vision,
-    MaxBomb,
     CurrBomb,
-    TempUpgradeSlots,
     Gold,
     Redstone,
     Diamond,
-    BombImmune,
-    BombCollectOre,
-    HorizontalDig,
-    VerticalDig,
-    DuplicateOre,
-    MasterYi,
     Fossil1,
     Fossil2,
     Fossil3,
     Fossil4,
     Fossil5,
     Fossil6
+}
+
+public enum UpgradeStat
+{
+    MaxStamina,
+    Vision,
+    MaxBomb,
+    TempUpgradeSlots,
+    BombImmune,
+    BombCollectOre,
+    HorizontalDig,
+    VerticalDig,
+    DuplicateOre,
+    MasterYi,
 }
 
 [System.Serializable]
@@ -39,8 +43,8 @@ public class StatData
 public class PlayerData : MonoBehaviour{
     public static PlayerData Instance;
     public Dictionary<Stat, float> stats = new();
+    public Dictionary<UpgradeStat, int> upgradeStats = new();
 
-    public Dictionary<UpgradeID, int> upgradeLevels = new();
     
     void Awake()
     {
@@ -65,6 +69,15 @@ public class PlayerData : MonoBehaviour{
         return 0;
     }
 
+    public int GetStatValue(UpgradeStat upgradeStat)
+    {
+        if (upgradeStats.TryGetValue(upgradeStat, out var value))
+        {
+            return value;
+        }
+        return 0;
+    }
+
     public void SetStat(Stat stat, float value)
     {
         stats[stat] = value;
@@ -81,41 +94,41 @@ public class PlayerData : MonoBehaviour{
 
     public void OnGame()
     {
-        stats[Stat.CurrentStamina] = stats[Stat.MaxStamina];
-        stats[Stat.CurrBomb] = stats[Stat.MaxBomb];
+        stats[Stat.CurrentStamina] = upgradeStats[UpgradeStat.MaxStamina];
+        stats[Stat.CurrBomb] = upgradeStats[UpgradeStat.MaxBomb];
     }
 
-    public void LevelUpgrade(Upgrade upgrade)
+    public void ResetUpgrades()
     {
-        if (!upgradeLevels.ContainsKey(upgrade.upgradeID))
-        {
-            upgradeLevels[upgrade.upgradeID] = 1;
-        }
-        else if (upgradeLevels[upgrade.upgradeID] < upgrade.upgradeLevels.Count)
-        {
-            upgradeLevels[upgrade.upgradeID]++;
-        }
+        // Upgrades
+        upgradeStats[UpgradeStat.BombImmune] = 0;
+        upgradeStats[UpgradeStat.BombCollectOre] = 0;
+        upgradeStats[UpgradeStat.HorizontalDig] = 1;
+        upgradeStats[UpgradeStat.VerticalDig] = 1;
+        upgradeStats[UpgradeStat.DuplicateOre] = 0;
+        upgradeStats[UpgradeStat.MasterYi] = 0;
+        stats[Stat.Redstone] = 0;
     }
+
 
     public void InitializeStats()
     {
-        stats[Stat.MaxStamina] = 10;
-        stats[Stat.CurrentStamina] = 10;
-        stats[Stat.Vision] = 0;
-        stats[Stat.MaxBomb] = 3;
-        stats[Stat.CurrBomb] = 3;
-        stats[Stat.TempUpgradeSlots] = 3;
+        // Resources
         stats[Stat.Gold] = 9999;
         stats[Stat.Redstone] = 0;
         stats[Stat.Diamond] = 100;
         
         // Upgrades
-        stats[Stat.BombImmune] = 0;
-        stats[Stat.BombCollectOre] = 0;
-        stats[Stat.HorizontalDig] = 1;
-        stats[Stat.VerticalDig] = 1;
-        stats[Stat.DuplicateOre] = 0;
-        stats[Stat.MasterYi] = 0;
+        upgradeStats[UpgradeStat.MaxStamina] = 100;
+        upgradeStats[UpgradeStat.Vision] = 0;
+        upgradeStats[UpgradeStat.MaxBomb] = 3;
+        upgradeStats[UpgradeStat.TempUpgradeSlots] = 3;
+        upgradeStats[UpgradeStat.BombImmune] = 0;
+        upgradeStats[UpgradeStat.BombCollectOre] = 0;
+        upgradeStats[UpgradeStat.HorizontalDig] = 1;
+        upgradeStats[UpgradeStat.VerticalDig] = 1;
+        upgradeStats[UpgradeStat.DuplicateOre] = 0;
+        upgradeStats[UpgradeStat.MasterYi] = 0;
 
         // Fossils
         stats[Stat.Fossil1] = 0;

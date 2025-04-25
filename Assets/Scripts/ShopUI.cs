@@ -49,10 +49,10 @@ public class ShopUI : MonoBehaviour
 
     void UpdateUI()
     {
-        staminaText.text = data.GetStatValue(Stat.MaxStamina).ToString();
-        visionText.text = data.GetStatValue(Stat.Vision).ToString();
-        bombText.text = data.GetStatValue(Stat.MaxBomb).ToString();
-        slotText.text = data.GetStatValue(Stat.TempUpgradeSlots).ToString();
+        staminaText.text = data.GetStatValue(UpgradeStat.MaxStamina).ToString();
+        visionText.text = data.GetStatValue(UpgradeStat.Vision).ToString();
+        bombText.text = data.GetStatValue(UpgradeStat.MaxBomb).ToString();
+        slotText.text = data.GetStatValue(UpgradeStat.TempUpgradeSlots).ToString();
         diamondText.text = data.GetStatValue(Stat.Diamond).ToString();
         goldText.text = data.GetStatValue(Stat.Gold).ToString();
     }
@@ -65,7 +65,7 @@ public class ShopUI : MonoBehaviour
             if (upg is StatsUpgrade statsUpgrade)
             {
                 Debug.Log("Stat");
-                int currentLevel = statsUpgrade.currentLevel;
+                int currentLevel = UpgradeManager.Instance.upgradeLevels[statsUpgrade.upgradeID];
 
                 if (currentLevel < statsUpgrade.upgradeLevels.Count)
                 {
@@ -86,13 +86,13 @@ public class ShopUI : MonoBehaviour
         }
     }
 
-    public void UpgradeStat(int index)
+    public void UpgradeInShop(int index)
     {
         if (index < 0 || index >= upgradeIDs.Length) return;
 
         if (upgManager.GetPermanentUpgrade(upgradeIDs[index]) is StatsUpgrade statsUpgrade)
         {
-            int currentLevel = statsUpgrade.currentLevel;
+            int currentLevel = UpgradeManager.Instance.upgradeLevels[statsUpgrade.upgradeID];
             if (currentLevel >= statsUpgrade.upgradeLevels.Count) return;
 
             ResourceAmount cost = statsUpgrade.upgradeLevels[currentLevel].cost;

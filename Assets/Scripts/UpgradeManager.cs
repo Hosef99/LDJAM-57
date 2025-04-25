@@ -7,6 +7,7 @@ public class UpgradeManager : MonoBehaviour{
     public Upgrade[] permanentUpgrades;
     public Upgrade[] tempUpgrades;
     public List<Upgrade> activeUpgrades = new();
+    public Dictionary<UpgradeID, int> upgradeLevels = new();
 
     void Awake()
     {
@@ -37,14 +38,46 @@ public class UpgradeManager : MonoBehaviour{
         activeUpgrades.Clear();
         foreach (var upgrade in tempUpgrades)
         {
-            if (upgrade is StatsUpgrade statsUpgrade)
-            {
-                statsUpgrade.currentLevel = 0;
-            }
+            upgradeLevels[upgrade.upgradeID] = 0;
+        }
+    }
+
+    public void LevelUpgrade(Upgrade upgrade)
+    {
+        if (!upgradeLevels.ContainsKey(upgrade.upgradeID))
+        {
+            upgradeLevels[upgrade.upgradeID] = 1;
+        }
+        else if (upgradeLevels[upgrade.upgradeID] < upgrade.upgradeLevels.Count)
+        {
+            upgradeLevels[upgrade.upgradeID]++;
         }
     }
 
     public void AddTempUpgrade(Upgrade upg){
         activeUpgrades.Add(upg);
+    }
+
+    public void ApplyTempUpgrade()
+    {
+        foreach (var upg in tempUpgrades)
+        {
+            upg.DoUpgrade();
+        }
+    }
+
+    public int GetUpgradeLevel(UpgradeID upgradeID)
+    {
+        if (upgradeLevels.ContainsKey(upgradeID))
+        {
+            return upgradeLevels[upgradeID];
+        }
+        upgradeLevels[upgradeID] = 0;
+        return 0;
+    }
+
+    public int SetUpgradeLevel(UpgradeID upgradeID, int level)
+    {
+        return 0;
     }
 }

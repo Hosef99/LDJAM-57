@@ -49,15 +49,15 @@ public class BoomScript : MonoBehaviour
         {
             for (int dy = -range; dy <= range; dy++)
             {
-                Vector3Int offset = new Vector3Int(dx, dy, 0);
+                Vector3Int offset = new(dx, dy, 0);
                 Vector3Int targetTile = center + offset;
 
                 if (offset.sqrMagnitude <= (range - 0.5f) * (range - 0.5f))
                 {
-                    if (data.GetStatValue(Stat.BombCollectOre) != 0)
+                    if (data.GetStatValue(UpgradeStat.BombCollectOre) != 0)
                         player.CollectBlockAt(targetTile);
 
-                    if (data.GetStatValue(Stat.BombImmune) == 0 && Vector3.Distance(player.transform.position, targetTile) < 0.5f)
+                    if (data.GetStatValue(UpgradeStat.BombImmune) == 0 && Vector3.Distance(player.transform.position, targetTile) < 0.5f)
                     {
                         Debug.Log("Player DEATH");
                     }
