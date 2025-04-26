@@ -43,6 +43,7 @@ public class PlayerController : MonoBehaviour
         targetPos = transform.position;
 
         data = PlayerData.Instance;
+        data.OnGame();
         worldGenerator = FindObjectOfType<WorldGenerator>();
         levelLoader = FindObjectOfType<LevelLoader>();
         undergroundUI.UpdateStamina((int)data.GetStatValue(Stat.CurrentStamina));
@@ -87,11 +88,11 @@ public class PlayerController : MonoBehaviour
         {
             if (facing == FacingDirection.Down || facing == FacingDirection.Up)
             {
-                DestroyBlocksInFront(data.GetStatValue(UpgradeStat.VerticalDig));
+                DestroyBlocksInFront(data.GetStatValue(UpgradeID.VerticalDig));
             }
             else
             {
-                DestroyBlocksInFront(data.GetStatValue(UpgradeStat.HorizontalDig));
+                DestroyBlocksInFront(data.GetStatValue(UpgradeID.HorizontalDig));
             }
         }
         else if (Input.GetKeyDown(KeyCode.F))
@@ -221,7 +222,7 @@ public class PlayerController : MonoBehaviour
             lastHitOnRow = currentTile.y;
             rowStreak = 1;
         }
-        int masterYi = data.GetStatValue(UpgradeStat.MasterYi);
+        int masterYi = data.GetStatValue(UpgradeID.MasterYi);
         if (masterYi > 0)
         {
 
@@ -283,7 +284,7 @@ public class PlayerController : MonoBehaviour
                     GetTileTypeAt(frontTile) != ChunkData.OBSIDIAN3)
                 {
                     double rand = rnd.NextDouble();
-                    if (rand < data.GetStatValue(UpgradeStat.DuplicateOre)/100)
+                    if (rand < data.GetStatValue(UpgradeID.DuplicateOre)/100)
                     {
                         CollectBlockAt(frontTile);
                     }
@@ -343,7 +344,7 @@ public class PlayerController : MonoBehaviour
     public void InitializeOnGame()
     {
         float intensity = 0f;
-        switch (data.GetStatValue(UpgradeStat.Vision))
+        switch (data.GetStatValue(UpgradeID.PermVision))
         {
             case 0:
             intensity = 0.5f;

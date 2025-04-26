@@ -17,29 +17,16 @@ MonoBehaviour:
   upgradeName: Upgrade Stamina
   description: 
   upgradeLevels:
-  - upgradedStats:
-    - stat: 0
-      value: 50
-    cost:
-      resourceType: 0
-      value: 30
-  - upgradedStats:
-    - stat: 0
-      value: 100
-    cost:
-      resourceType: 0
-      value: 70
-  - upgradedStats:
-    - stat: 0
-      value: 150
-    cost:
-      resourceType: 0
-      value: 150
-  - upgradedStats:
-    - stat: 0
-      value: 300
-    cost:
-      resourceType: 0
-      value: 400
-  currentLevel: 0
+  - value: 50
+    costType: 2
+    cost: 30
+  - value: 100
+    costType: 4
+    cost: 70
+  - value: 200
+    costType: 2
+    cost: 100
+  - value: 300
+    costType: 2
+    cost: 200
   isTemp: 0

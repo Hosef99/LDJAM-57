@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f2b871b805c9be438400f86116cd7c3, type: 3}
   m_Name: ResourceIcons
   m_EditorClassIdentifier: 
-  goldIcon: {fileID: 0}
-  redstoneIcon: {fileID: 0}
-  diamondIcon: {fileID: 0}
+  goldIcon: {fileID: 1775973949, guid: 65c1b0a4f2575bb47a98a678ae41854d, type: 3}
+  redstoneIcon: {fileID: 1788919912, guid: 65c1b0a4f2575bb47a98a678ae41854d, type: 3}
+  diamondIcon: {fileID: 876502101, guid: 65c1b0a4f2575bb47a98a678ae41854d, type: 3}
+  lapisIcon: {fileID: 0}
+  fossil1: {fileID: -2113726295, guid: 05391b422a6a3bc44b938eb311226268, type: 3}

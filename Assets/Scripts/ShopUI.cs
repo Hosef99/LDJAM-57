@@ -19,6 +19,9 @@ public class ShopUI : MonoBehaviour
     public TextMeshProUGUI[] powerUpText;
     public TextMeshProUGUI[] value;
     public Image[] coins;
+    public Image[] resourceImage;
+
+    public ResourceIcon resourceIcon;
 
     private PlayerData data;
     private UpgradeManager upgManager;
@@ -49,10 +52,10 @@ public class ShopUI : MonoBehaviour
 
     void UpdateUI()
     {
-        staminaText.text = data.GetStatValue(UpgradeStat.MaxStamina).ToString();
-        visionText.text = data.GetStatValue(UpgradeStat.Vision).ToString();
-        bombText.text = data.GetStatValue(UpgradeStat.MaxBomb).ToString();
-        slotText.text = data.GetStatValue(UpgradeStat.TempUpgradeSlots).ToString();
+        staminaText.text = data.GetStatValue(UpgradeID.PermStamina).ToString();
+        visionText.text = data.GetStatValue(UpgradeID.PermVision).ToString();
+        bombText.text = data.GetStatValue(UpgradeID.PermBomb).ToString();
+        slotText.text = data.GetStatValue(UpgradeID.PermSlot).ToString();
         diamondText.text = data.GetStatValue(Stat.Diamond).ToString();
         goldText.text = data.GetStatValue(Stat.Gold).ToString();
     }
@@ -64,17 +67,18 @@ public class ShopUI : MonoBehaviour
             Upgrade upg = upgManager.GetPermanentUpgrade(upgradeIDs[i]);
             if (upg is StatsUpgrade statsUpgrade)
             {
-                Debug.Log("Stat");
-                int currentLevel = UpgradeManager.Instance.upgradeLevels[statsUpgrade.upgradeID];
+                int currentLevel = UpgradeManager.Instance.GetUpgradeLevel(statsUpgrade.upgradeID);
 
                 if (currentLevel < statsUpgrade.upgradeLevels.Count)
                 {
-                    float val = statsUpgrade.upgradeLevels[currentLevel].upgradedStats[0].value;
-                    int cost = (int)statsUpgrade.upgradeLevels[currentLevel].cost.value;
+                    UpgradeLevel levelInfo = statsUpgrade.upgradeLevels[currentLevel];
+                    float val = levelInfo.value;
+                    int cost = statsUpgrade.upgradeLevels[currentLevel].cost;
 
                     powerUpText[i].text = $"+{val} {statNames[i]}";
                     value[i].text = cost.ToString();
                     coins[i].enabled = true;
+                    resourceImage[i].sprite = resourceIcon.GetIcon(levelInfo.costType);
                 }
                 else
                 {
@@ -86,7 +90,7 @@ public class ShopUI : MonoBehaviour
         }
     }
 
-    public void UpgradeInShop(int index)
+    public void UpgradeStat(int index)
     {
         if (index < 0 || index >= upgradeIDs.Length) return;
 
@@ -94,12 +98,12 @@ public class ShopUI : MonoBehaviour
         {
             int currentLevel = UpgradeManager.Instance.upgradeLevels[statsUpgrade.upgradeID];
             if (currentLevel >= statsUpgrade.upgradeLevels.Count) return;
-
-            ResourceAmount cost = statsUpgrade.upgradeLevels[currentLevel].cost;
-            if (data.GetStatValue(cost.GetResourceTypeInStat()) >= cost.value)
+            Debug.Log("Test");
+            UpgradeLevel level = statsUpgrade.upgradeLevels[currentLevel];
+            if (data.GetStatValue(level.costType) >= level.cost)
             {
                 statsUpgrade.DoUpgrade();
-                data.AddStat(cost.GetResourceTypeInStat(), -cost.value);
+                data.AddStat(level.costType, -level.cost);
                 SoundManager.Instance.PlaySFX("powerUp");
                 UpdateButtons();
             }

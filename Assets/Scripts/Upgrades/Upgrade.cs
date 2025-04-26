@@ -17,17 +17,11 @@ public enum UpgradeID
 }
 
 [System.Serializable]
-public class UpgradedStat
-{
-    public Stat stat;
-    public float value;
-}
-
-[System.Serializable]
 public class UpgradeLevel
 {
-    public List<UpgradedStat> upgradedStats;
-    public ResourceAmount cost;
+    public int value;
+    public Stat costType;
+    public int cost;
 }
 
 public abstract class Upgrade : ScriptableObject 

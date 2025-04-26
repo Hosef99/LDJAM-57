@@ -10,20 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 35f642be1e9db2646b08227c351b6ad1, type: 3}
-  m_Name: UpgradeSlot
+  m_Name: MasterYi
   m_EditorClassIdentifier: 
   icon: {fileID: 0}
-  upgradeID: 9
-  upgradeName: Increase Slot
-  description: 
+  upgradeID: 5
+  upgradeName: Residual Collection
+  description: Allows you to collect minerals destroyed by bomb blasts
   upgradeLevels:
-  - value: 1
-    costType: 4
-    cost: 1
-  - value: 1
-    costType: 4
-    cost: 5
-  - value: 1
-    costType: 4
-    cost: 25
-  isTemp: 0
+  - value: 0
+    costType: 0
+    cost: 0
+  - value: 0
+    costType: 0
+    cost: 0
+  - value: 0
+    costType: 0
+    cost: 0
+  - value: 0
+    costType: 0
+    cost: 0
+  isTemp: 1

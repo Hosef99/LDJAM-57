@@ -17,29 +17,16 @@ MonoBehaviour:
   upgradeName: Increase Vision
   description: 
   upgradeLevels:
-  - upgradedStats:
-    - stat: 2
-      value: 1
-    cost:
-      resourceType: 0
-      value: 50
-  - upgradedStats:
-    - stat: 2
-      value: 1
-    cost:
-      resourceType: 0
-      value: 100
-  - upgradedStats:
-    - stat: 2
-      value: 1
-    cost:
-      resourceType: 0
-      value: 150
-  - upgradedStats:
-    - stat: 2
-      value: 1
-    cost:
-      resourceType: 0
-      value: 200
-  currentLevel: 0
+  - value: 1
+    costType: 2
+    cost: 50
+  - value: 1
+    costType: 2
+    cost: 150
+  - value: 1
+    costType: 2
+    cost: 250
+  - value: 1
+    costType: 2
+    cost: 500
   isTemp: 0

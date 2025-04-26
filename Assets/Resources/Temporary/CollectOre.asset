@@ -12,16 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35f642be1e9db2646b08227c351b6ad1, type: 3}
   m_Name: CollectOre
   m_EditorClassIdentifier: 
-  icon: {fileID: 0}
+  icon: {fileID: -954584436, guid: 4158826ffb161914784aff02b825efa4, type: 3}
   upgradeID: 1
   upgradeName: Residual Collection
   description: Allows you to collect minerals destroyed by bomb blasts
   upgradeLevels:
-  - upgradedStats:
-    - stat: 10
-      value: 1
-    cost:
-      resourceType: 2
-      value: 80
-  currentLevel: 0
+  - value: 1
+    costType: 3
+    cost: 80
   isTemp: 1

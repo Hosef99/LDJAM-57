@@ -17,11 +17,7 @@ MonoBehaviour:
   upgradeName: Blastproof Boots
   description: Grants immunity to bomb damage
   upgradeLevels:
-  - upgradedStats:
-    - stat: 9
-      value: 1
-    cost:
-      resourceType: 2
-      value: 50
-  currentLevel: 0
+  - value: 1
+    costType: 3
+    cost: 70
   isTemp: 1

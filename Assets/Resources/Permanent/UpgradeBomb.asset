@@ -17,29 +17,16 @@ MonoBehaviour:
   upgradeName: Increase Bomb
   description: 
   upgradeLevels:
-  - upgradedStats:
-    - stat: 3
-      value: 3
-    cost:
-      resourceType: 0
-      value: 50
-  - upgradedStats:
-    - stat: 3
-      value: 5
-    cost:
-      resourceType: 0
-      value: 80
-  - upgradedStats:
-    - stat: 3
-      value: 8
-    cost:
-      resourceType: 0
-      value: 100
-  - upgradedStats:
-    - stat: 3
-      value: 10
-    cost:
-      resourceType: 0
-      value: 150
-  currentLevel: 0
+  - value: 3
+    costType: 2
+    cost: 50
+  - value: 5
+    costType: 2
+    cost: 100
+  - value: 7
+    costType: 2
+    cost: 150
+  - value: 10
+    costType: 2
+    cost: 200
   isTemp: 0

@@ -4499,6 +4499,12 @@ MonoBehaviour:
   - {fileID: 361397041}
   - {fileID: 1054568685}
   - {fileID: 1397146959}
+  resourceImage:
+  - {fileID: 1148612899}
+  - {fileID: 361397041}
+  - {fileID: 1054568685}
+  - {fileID: 1397146959}
+  resourceIcon: {fileID: 11400000, guid: 98b2dbeac818bd841b602503da135ac5, type: 2}
 --- !u!114 &1188621897 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6024364565688919637, guid: a3aeece1027aa2b49b441d25c50bdb52, type: 3}

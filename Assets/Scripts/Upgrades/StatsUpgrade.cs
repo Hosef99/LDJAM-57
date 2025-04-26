@@ -17,10 +17,8 @@ public class StatsUpgrade : Upgrade
 
         var level = upgradeLevels[currentLevel];
 
-        foreach (var item in level.upgradedStats)
-        {
-            PlayerData.Instance.AddStat(item.stat, item.value);
-        }
+        
+        PlayerData.Instance.AddStat(upgradeID, level.value);
 
         if (isTemp)
         {
