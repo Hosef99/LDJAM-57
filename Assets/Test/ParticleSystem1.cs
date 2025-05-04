@@ -9,6 +9,7 @@ class Particle {
     public float age;
     public float t;
     public float opacity;
+    public float initialOpacity;
     public Vector3 velocity;
 
     public Particle(ParticleProperty p) {
@@ -17,12 +18,13 @@ class Particle {
         this.size = p.size;
         this.lifeTime = p.lifeTime;
         this.velocity = p.velocity;
+        this.initialOpacity = p.initialOpacity;
     }
 
     public void update() {
         this.age += Time.deltaTime;
         this.t = Mathf.InverseLerp(0, lifeTime, age);
-        this.opacity = Mathf.Lerp(0.3f, 0f, t);
+        this.opacity = Mathf.Lerp(initialOpacity, 0f, t);
         position += velocity * Time.deltaTime;
     }
 }
@@ -32,6 +34,7 @@ struct ParticleProperty {
     public float size;
     public float lifeTime;
     public Vector3 velocity;
+    public float initialOpacity;
 }
 
 public class ParticleSystem1 : MonoBehaviour {
@@ -43,11 +46,10 @@ public class ParticleSystem1 : MonoBehaviour {
     public float interval = 0.035f;
     public float areaSize = 0.2f;
     public float speed = 4.5f;
-    public Vector2 position;
-    public bool isEnabled;
-
-    public float y;
-    public Vector2 area;
+    public Vector2 position = new Vector2(0, 0);
+    public bool isEnabled = true;
+    public float opacity = 0.8f;
+    public Vector2 area = new Vector2(0.5f, 0.5f);
 
     List<Particle> particlesList;
     List<Vector3> vertices = new List<Vector3>(); 
@@ -59,7 +61,6 @@ public class ParticleSystem1 : MonoBehaviour {
     Transform playerTransform;
 
     void Start() {
-        playerTransform = GameObject.Find("Player").GetComponent<Transform>();
         particlesList = new List<Particle>();
         mesh = new Mesh();  
         mesh.MarkDynamic();
@@ -69,8 +70,6 @@ public class ParticleSystem1 : MonoBehaviour {
     }
 
     void Update() {
-        position = new Vector2(playerTransform.position.x, playerTransform.position.y) + new Vector2(0, y);
-
         if (isEnabled) {
             createParticles();
         }
@@ -89,6 +88,7 @@ public class ParticleSystem1 : MonoBehaviour {
                 p.lifeTime = Random.Range(Mathf.Max(0, lifeTime - 0.1f), lifeTime + 0.1f);
                 p.position = new Vector3(Random.Range(-area.x / 2.0f + position.x, area.x / 2.0f + position.x), Random.Range(-area.y / 2.0f + position.y, area.y / 2.0f + position.y), 0);
                 p.velocity = (p.position - new Vector3(position.x, position.y, 0)).normalized * Random.Range(speed / 2, speed);
+                p.initialOpacity = opacity;
                 createParticle(p);
             } 
             

@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 targetPos;
     private Random rnd = new Random();
     private WorldGenerator worldGenerator;
+    private MoneyDisplayScript moneyDisplay;
     public PlayerData playerData ;
 
     public UndergroundUI undergroundUI;
@@ -52,6 +53,7 @@ public class PlayerController : MonoBehaviour
         playerData.OnPlay();
         worldGenerator = FindObjectOfType<WorldGenerator>();
         levelLoader = FindObjectOfType<LevelLoader>();
+        moneyDisplay = FindObjectOfType<MoneyDisplayScript>();
         currentStamina = playerData.stamina;
         undergroundUI.UpdateStamina(playerData.stamina);
         undergroundUI.UpdateUI();
@@ -176,12 +178,12 @@ public class PlayerController : MonoBehaviour
                 isMoving = false;
             }
 
-            GameObject.Find("DustTrailParticle").GetComponent<ParticleSystem1>().isEnabled = true;
+            GameObject.Find("DustTrailParticle").GetComponent<ParticleSystem2>().isEnabled = true;
         }
         else{
             anim.SetBool("IsMove", false);
 
-            GameObject.Find("DustTrailParticle").GetComponent<ParticleSystem1>().isEnabled = false;
+            GameObject.Find("DustTrailParticle").GetComponent<ParticleSystem2>().isEnabled = false;
         }
     }
 
@@ -361,14 +363,17 @@ public class PlayerController : MonoBehaviour
 
             case ChunkData.GOLD1:
                 playerData.goldCount += 2;
+                moneyDisplay.increment(0, 2);
                 break;
 
             case ChunkData.GOLD2:
                 playerData.goldCount += 4;
+                moneyDisplay.increment(0, 4);
                 break;
 
             case ChunkData.GOLD3:
                 playerData.goldCount += 6;
+                moneyDisplay.increment(0, 6);
                 break;
 
             case ChunkData.FOSSIL1:
@@ -397,10 +402,12 @@ public class PlayerController : MonoBehaviour
 
             case ChunkData.DIAMOND:
                 playerData.diamondCount += 1;
+                moneyDisplay.increment(2, 1);
                 break;
 
             case ChunkData.REDSTONE:
                 playerData.redStoneCount += 6;
+                moneyDisplay.increment(1, 6);
                 break;
 
             default:
